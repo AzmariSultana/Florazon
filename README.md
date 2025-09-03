@@ -64,16 +64,19 @@ Installation:
 i. Clone the repository
 
 ii. Set up the backend: 
+```text
 
 cd backend
 
 npm install
-
+```
 iii. Set up the frontend: 
+```text
 
 cd frontend
 
 npm install
+```
 
 iv. Configure environment variables:
 
@@ -82,16 +85,20 @@ Create a .env file in both the backend and frontend directories with the necessa
 v. Run the applications-
 
 Start the backend server:
+```text
 
 cd backend
 
 node server.js
+```
 
 Start the frontend development server:
+```text
 
 cd frontend
 
 npm run dev
+```
 
 The application should now be running locally, with the frontend on http://localhost:5173 and the backend on http://localhost:4000
 
