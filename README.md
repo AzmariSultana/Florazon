@@ -243,20 +243,6 @@ Florazon/
 - Product reviews and ratings
 - Automated tests and continuous integration
 
-## Image Credits
-
-The screenshots use sample catalogue data. The yellow tulip and yellow rose photographs are part of this repository. The other product photographs come from Wikimedia Commons and are used under the licences below.
-
-| Product | Source file | Author | Licence |
-| --- | --- | --- | --- |
-| Red Rose Bunch | [Hand holding a bouquet of red roses](https://commons.wikimedia.org/wiki/File:Hand_holding_a_bouquet_of_red_roses.jpg) | Karthika Manikandan | CC0 |
-| Red & Yellow Rose Bundle | [Bouquet of red and yellow roses](https://commons.wikimedia.org/wiki/File:Bouquet_of_red_and_yellow_roses.jpg) | Karthika Manikandan | CC0 |
-| Mixed Tulip Bouquet | [Tulip-bouquet-vienna (Unsplash)](https://commons.wikimedia.org/wiki/File:Tulip-bouquet-vienna_%28Unsplash%29.jpg) | Gábor Juhász | CC0 |
-| Pink Tulip Basket | [A bouquet of pink tulips in a basket](https://commons.wikimedia.org/wiki/File:A_bouquet_of_pink_tulips_in_a_basket.jpg) | George E. Koronaios | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
-| Single Red Rose | [Red rose with black background](https://commons.wikimedia.org/wiki/File:Red_rose_with_black_background.jpg) | Laitche | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
-| Marigold Garland | [Marigold garlands](https://commons.wikimedia.org/wiki/File:Marigold_garlands.jpg) | পাপৰি বৰা | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
-| White Orchid Stem | [White Orchid 1 NBG](https://commons.wikimedia.org/wiki/File:White_Orchid_1_NBG.jpg) | PumpkinSky | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
-| Orange Gerbera Bunch | [Bunch of Sunflower](https://commons.wikimedia.org/wiki/File:Bunch_of_Sunflower.jpg) | ezhuttukari | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
 
 ## Author
 
