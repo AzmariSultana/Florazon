@@ -11,21 +11,6 @@ Florazon is a full-stack e-commerce platform for ordering fresh flowers online, 
 
 ![Florazon home page](docs/screenshots/home.jpg)
 
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Getting Started](#getting-started)
-- [Usage](#usage)
-- [API Reference](#api-reference)
-- [Security](#security)
-- [Project Structure](#project-structure)
-- [Roadmap](#roadmap)
-- [Image Credits](#image-credits)
-- [Author](#author)
 
 ## Overview
 
