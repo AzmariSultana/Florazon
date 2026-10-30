@@ -1,6 +1,6 @@
 import Title from '../components/Title'
 import {assets} from '../assets/assets'
-import Newsletterbox from '../components/Newsletterbox'
+import NewsletterBox from '../components/NewsletterBox'
 
 
 const About = () => {
@@ -11,7 +11,7 @@ const About = () => {
 
       </div>
       <div className='my-10 flex flex-col md:flex-row gap-16'>
-        <img className='w-full md:max-w-[450px]' src={assets.about_img} alt=""/>
+        <img className='w-full md:max-w-[450px]' src={assets.about_img} alt="Florazon floral arrangements"/>
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-600'>
           <p>Florazon was founded to bring the elegance of nature into everyday life through carefully crafted floral arrangements. Each bouquet we deliver reflects our commitment to quality and meaningful connection.</p>
           <p>From dawn to dusk, we select blooms that express love, joy, and comfort, delivering nature's freshest, most graceful flowers right to your door.</p>
@@ -46,7 +46,7 @@ const About = () => {
         </div>
 
       </div>
-      <Newsletterbox/>
+      <NewsletterBox/>
     </div>
   )
 }

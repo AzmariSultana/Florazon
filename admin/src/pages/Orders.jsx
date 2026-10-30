@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
-import { backendUrl, currency } from '../App'
+import { backendUrl, currency } from '../config'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets';
 
@@ -9,45 +9,50 @@ const Orders = ({ token }) => {
 
   const [orders, setOrders] = useState([])
 
-  const fetchAllOrders = async () => {
+  const fetchAllOrders = useCallback(async () => {
     if (!token) {
       return null;
     }
     try {
       const response = await axios.post(backendUrl + '/api/order/list', {}, { headers: { token } })
-      if (response.data.orders) {
-        setOrders(response.data.orders.reverse())
+      if (response.data.success) {
+        setOrders(response.data.orders)
       } else {
         toast.error(response.data.message)
       }
 
     } catch (error) {
-      toast.error(error.message)
+      // 401s are handled globally in App (auto-logout)
+      if (error.response?.status !== 401) toast.error(error.response?.data?.message || error.message)
     }
-  }
+  }, [token])
 
   const statusHandler = async (event,orderId) => {
     try {
       const response = await axios.post(backendUrl + '/api/order/status', {orderId, status: event.target.value}, {headers: {token}})
       if (response.data.success) {
+        toast.success(response.data.message)
         await fetchAllOrders()
+      } else {
+        toast.error(response.data.message)
       }
     } catch (error) {
       console.log(error)
-      toast.error(response.data.message)
-      
+      // 401s are handled globally in App (auto-logout)
+      if (error.response?.status !== 401) toast.error(error.response?.data?.message || error.message)
     }
   }
   useEffect(() => {
     fetchAllOrders();
-  }, [token])
+  }, [fetchAllOrders])
   return (
     <div>
       <h3>Order Page</h3>
+      {orders.length === 0 && <p className='mt-4 text-sm text-gray-500'>No orders yet.</p>}
       <div>
         {
-          orders.map((order, index) => (
-            <div className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700' key={index}>
+          orders.map((order) => (
+            <div className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700' key={order._id}>
               <img className='w-12' src={assets.parcel_icon} alt="" />
               <div>
                 <div>
@@ -75,7 +80,7 @@ const Orders = ({ token }) => {
                 <p>Date : { new Date(order.date).toLocaleDateString() }</p>
               </div>
               <p className='text-sm sm:text-[15px]'>{currency} {order.amount}</p>
-              <select onChange={(event)=>statusHandler(event,order._id)} value={order.status} className='p-2 font-semibold'>
+              <select onChange={(event)=>statusHandler(event,order._id)} value={order.status} aria-label='Order status' className='p-2 font-semibold'>
                 <option value="Order Placed">Order Placed</option>
                 <option value="Packing">Packing</option>
                 <option value="Shipped">Shipped</option>

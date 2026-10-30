@@ -1,13 +1,27 @@
+import mongoose from "mongoose"
 import userModel from "../models/userModel.js"
 
+// Cart keys come from the client and are used as object keys, so they must be safe
+const isValidCartKey = (itemId, size) =>
+    mongoose.isValidObjectId(itemId) &&
+    typeof size === "string" && size.length > 0 && size.length <= 30 &&
+    !["__proto__", "constructor", "prototype"].includes(size)
 
 // add products to user cart
 const addToCart = async (req,res) => {
     try {
-        const { userId, itemId, size } = req.body
+        const userId = req.userId
+        const { itemId, size } = req.body
+
+        if (!isValidCartKey(itemId, size)) {
+            return res.status(400).json({ success: false, message: "Item and size are required" })
+        }
 
         const userData = await userModel.findById(userId)
-        let cartData = await userData.cartData;
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
+        const cartData = userData.cartData || {}
 
         if (cartData[itemId]) {
             if (cartData[itemId][size]) {
@@ -35,12 +49,24 @@ const addToCart = async (req,res) => {
 // update user cart
 const updateCart = async (req,res) => {
     try {
-        const { userId, itemId, size, quantity } = req.body
+        const userId = req.userId
+        const { itemId, size, quantity } = req.body
+
+        const qty = Number(quantity)
+        if (!isValidCartKey(itemId, size) || !Number.isInteger(qty) || qty < 0) {
+            return res.status(400).json({ success: false, message: "Invalid cart update" })
+        }
 
         const userData = await userModel.findById(userId)
-        let cartData = await userData.cartData;
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
+        const cartData = userData.cartData || {}
 
-        cartData[itemId][size]= quantity
+        if (!cartData[itemId]) {
+            cartData[itemId] = {}
+        }
+        cartData[itemId][size]= qty
 
         await userModel.findByIdAndUpdate(userId, {cartData})
 
@@ -56,12 +82,12 @@ const updateCart = async (req,res) => {
 // get user cart data
 const getUserCart = async (req,res) => {
     try {
-        const { userId } = req.body
+        const userData = await userModel.findById(req.userId)
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
 
-        const userData = await userModel.findById(userId)
-        let cartData = await userData.cartData;
-
-        res.json({ success: true, cartData })
+        res.json({ success: true, cartData: userData.cartData || {} })
     } catch (error) {
         console.log(error)
         res.json({ success: false, message: error.message })

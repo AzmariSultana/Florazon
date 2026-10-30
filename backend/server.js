@@ -8,10 +8,20 @@ import productRouter from './routes/productRoute.js'
 import cartRouter from './routes/cartRoute.js'
 import orderRouter from './routes/orderRoute.js'
 
+const requiredEnv = ['MONGODB_URI', 'JWT_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD']
+const missingEnv = requiredEnv.filter((key) => !process.env[key])
+if (missingEnv.length > 0) {
+    console.error(`Missing required environment variables: ${missingEnv.join(', ')}`)
+    process.exit(1)
+}
+
 // App Config
 const app= express()
 const port= process.env.PORT || 4000
-connectDB()
+connectDB().catch((error) => {
+    console.error('DB connection failed:', error.message)
+    process.exit(1)
+})
 connectCloudinary()
 
 // middlewares
@@ -26,6 +36,15 @@ app.use('/api/order',orderRouter)
 
 app.get('/',(req,res)=>{
     res.send("API Working")
+})
+
+app.use((req,res)=>{
+    res.status(404).json({ success: false, message: "Route not found" })
+})
+
+app.use((err,req,res,next)=>{
+    console.log(err)
+    res.status(err.status || 400).json({ success: false, message: err.message || "Something went wrong" })
 })
 
 app.listen(port,()=> console.log('Server started on PORT : '+port))

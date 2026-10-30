@@ -3,7 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from './Title';
 import ProductItem from './ProductItem';
 
-const RelatedProducts = ({ category, subCategory, onSelect }) => {
+const RelatedProducts = ({ category, subCategory, currentId }) => {
   const { products } = useContext(ShopContext);
   const [related, setRelated] = useState([]);
 
@@ -11,10 +11,10 @@ const RelatedProducts = ({ category, subCategory, onSelect }) => {
     if (products.length > 0) {
       let productsCopy = products.slice();
       productsCopy = productsCopy.filter((item) => category === item.category);
-      productsCopy = productsCopy.filter((item) => subCategory === item.subCategory);
+      productsCopy = productsCopy.filter((item) => subCategory === item.subCategory && item._id !== currentId);
       setRelated(productsCopy.slice(0, 5));
     }
-  }, [products, category, subCategory]);
+  }, [products, category, subCategory, currentId]);
 
   return (
     <div className='my-24'>
@@ -24,19 +24,13 @@ const RelatedProducts = ({ category, subCategory, onSelect }) => {
 
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
         {related.map((item) => (
-          <button
+          <ProductItem
             key={item._id}
-            type="button"
-            onClick={() => onSelect?.(item._id)}
-            className="text-left"
-          >
-            <ProductItem
-              id={item._id}
-              name={item.name}
-              price={item.price}
-              image={item.image}
-            />
-          </button>
+            id={item._id}
+            name={item.name}
+            price={item.price}
+            image={item.image}
+          />
         ))}
       </div>
     </div>

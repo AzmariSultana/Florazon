@@ -1,5 +1,10 @@
+import mongoose from "mongoose";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js"
+import productModel from "../models/productModel.js";
+
+const DELIVERY_FEE = 60;
+const ORDER_STATUSES = ["Order Placed", "Packing", "Shipped", "Out for delivery", "Delivered"];
 
 // Placing orders using COD Method
 
@@ -10,13 +15,39 @@ const placeOrder = async (req, res) => {
       return res.status(401).json({ success: false, message: "Not authorized" });
     }
 
-    const { items, amount, address } = req.body;
+    const { items, address } = req.body;
+
+    if (!Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ success: false, message: "Your cart is empty" });
+    }
+    if (!address || typeof address !== "object") {
+      return res.status(400).json({ success: false, message: "Delivery address is required" });
+    }
+
+    // Rebuild items from the database so prices can't be tampered with client-side
+    const orderItems = [];
+    let subtotal = 0;
+    for (const item of items) {
+      const quantity = Number(item.quantity);
+      if (!Number.isInteger(quantity) || quantity < 1) {
+        return res.status(400).json({ success: false, message: "Invalid item quantity" });
+      }
+      const product = mongoose.isValidObjectId(item?._id) ? await productModel.findById(item._id).lean() : null;
+      if (!product) {
+        return res.status(400).json({ success: false, message: "A product in your cart is no longer available" });
+      }
+      if (!product.sizes.includes(item.size)) {
+        return res.status(400).json({ success: false, message: `Size ${item.size} is not available for ${product.name}` });
+      }
+      orderItems.push({ ...product, size: item.size, quantity });
+      subtotal += product.price * quantity;
+    }
 
     const orderData = {
       userId,
-      items,
+      items: orderItems,
       address,
-      amount,
+      amount: subtotal + DELIVERY_FEE,
       paymentMethod: "COD",
       payment: false,
       date: Date.now(),
@@ -38,7 +69,7 @@ const placeOrder = async (req, res) => {
 //All Orders data for Admin Panel
 const allOrders = async (req,res) =>{
     try {
-        const orders = await orderModel.find({})
+        const orders = await orderModel.find({}).sort({ date: -1 })
         res.json({success:true,orders})
     } catch (error) {
         console.log(error)
@@ -55,7 +86,7 @@ const userOrders = async (req, res) => {
       return res.status(401).json({ success: false, message: "Not authorized" });
     }
 
-    const orders = await orderModel.find({ userId });
+    const orders = await orderModel.find({ userId }).sort({ date: 1 });
     return res.json({ success: true, orders });
   } catch (error) {
     console.log(error);
@@ -68,7 +99,14 @@ const updateStatus = async (req,res) =>{
     try {
         const { orderId, status } = req.body
 
-        await orderModel.findByIdAndUpdate(orderId, { status })
+        if (!mongoose.isValidObjectId(orderId) || !ORDER_STATUSES.includes(status)) {
+            return res.status(400).json({ success: false, message: "Invalid order or status" })
+        }
+
+        const order = await orderModel.findByIdAndUpdate(orderId, { status })
+        if (!order) {
+            return res.status(404).json({ success: false, message: "Order not found" })
+        }
         res.json({success:true,message:'Status Updated'})
     } catch (error) {
         console.log(error)

@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
-import { assets } from '../assets/assets'
 import { ShopContext } from '../context/ShopContext'
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -9,7 +8,8 @@ import { toast } from 'react-toastify';
 
 const PlaceOrder = () => {
   const [method, setMethod]= useState('cod');
-  const {navigate,backendUrl,token,cartItems,setCartItems,getCartAmount,delivery_fee,products} =useContext(ShopContext);
+  const [submitting, setSubmitting] = useState(false);
+  const {navigate,backendUrl,token,cartItems,setCartItems,getCartAmount,delivery_fee,products,handleApiError} =useContext(ShopContext);
   const [formData, setFormData] = useState({
     firstName:'',
     lastName:'',
@@ -31,46 +31,54 @@ const PlaceOrder = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault()
-    try {
-      let orderItems= []
+    if (!token) {
+      toast.error('Please log in to place an order')
+      navigate('/login')
+      return
+    }
 
-      for(const items in cartItems){
-        for(const item in cartItems[items]){
-          if (cartItems[items][item] >0 ){
-            const itemInfo = structuredClone(products.find(product => product._id === items))
-            if (itemInfo) {
-              itemInfo.size=item
-              itemInfo.quantity=cartItems[items][item]
-              orderItems.push(itemInfo)
-            }
+    let orderItems= []
+
+    for(const items in cartItems){
+      for(const item in cartItems[items]){
+        if (cartItems[items][item] >0 ){
+          const itemInfo = products.find(product => product._id === items)
+          if (itemInfo) {
+            // prices are recalculated on the server, so only identifiers are needed
+            orderItems.push({ _id: itemInfo._id, size: item, quantity: cartItems[items][item] })
           }
         }
       }
-      
-      let orderData = {
-        address: formData,
-        items: orderItems,
-        amount: getCartAmount() + delivery_fee
-      }
-      switch(method){
-        //API calls for COD
-        case 'cod':
-          const response = await axios.post(backendUrl + '/api/order/place',orderData,{headers:{token}})
-          
-          if (response.data.success) {
-            setCartItems({})
-            navigate('/orders')
-          } else {
-            toast.error(response.data.message)
-          }
-          break;
+    }
 
-          default:
-            break;
+    if (orderItems.length === 0) {
+      toast.error('Your cart is empty')
+      return
+    }
+
+    const orderData = {
+      address: formData,
+      items: orderItems,
+      amount: getCartAmount() + delivery_fee
+    }
+
+    try {
+      setSubmitting(true)
+      if (method === 'cod') {
+        const response = await axios.post(backendUrl + '/api/order/place',orderData,{headers:{token}})
+
+        if (response.data.success) {
+          setCartItems({})
+          toast.success('Order placed successfully')
+          navigate('/orders')
+        } else {
+          toast.error(response.data.message)
+        }
       }
     } catch (error) {
-        console.log(error)
-        toast.error(error.message)
+      handleApiError(error)
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -95,11 +103,11 @@ const PlaceOrder = () => {
 
         </div>
         <div className='flex gap-3'>
-          <input required onChange={onChangeHandler} name='zipcode' value={formData.zipcode} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="number" placeholder='Zipcode'/>
+          <input required onChange={onChangeHandler} name='zipcode' value={formData.zipcode} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="text" inputMode='numeric' autoComplete='postal-code' placeholder='Zipcode'/>
           <input required onChange={onChangeHandler} name='country' value={formData.country} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="text" placeholder='Country'/>
 
         </div>
-        <input required onChange={onChangeHandler} name='phone' value={formData.phone} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="number" placeholder='Phone'/>
+        <input required onChange={onChangeHandler} name='phone' value={formData.phone} className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="tel" autoComplete='tel' placeholder='Phone'/>
 
       </div>
 
@@ -113,7 +121,7 @@ const PlaceOrder = () => {
           <Title text1={'PAYMENT'} text2={'METHOD'} />
           {/*------Payment method selection------*/}
 
-            <div onClick={()=>setMethod('cod')} className='flex items-center gap-3 border p-2 px-3 cursor-pointer'>
+            <div onClick={()=>setMethod('cod')} role='radio' aria-checked={method==='cod'} tabIndex={0} onKeyDown={(e)=> (e.key === 'Enter' || e.key === ' ') && setMethod('cod')} className='flex items-center gap-3 border p-2 px-3 cursor-pointer mt-3'>
               <p className={`min-w-3.5 h-3.5 border rounded-full ${method==='cod' ? 'bg-green-400' : ''}`}></p>
               <p className='text-gray-500 text-sm font-medium mx-4'>CASH ON DELIVERY</p>
 
@@ -121,7 +129,7 @@ const PlaceOrder = () => {
 
         </div>
         <div className='w-full text-end mt-8'>
-          <button type='submit' className='bg-black text-white px-16 py-3 text-sm'>PLACE ORDER</button>
+          <button type='submit' disabled={submitting} className='bg-black text-white px-16 py-3 text-sm disabled:opacity-60 disabled:cursor-not-allowed'>{submitting ? 'PLACING ORDER...' : 'PLACE ORDER'}</button>
 
         </div>
 
