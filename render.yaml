@@ -1,0 +1,34 @@
+# Render Blueprint for the Florazon API (https://render.com/docs/blueprint-spec)
+# Render > New > Blueprint > select this repository. Values marked "sync: false" are
+# requested in the Render dashboard during setup and are never stored in the repository.
+services:
+  - type: web
+    name: florazon-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CLOUDINARY_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_SECRET_KEY
+        sync: false
+      # Comma-separated list of the deployed storefront and admin URLs, e.g.
+      # https://florazon.vercel.app,https://florazon-admin.vercel.app
+      - key: CORS_ORIGINS
+        sync: false

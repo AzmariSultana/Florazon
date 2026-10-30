@@ -24,9 +24,15 @@ connectDB().catch((error) => {
 })
 connectCloudinary()
 
+// Only the listed origins may call the API in production; unset means allow all (local development)
+const allowedOrigins = (process.env.CORS_ORIGINS || '')
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/$/, ''))
+    .filter(Boolean)
+
 // middlewares
 app.use(express.json())
-app.use(cors())
+app.use(cors(allowedOrigins.length > 0 ? { origin: allowedOrigins } : undefined))
 
 //api endpoints
 app.use('/api/user',userRouter)

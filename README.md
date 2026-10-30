@@ -186,32 +186,44 @@ The script adds products that are not in the database yet and never deletes anyt
 
 ## Deployment
 
-### Storefront and admin panel (GitHub Pages)
+The API is deployed to [Render](https://render.com) and the two React applications to [Vercel](https://vercel.com). Deploy the API first, because both frontends need its URL.
 
-The workflow in `.github/workflows/deploy-pages.yml` builds both React applications and publishes them to GitHub Pages. It runs on every push to `main` that changes `frontend/` or `admin/`, and it can also be started manually from the **Actions** tab.
+### 1. API on Render
 
-| Application | URL |
-| --- | --- |
-| Storefront | https://azmarisultana.github.io/Florazon/ |
-| Admin panel | https://azmarisultana.github.io/Florazon/admin/ |
+The repository includes a Render Blueprint (`render.yaml`) that configures the service.
 
-One-time setup:
+1. In MongoDB Atlas, open **Network Access** and allow connections from `0.0.0.0/0`. Render's free plan does not use fixed IP addresses.
+2. In Render, choose **New > Blueprint** and select this repository.
+3. Enter the requested environment variables: `MONGODB_URI`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY` and `CLOUDINARY_SECRET_KEY`. `JWT_SECRET` is generated automatically. Leave `CORS_ORIGINS` empty for now.
+4. Deploy. When the service is live, opening its URL (for example `https://florazon-api.onrender.com`) shows `API Working`.
 
-1. In **Settings > Pages**, set **Source** to **GitHub Actions**.
-2. In **Settings > Secrets and variables > Actions > Variables**, add a repository variable named `VITE_BACKEND_URL` set to the URL of the deployed API.
-3. Re-run the workflow so the new variable is included in the build.
+On the free plan the service sleeps after a period of inactivity, so the first request afterwards can take up to a minute.
 
-### API (Node.js hosting)
+### 2. Storefront and admin panel on Vercel
 
-GitHub Pages only serves static files, so the Express API must be hosted separately. You can use any Node.js host, such as Render, Railway or Fly.io. Configure it as follows:
+Create two Vercel projects from this repository, one for each application. Each folder contains a `vercel.json` with the build settings and the routing rule that keeps page links working on refresh.
 
-- **Root directory:** `backend`
-- **Build command:** `npm install`
-- **Start command:** `npm start`
-- **Environment variables:** the variables listed under [Configure environment variables](#3-configure-environment-variables)
+| Setting | Storefront project | Admin project |
+| --- | --- | --- |
+| Root Directory | `frontend` | `admin` |
+| Framework Preset | Vite (detected) | Vite (detected) |
+| Environment variable | `VITE_BACKEND_URL` = Render API URL | `VITE_BACKEND_URL` = Render API URL |
 
-In MongoDB Atlas, allow connections from the host under **Network Access**. Once the API is running, set its URL as `VITE_BACKEND_URL` as described above.
+Enter the API URL without a trailing slash. Vite includes environment variables at build time, so redeploy a project after changing its `VITE_BACKEND_URL`.
 
+### 3. Connect the API to the frontends
+
+Return to the Render service and set `CORS_ORIGINS` to both Vercel URLs, separated by a comma:
+
+```
+https://florazon.vercel.app,https://florazon-admin.vercel.app
+```
+
+Save the change to redeploy the API. From then on, the API only accepts browser requests from these two sites.
+
+### Alternative: GitHub Pages
+
+`.github/workflows/deploy-pages.yml` can also publish both applications to GitHub Pages, at https://azmarisultana.github.io/Florazon/ and https://azmarisultana.github.io/Florazon/admin/. It runs on pushes to `main` that change `frontend/` or `admin/` and reads the API URL from the repository variable `VITE_BACKEND_URL` (**Settings > Secrets and variables > Actions > Variables**). If you use it, add the Pages URL to `CORS_ORIGINS` as well.
 
 ## Security
 
