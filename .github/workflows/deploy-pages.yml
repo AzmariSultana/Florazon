@@ -39,12 +39,16 @@ jobs:
         working-directory: frontend
         run: |
           npm install --no-audit --no-fund
+          # npm can skip Rollup's native binary without a lockfile (npm/cli#4828); install the matching one explicitly
+          npm install --no-save --no-audit --no-fund "@rollup/rollup-linux-x64-gnu@$(node -p "require('rollup/package.json').version")"
           BASE_PATH="$BASE" npm run build
 
       - name: Build admin panel
         working-directory: admin
         run: |
           npm install --no-audit --no-fund
+          # npm can skip Rollup's native binary without a lockfile (npm/cli#4828); install the matching one explicitly
+          npm install --no-save --no-audit --no-fund "@rollup/rollup-linux-x64-gnu@$(node -p "require('rollup/package.json').version")"
           BASE_PATH="${BASE}admin/" npm run build
 
       - name: Assemble site
