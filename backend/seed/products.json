@@ -1,0 +1,342 @@
+[
+  {
+    "name": "Red Rose & Pink Carnation Bouquet",
+    "description": "Deep red roses and soft pink carnations with sprigs of gypsophila, wrapped in rich crimson paper. A bold, romantic arrangement for anniversaries and Valentine's Day.",
+    "price": 2400,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": true,
+    "image": "red-rose-pink-carnation-bouquet.jpg"
+  },
+  {
+    "name": "Pink Chrysanthemum Bouquet",
+    "description": "Dusky pink chrysanthemums with dark centres, filled out with clouds of gypsophila and wrapped in peach paper. A soft, cheerful gift for any day.",
+    "price": 1300,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["S", "M"],
+    "bestseller": false,
+    "image": "pink-chrysanthemum-bouquet.jpg"
+  },
+  {
+    "name": "Single Pink Lily",
+    "description": "One pink stargazer lily framed with gypsophila and wrapped in white paper. A simple, elegant way to say thank you.",
+    "price": 650,
+    "category": "Gift-Type",
+    "subCategory": "Single-Flower",
+    "sizes": ["One size"],
+    "bestseller": false,
+    "image": "single-pink-lily.jpg"
+  },
+  {
+    "name": "Hot Pink Rose & Carnation Bouquet",
+    "description": "Three hot pink roses with light pink spray carnations, purple statice and eucalyptus, wrapped in blush pink paper.",
+    "price": 1900,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M"],
+    "bestseller": false,
+    "image": "hot-pink-rose-carnation-bouquet.jpg"
+  },
+  {
+    "name": "Pink Gerbera Trio",
+    "description": "Three salmon-pink gerberas with gypsophila, wrapped in pink paper and newsprint and finished with a pink ribbon.",
+    "price": 900,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["S"],
+    "bestseller": false,
+    "image": "pink-gerbera-trio.jpg"
+  },
+  {
+    "name": "Pink Rose Trio",
+    "description": "Three pink roses surrounded by gypsophila in lilac-pink wrapping, tied with natural twine.",
+    "price": 1000,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["S"],
+    "bestseller": false,
+    "image": "pink-rose-trio.jpg"
+  },
+  {
+    "name": "Pink Gerbera & Lily Bouquet",
+    "description": "Two pink gerberas, pink lilies in bloom and bud, and a blush garden rose with gypsophila, presented in frosted white wrapping.",
+    "price": 1600,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["S", "M"],
+    "bestseller": false,
+    "image": "pink-gerbera-lily-bouquet.jpg"
+  },
+  {
+    "name": "Mint Meadow Mixed Bouquet",
+    "description": "A vibrant mix of orange gerberas, pink and purple daisy chrysanthemums, green and yellow button chrysanthemums, white and red roses, solidago and eucalyptus in mint green wrapping.",
+    "price": 3400,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["L"],
+    "bestseller": true,
+    "image": "mint-meadow-mixed-bouquet.jpg"
+  },
+  {
+    "name": "Pink Lily & Gerbera Bouquet",
+    "description": "Pink lilies and a white lily with pink gerberas and pink and white chrysanthemums, arranged in peach wrapping.",
+    "price": 2800,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "pink-lily-gerbera-bouquet.jpg"
+  },
+  {
+    "name": "Single Sunflower",
+    "description": "One bright sunflower nestled in gypsophila, wrapped in brown kraft paper with a printed satin ribbon.",
+    "price": 700,
+    "category": "Gift-Type",
+    "subCategory": "Single-Flower",
+    "sizes": ["One size"],
+    "bestseller": false,
+    "image": "single-sunflower.jpg"
+  },
+  {
+    "name": "Yellow Tulip Bouquet",
+    "description": "A bunch of fresh yellow tulips in butter-yellow and white wrapping, tied with a white organza ribbon.",
+    "price": 2000,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M"],
+    "bestseller": false,
+    "image": "yellow-tulip-bouquet.jpg"
+  },
+  {
+    "name": "Lavender Gerbera & Rose Bouquet",
+    "description": "Pink gerberas and lavender roses with purple button chrysanthemums, white and pink daisy chrysanthemums and deep purple carnations in layered lilac wrapping.",
+    "price": 3000,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["L"],
+    "bestseller": false,
+    "image": "lavender-gerbera-rose-bouquet.jpg"
+  },
+  {
+    "name": "Yellow Rose Bouquet",
+    "description": "Fifteen yellow roses with gypsophila and fresh greenery, wrapped in cream paper and tied with a yellow satin ribbon.",
+    "price": 3300,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": true,
+    "image": "yellow-rose-bouquet.jpg"
+  },
+  {
+    "name": "Pink Tulip Bouquet",
+    "description": "Pink tulips with a few white tulips and gypsophila in soft pink wrapping, finished with a pink satin ribbon.",
+    "price": 2400,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M"],
+    "bestseller": false,
+    "image": "pink-tulip-bouquet.jpg"
+  },
+  {
+    "name": "Blue Rose Bouquet",
+    "description": "Three blue-dyed roses surrounded by gypsophila and wrapped in pale blue paper. A striking, unusual gift.",
+    "price": 1500,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["S"],
+    "bestseller": false,
+    "image": "blue-rose-bouquet.jpg"
+  },
+  {
+    "name": "Sunflower Sunshine Bouquet",
+    "description": "Five sunflowers with white roses, gypsophila, solidago and eucalyptus in cream wrapping, finished with a gold ribbon, charms and a \"You are my sunshine\" card.",
+    "price": 3600,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["L"],
+    "bestseller": true,
+    "image": "sunflower-sunshine-bouquet.jpg"
+  },
+  {
+    "name": "Red & Pink Rose Bouquet",
+    "description": "Red and pink roses with generous gypsophila in peach wrapping, a classic mix for birthdays and anniversaries.",
+    "price": 2000,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M"],
+    "bestseller": false,
+    "image": "red-pink-rose-bouquet.jpg"
+  },
+  {
+    "name": "Sunflower & Lily Mixed Bouquet",
+    "description": "Sunflowers, white and pink lilies, pink and yellow carnations and purple chrysanthemums with gypsophila, in white polka-dot wrapping.",
+    "price": 2500,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "sunflower-lily-mixed-bouquet.jpg"
+  },
+  {
+    "name": "Pink & White Rose Bouquet",
+    "description": "Pink and white roses with gypsophila in soft pink tissue wrapping.",
+    "price": 2100,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M"],
+    "bestseller": false,
+    "image": "pink-white-rose-bouquet.jpg"
+  },
+  {
+    "name": "White Lily Bouquet",
+    "description": "White oriental lilies in full bloom and bud, wrapped in kraft paper and newsprint and tied with a polka-dot ribbon.",
+    "price": 2300,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M"],
+    "bestseller": false,
+    "image": "white-lily-bouquet.jpg"
+  },
+  {
+    "name": "Grand Mixed Celebration Bouquet",
+    "description": "A full, round bouquet of red and pink roses, pink lisianthus, yellow and magenta chrysanthemums, hypericum berries and gypsophila in white wrapping.",
+    "price": 3800,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["L"],
+    "bestseller": true,
+    "image": "grand-mixed-celebration-bouquet.jpg"
+  },
+  {
+    "name": "Pink Rose Bouquet",
+    "description": "Two-tone pink roses with gypsophila, wrapped in white paper.",
+    "price": 1900,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M"],
+    "bestseller": false,
+    "image": "pink-rose-bouquet.jpg"
+  },
+  {
+    "name": "Sunflower & Gerbera Grand Bouquet",
+    "description": "A large, joyful bouquet of sunflowers, white, peach and pink gerberas, hot pink roses and daisies with gypsophila in pink wrapping.",
+    "price": 4200,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["L"],
+    "bestseller": true,
+    "image": "sunflower-gerbera-grand-bouquet.jpg"
+  },
+  {
+    "name": "Lavender Dreams Bouquet",
+    "description": "Purple and lilac roses with white roses, lilac stock, lisianthus buds and gypsophila, wrapped in kraft paper and tied with a lavender ribbon.",
+    "price": 3200,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "lavender-dreams-bouquet.jpg"
+  },
+  {
+    "name": "Red & White Rose Bouquet",
+    "description": "Classic red and white roses generously filled with gypsophila and wrapped in natural kraft paper.",
+    "price": 2500,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["S", "M", "L"],
+    "bestseller": false,
+    "image": "red-white-rose-bouquet.jpg"
+  },
+  {
+    "name": "Sunshine Gerbera Bouquet",
+    "description": "Yellow, pink, lilac and cream gerberas with orange spray roses, daisies and solidago in kraft wrapping, finished with a pink ribbon.",
+    "price": 1800,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["S", "M"],
+    "bestseller": false,
+    "image": "sunshine-gerbera-bouquet.jpg"
+  },
+  {
+    "name": "Lily & Red Rose Bouquet",
+    "description": "White oriental lilies and red roses with gypsophila in white wrapping, tied with a champagne satin ribbon.",
+    "price": 2800,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "lily-red-rose-bouquet.jpg"
+  },
+  {
+    "name": "White Rose & Blue Gypsophila",
+    "description": "White roses paired with blue-tinted gypsophila in soft white tissue wrapping.",
+    "price": 2200,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "white-rose-blue-gypsophila.jpg"
+  },
+  {
+    "name": "Pink Lily Romance",
+    "description": "Pink stargazer lilies and pink roses with gypsophila in blush wrapping with a pink satin bow.",
+    "price": 2900,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "pink-lily-romance.jpg"
+  },
+  {
+    "name": "Pastel Garden Bouquet",
+    "description": "Peach roses, white gerberas, pink lisianthus, a pink lily, statice and eucalyptus in white wrapping with a champagne ribbon.",
+    "price": 2600,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "pastel-garden-bouquet.jpg"
+  },
+  {
+    "name": "Gerbera Celebration Bouquet",
+    "description": "Red, pink and yellow gerberas with white daisy chrysanthemums, a peach rose and gypsophila in pink wrapping.",
+    "price": 1900,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["S", "M"],
+    "bestseller": false,
+    "image": "gerbera-celebration-bouquet.jpg"
+  },
+  {
+    "name": "Classic Red Rose Bouquet",
+    "description": "Eleven velvet red roses with gypsophila and eucalyptus in kraft and sheer wrapping, tied with a burgundy ribbon and a \"for you\" card.",
+    "price": 3500,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": true,
+    "image": "classic-red-rose-bouquet.jpg"
+  },
+  {
+    "name": "Blush Pastel Bouquet",
+    "description": "Pink and white gerberas, pink chrysanthemums, peach and lilac roses, white daisies and purple statice in blush pink wrapping.",
+    "price": 2700,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "blush-pastel-bouquet.jpg"
+  },
+  {
+    "name": "White Lily & Pink Rose Bouquet",
+    "description": "White lilies with pink and white spray roses and gypsophila in blush pink wrapping, finished with a cream satin ribbon.",
+    "price": 2700,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["M", "L"],
+    "bestseller": false,
+    "image": "white-lily-pink-rose-bouquet.jpg"
+  }
+]

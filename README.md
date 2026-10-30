@@ -9,7 +9,7 @@ Florazon is a full-stack e-commerce platform for ordering fresh flowers online, 
 ![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_8-47A248?logo=mongodb&logoColor=white)
 
-![Florazon storefront collection](docs/screenshots/storefront-collection.jpg)
+![Florazon home page](docs/screenshots/storefront-home.jpg)
 
 ## Overview
 
@@ -46,34 +46,67 @@ The repository contains three independent applications:
 
 ## Screenshots
 
-The screenshots use the sample catalogue below.
-
-| Product | Description | Category | Sizes | Price (BDT) |
-| --- | --- | --- | --- | --- |
-| Lavender Dreams Bouquet | Purple, lilac and white roses with lilac stock, lisianthus buds and gypsophila in kraft paper with a lavender ribbon | Occasion | M, L | 3,200 |
-| Red & White Rose Bouquet | Red and white roses filled with gypsophila in natural kraft paper | Occasion | S, M, L | 2,500 |
-| Sunshine Gerbera Bouquet | Yellow, pink, lilac and cream gerberas with orange spray roses, daisies and solidago, finished with a pink ribbon | Gift-Type | S, M | 1,800 |
-| Lily & Red Rose Bouquet | White oriental lilies and red roses with gypsophila in a white wrap with a champagne satin ribbon | Occasion | M, L | 2,800 |
-| White Rose & Blue Gypsophila | White roses with blue-tinted gypsophila in white tissue wrapping | Gift-Type | M, L | 2,200 |
-| Pink Lily Romance | Pink stargazer lilies and pink roses with gypsophila in a blush wrap with a pink satin bow | Occasion | M, L | 2,900 |
-| Pastel Garden Bouquet | Peach roses, white gerberas, pink lisianthus, a pink lily, statice and eucalyptus in a white wrap | Gift-Type | M, L | 2,600 |
-| Gerbera Celebration Bouquet | Red, pink and yellow gerberas with white daisies, a peach rose and gypsophila in a pink wrap | Occasion | S, M | 1,900 |
-
-| Product details | Shopping cart |
+| Collection with filters | Product details |
 | --- | --- |
-| ![Product page](docs/screenshots/storefront-product.jpg) | ![Cart page](docs/screenshots/storefront-cart.jpg) |
+| ![Collection page](docs/screenshots/storefront-collection.jpg) | ![Product page](docs/screenshots/storefront-product.jpg) |
 
-| Order history | Mobile view |
+| Shopping cart | Order history |
 | --- | --- |
-| ![Orders page](docs/screenshots/storefront-orders.jpg) | <img src="docs/screenshots/storefront-mobile.jpg" alt="Mobile collection page" width="300"> |
+| ![Cart page](docs/screenshots/storefront-cart.jpg) | ![Orders page](docs/screenshots/storefront-orders.jpg) |
 
 | Admin: product list | Admin: order management |
 | --- | --- |
 | ![Admin product list](docs/screenshots/admin-products.jpg) | ![Admin orders](docs/screenshots/admin-order-management.jpg) |
 
-| Admin: add product |
-| --- |
-| ![Admin add product](docs/screenshots/admin-add-product.jpg) |
+| Admin: add product | Mobile view |
+| --- | --- |
+| ![Admin add product](docs/screenshots/admin-add-product.jpg) | <img src="docs/screenshots/storefront-mobile.jpg" alt="Mobile collection page" width="300"> |
+
+## Product Catalogue
+
+The store includes a catalogue of 34 bouquets photographed by the owner. Product data is stored in `backend/seed/products.json` and the web-optimised photos in `backend/seed/images/`. See [Load the product catalogue](#5-load-the-product-catalogue) to import them.
+
+<details>
+<summary>View all 34 products</summary>
+
+| Product | Description | Category | Type | Sizes | Price (BDT) |
+| --- | --- | --- | --- | --- | --- |
+| Red Rose & Pink Carnation Bouquet | Deep red roses and soft pink carnations with sprigs of gypsophila, wrapped in rich crimson paper. A bold, romantic arrangement for anniversaries and Valentine's Day. | Occasion | Bouquet | M, L | 2,400 |
+| Pink Chrysanthemum Bouquet | Dusky pink chrysanthemums with dark centres, filled out with clouds of gypsophila and wrapped in peach paper. A soft, cheerful gift for any day. | Gift-Type | Bouquet | S, M | 1,300 |
+| Single Pink Lily | One pink stargazer lily framed with gypsophila and wrapped in white paper. A simple, elegant way to say thank you. | Gift-Type | Single-Flower | One size | 650 |
+| Hot Pink Rose & Carnation Bouquet | Three hot pink roses with light pink spray carnations, purple statice and eucalyptus, wrapped in blush pink paper. | Occasion | Bouquet | M | 1,900 |
+| Pink Gerbera Trio | Three salmon-pink gerberas with gypsophila, wrapped in pink paper and newsprint and finished with a pink ribbon. | Gift-Type | Bouquet | S | 900 |
+| Pink Rose Trio | Three pink roses surrounded by gypsophila in lilac-pink wrapping, tied with natural twine. | Gift-Type | Bouquet | S | 1,000 |
+| Pink Gerbera & Lily Bouquet | Two pink gerberas, pink lilies in bloom and bud, and a blush garden rose with gypsophila, presented in frosted white wrapping. | Gift-Type | Bouquet | S, M | 1,600 |
+| Mint Meadow Mixed Bouquet | A vibrant mix of orange gerberas, pink and purple daisy chrysanthemums, green and yellow button chrysanthemums, white and red roses, solidago and eucalyptus in mint green wrapping. | Occasion | Bouquet | L | 3,400 |
+| Pink Lily & Gerbera Bouquet | Pink lilies and a white lily with pink gerberas and pink and white chrysanthemums, arranged in peach wrapping. | Occasion | Bouquet | M, L | 2,800 |
+| Single Sunflower | One bright sunflower nestled in gypsophila, wrapped in brown kraft paper with a printed satin ribbon. | Gift-Type | Single-Flower | One size | 700 |
+| Yellow Tulip Bouquet | A bunch of fresh yellow tulips in butter-yellow and white wrapping, tied with a white organza ribbon. | Gift-Type | Bouquet | M | 2,000 |
+| Lavender Gerbera & Rose Bouquet | Pink gerberas and lavender roses with purple button chrysanthemums, white and pink daisy chrysanthemums and deep purple carnations in layered lilac wrapping. | Occasion | Bouquet | L | 3,000 |
+| Yellow Rose Bouquet | Fifteen yellow roses with gypsophila and fresh greenery, wrapped in cream paper and tied with a yellow satin ribbon. | Occasion | Bouquet | M, L | 3,300 |
+| Pink Tulip Bouquet | Pink tulips with a few white tulips and gypsophila in soft pink wrapping, finished with a pink satin ribbon. | Gift-Type | Bouquet | M | 2,400 |
+| Blue Rose Bouquet | Three blue-dyed roses surrounded by gypsophila and wrapped in pale blue paper. A striking, unusual gift. | Gift-Type | Bouquet | S | 1,500 |
+| Sunflower Sunshine Bouquet | Five sunflowers with white roses, gypsophila, solidago and eucalyptus in cream wrapping, finished with a gold ribbon, charms and a "You are my sunshine" card. | Gift-Type | Bouquet | L | 3,600 |
+| Red & Pink Rose Bouquet | Red and pink roses with generous gypsophila in peach wrapping, a classic mix for birthdays and anniversaries. | Occasion | Bouquet | M | 2,000 |
+| Sunflower & Lily Mixed Bouquet | Sunflowers, white and pink lilies, pink and yellow carnations and purple chrysanthemums with gypsophila, in white polka-dot wrapping. | Occasion | Bouquet | M, L | 2,500 |
+| Pink & White Rose Bouquet | Pink and white roses with gypsophila in soft pink tissue wrapping. | Occasion | Bouquet | M | 2,100 |
+| White Lily Bouquet | White oriental lilies in full bloom and bud, wrapped in kraft paper and newsprint and tied with a polka-dot ribbon. | Gift-Type | Bouquet | M | 2,300 |
+| Grand Mixed Celebration Bouquet | A full, round bouquet of red and pink roses, pink lisianthus, yellow and magenta chrysanthemums, hypericum berries and gypsophila in white wrapping. | Occasion | Bouquet | L | 3,800 |
+| Pink Rose Bouquet | Two-tone pink roses with gypsophila, wrapped in white paper. | Gift-Type | Bouquet | M | 1,900 |
+| Sunflower & Gerbera Grand Bouquet | A large, joyful bouquet of sunflowers, white, peach and pink gerberas, hot pink roses and daisies with gypsophila in pink wrapping. | Occasion | Bouquet | L | 4,200 |
+| Lavender Dreams Bouquet | Purple and lilac roses with white roses, lilac stock, lisianthus buds and gypsophila, wrapped in kraft paper and tied with a lavender ribbon. | Occasion | Bouquet | M, L | 3,200 |
+| Red & White Rose Bouquet | Classic red and white roses generously filled with gypsophila and wrapped in natural kraft paper. | Occasion | Bouquet | S, M, L | 2,500 |
+| Sunshine Gerbera Bouquet | Yellow, pink, lilac and cream gerberas with orange spray roses, daisies and solidago in kraft wrapping, finished with a pink ribbon. | Gift-Type | Bouquet | S, M | 1,800 |
+| Lily & Red Rose Bouquet | White oriental lilies and red roses with gypsophila in white wrapping, tied with a champagne satin ribbon. | Occasion | Bouquet | M, L | 2,800 |
+| White Rose & Blue Gypsophila | White roses paired with blue-tinted gypsophila in soft white tissue wrapping. | Gift-Type | Bouquet | M, L | 2,200 |
+| Pink Lily Romance | Pink stargazer lilies and pink roses with gypsophila in blush wrapping with a pink satin bow. | Occasion | Bouquet | M, L | 2,900 |
+| Pastel Garden Bouquet | Peach roses, white gerberas, pink lisianthus, a pink lily, statice and eucalyptus in white wrapping with a champagne ribbon. | Gift-Type | Bouquet | M, L | 2,600 |
+| Gerbera Celebration Bouquet | Red, pink and yellow gerberas with white daisy chrysanthemums, a peach rose and gypsophila in pink wrapping. | Occasion | Bouquet | S, M | 1,900 |
+| Classic Red Rose Bouquet | Eleven velvet red roses with gypsophila and eucalyptus in kraft and sheer wrapping, tied with a burgundy ribbon and a "for you" card. | Occasion | Bouquet | M, L | 3,500 |
+| Blush Pastel Bouquet | Pink and white gerberas, pink chrysanthemums, peach and lilac roses, white daisies and purple statice in blush pink wrapping. | Gift-Type | Bouquet | M, L | 2,700 |
+| White Lily & Pink Rose Bouquet | White lilies with pink and white spray roses and gypsophila in blush pink wrapping, finished with a cream satin ribbon. | Gift-Type | Bouquet | M, L | 2,700 |
+
+</details>
 
 ## Technology Stack
 
@@ -167,12 +200,24 @@ cd admin
 npm run dev
 ```
 
+### 5. Load the product catalogue
+
+With `backend/.env` configured, import the catalogue into MongoDB. Each photo is uploaded to Cloudinary.
+
+```bash
+cd backend
+npm run seed
+```
+
+The script adds products that are not in the database yet and never deletes anything. Run `npm run seed -- --update` to refresh existing products with the catalogue data. Each run ends with a report of duplicate products, products that are not in the catalogue, and products without an image.
+
 ### Available Scripts
 
 | Location | Command | Description |
 | --- | --- | --- |
 | `backend` | `npm start` | Start the API with Node.js |
 | `backend` | `npm run server` | Start the API with Nodemon (reloads on changes) |
+| `backend` | `npm run seed` | Import the product catalogue into MongoDB and Cloudinary |
 | `frontend`, `admin` | `npm run dev` | Start the Vite development server |
 | `frontend`, `admin` | `npm run build` | Create a production build in `dist/` |
 | `frontend`, `admin` | `npm run preview` | Serve the production build locally |
@@ -180,7 +225,7 @@ npm run dev
 
 ## Usage
 
-1. **Add products:** open the admin panel at http://localhost:5175, sign in with `ADMIN_EMAIL` and `ADMIN_PASSWORD`, and use **Add Items** to upload images and product details.
+1. **Add products:** load the catalogue with `npm run seed`, or open the admin panel at http://localhost:5175, sign in with `ADMIN_EMAIL` and `ADMIN_PASSWORD`, and use **Add Items** to upload images and product details.
 2. **Browse and shop:** open the storefront at http://localhost:5173, browse or search the collection, select a size and add items to the cart.
 3. **Check out:** create an account or log in, go to checkout, enter delivery details and place a Cash on Delivery order.
 4. **Fulfil orders:** in the admin panel, open **Orders** and update the order status. The customer sees the change under **My Orders**.
@@ -233,6 +278,7 @@ Florazon/
 │   ├── middleware/          Customer and admin authentication, file uploads
 │   ├── models/              Mongoose schemas
 │   ├── routes/              Route definitions
+│   ├── seed/                Product catalogue data, optimised photos and import script
 │   └── server.js            Application entry point
 ├── frontend/                Customer storefront (React + Vite)
 │   └── src/
