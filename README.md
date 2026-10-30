@@ -11,7 +11,6 @@ Florazon is a full-stack e-commerce platform for ordering fresh flowers online, 
 
 ![Florazon home page](docs/screenshots/home.jpg)
 
-
 ## Overview
 
 Florazon lets customers browse a catalogue of bouquets, single flowers, garlands and baskets, manage a cart that is saved to their account, and place Cash on Delivery orders. Store administrators use a dedicated panel to publish products, with images hosted on Cloudinary, and to move orders through each stage of delivery.
@@ -174,6 +173,34 @@ npm run dev
 2. **Browse and shop:** open the storefront at http://localhost:5173, browse or search the collection, select a size and add items to the cart.
 3. **Check out:** create an account or log in, go to checkout, enter delivery details and place a Cash on Delivery order.
 4. **Fulfil orders:** in the admin panel, open **Orders** and update the order status. The customer sees the change under **My Orders**.
+
+## Deployment
+
+### Storefront and admin panel (GitHub Pages)
+
+The workflow in `.github/workflows/deploy-pages.yml` builds both React applications and publishes them to GitHub Pages. It runs on every push to `main` that changes `frontend/` or `admin/`, and it can also be started manually from the **Actions** tab.
+
+| Application | URL |
+| --- | --- |
+| Storefront | https://azmarisultana.github.io/Florazon/ |
+| Admin panel | https://azmarisultana.github.io/Florazon/admin/ |
+
+One-time setup:
+
+1. In **Settings > Pages**, set **Source** to **GitHub Actions**.
+2. In **Settings > Secrets and variables > Actions > Variables**, add a repository variable named `VITE_BACKEND_URL` set to the URL of the deployed API.
+3. Re-run the workflow so the new variable is included in the build.
+
+### API (Node.js hosting)
+
+GitHub Pages only serves static files, so the Express API must be hosted separately. You can use any Node.js host, such as Render, Railway or Fly.io. Configure it as follows:
+
+- **Root directory:** `backend`
+- **Build command:** `npm install`
+- **Start command:** `npm start`
+- **Environment variables:** the variables listed under [Configure environment variables](#3-configure-environment-variables)
+
+In MongoDB Atlas, allow connections from the host under **Network Access**. Once the API is running, set its URL as `VITE_BACKEND_URL` as described above.
 
 ## API Reference
 

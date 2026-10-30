@@ -1,0 +1,73 @@
+name: Deploy to GitHub Pages
+
+# Builds the storefront (served at /<repo>/) and the admin panel (served at /<repo>/admin/)
+# and publishes them to GitHub Pages. The Express API cannot run on Pages; set the
+# repository variable VITE_BACKEND_URL to the URL of the deployed backend.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/**'
+      - 'admin/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BASE: /${{ github.event.repository.name }}/
+      VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Build storefront
+        working-directory: frontend
+        run: |
+          npm install --no-audit --no-fund
+          BASE_PATH="$BASE" npm run build
+
+      - name: Build admin panel
+        working-directory: admin
+        run: |
+          npm install --no-audit --no-fund
+          BASE_PATH="${BASE}admin/" npm run build
+
+      - name: Assemble site
+        run: |
+          cp -r admin/dist frontend/dist/admin
+          # Pages has no server-side routing: serve the storefront for unknown paths so
+          # client-side routes survive a refresh, and send admin deep links to the admin app.
+          sed "s#<head>#<head><script>if(location.pathname.indexOf('${BASE}admin/')===0)location.replace('${BASE}admin/')</script>#" \
+            frontend/dist/index.html > frontend/dist/404.html
+          touch frontend/dist/.nojekyll
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: frontend/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

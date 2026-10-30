@@ -113,6 +113,11 @@ const ShopContextProvider = (props) => {
 
     useEffect(() => {
         const getProductsData = async () => {
+            if (!backendUrl) {
+                console.error('VITE_BACKEND_URL is not set, so products cannot be loaded.')
+                toast.error('The store is currently unavailable. Please try again later.', { toastId: 'no-backend' })
+                return
+            }
             try {
                 const response = await axios.get(backendUrl + '/api/product/list')
                 if (response.data.success) {
