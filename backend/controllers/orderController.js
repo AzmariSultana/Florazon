@@ -2,9 +2,8 @@ import mongoose from "mongoose";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js"
 import productModel from "../models/productModel.js";
+import { DELIVERY_FEE, ORDER_STATUSES } from "../config/constants.js";
 
-const DELIVERY_FEE = 60;
-const ORDER_STATUSES = ["Order Placed", "Packing", "Shipped", "Out for delivery", "Delivered"];
 
 // Placing orders using COD Method
 

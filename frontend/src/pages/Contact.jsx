@@ -2,28 +2,33 @@ import React from 'react'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
 import NewsletterBox from '../components/NewsletterBox'
+import { STORE } from '../constants'
+import useDocumentTitle from '../utils/useDocumentTitle'
 
 const Contact = () => {
+  useDocumentTitle('Contact')
   return (
     <div>
       <div className='text-center text-2xl pt-10 border-t'>
-        <Title text1={'CONTACT'} text2={'US'} />
-
+        <Title as='h1' text1={'CONTACT'} text2={'US'} />
       </div>
       <div className='my-10 flex flex-col justify-center md:flex-row gap-10 mb-28'>
-        <img className='w-full md:max-w-[480px]' src={assets.contact_img} alt="Florazon store" />
+        <img className='w-full md:max-w-[480px]' src={assets.contact_img} alt="Florazon store" width={960} height={985} loading='lazy' />
         <div className='flex flex-col justify-center items-start gap-6'>
-          <p className='font-semibold text-xl text-gray-600'>Our Store</p>
-          <p className='text-gray-500'>Merul Badda <br/> Dhaka 1949, Bangladesh</p>
-          <p className='text-gray-500'>Tel: +880 1715 297864 <br/> Email: azmari.sultana47@gmail.com</p>
-          <p className='font-semibold text-xl text-gray-600'>Careers at Florazon</p>
+          <h2 className='font-semibold text-xl text-gray-600'>Our Store</h2>
+          <address className='not-italic text-gray-500 leading-relaxed'>
+            {STORE.address.map((line) => <span key={line} className='block'>{line}</span>)}
+          </address>
+          <p className='text-gray-500 leading-relaxed'>
+            Tel: <a href={STORE.phoneHref} className='transition-colors hover:text-black'>{STORE.phone}</a><br />
+            Email: <a href={`mailto:${STORE.email}`} className='break-all transition-colors hover:text-black'>{STORE.email}</a>
+          </p>
+          <h2 className='font-semibold text-xl text-gray-600'>Careers at Florazon</h2>
           <p className='text-gray-500'>Learn more about our teams and job openings.</p>
-          <button className='border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500'>Explore Jobs</button>
-      
+          <a href={`mailto:${STORE.email}?subject=Careers%20at%20Florazon`} className='btn-outline px-8 py-4'>Explore Jobs</a>
         </div>
-
       </div>
-      <NewsletterBox/>
+      <NewsletterBox />
     </div>
   )
 }

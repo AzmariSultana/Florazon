@@ -8,13 +8,13 @@ export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
 
-    const currency = '৳';
-    const delivery_fee = 60;
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState({});
     const [products, setProducts] = useState([]);
+    // 'loading' until the catalogue arrives, then 'ready' or 'error'
+    const [productsStatus, setProductsStatus] = useState('loading');
     const [token, setToken] = useState(() => localStorage.getItem('token') || '')
     const navigate = useNavigate();
 
@@ -115,19 +115,22 @@ const ShopContextProvider = (props) => {
         const getProductsData = async () => {
             if (!backendUrl) {
                 console.error('VITE_BACKEND_URL is not set, so products cannot be loaded.')
-                toast.error('The store is currently unavailable. Please try again later.', { toastId: 'no-backend' })
+                setProductsStatus('error')
                 return
             }
             try {
                 const response = await axios.get(backendUrl + '/api/product/list')
                 if (response.data.success) {
                     setProducts(response.data.products)
+                    setProductsStatus('ready')
                 } else {
+                    setProductsStatus('error')
                     toast.error(response.data.message)
                 }
             } catch (error) {
                 console.log(error)
-                toast.error(error.message)
+                // Pages show an inline message with a retry button for this state
+                setProductsStatus('error')
             }
         }
         getProductsData()
@@ -178,7 +181,7 @@ const ShopContextProvider = (props) => {
     }, [token, backendUrl])
 
     const value = {
-        products, currency, delivery_fee, search, setSearch, showSearch, setShowSearch, cartItems, addToCart, setCartItems, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, setToken, token, logout, handleApiError
+        products, productsStatus, search, setSearch, showSearch, setShowSearch, cartItems, addToCart, setCartItems, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, setToken, token, logout, handleApiError
     }
     return (
         <ShopContext.Provider value={value}>

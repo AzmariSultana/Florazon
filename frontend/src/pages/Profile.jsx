@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ShopContext } from "../context/ShopContext";
+import useDocumentTitle from "../utils/useDocumentTitle";
 
-export default function ProfilePage() {
+export default function Profile() {
   const { backendUrl, token, logout, navigate } = useContext(ShopContext);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -13,6 +14,7 @@ export default function ProfilePage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
+  useDocumentTitle("My Profile");
 
   // axios instance
   const api = useMemo(() => axios.create({
@@ -116,112 +118,114 @@ export default function ProfilePage() {
 
   if (!token) {
     return (
-      <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800">
-        <div className="inline-flex items-center gap-2 mb-2 mt-10">
-          <p className="prata-regular text-3xl">Profile</p>
+      <div className="card flex flex-col items-center w-full max-w-md m-auto mt-10 sm:mt-16 gap-4 p-6 sm:p-10 text-gray-800">
+        <div className="inline-flex items-center gap-2 mb-1">
+          <h1 className="prata-regular text-3xl">Profile</h1>
           <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
         </div>
-        <div className="w-full px-3 py-2 border border-gray-800">
-          <p className="text-sm">You need to <Link to="/login" className="underline">log in</Link> to view this page.</p>
+        <div className="panel w-full px-4 py-3">
+          <p className="text-sm">You need to <Link to="/login" state={{ from: "/user-profile" }} className="underline">log in</Link> to view this page.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-6 text-gray-800">
+    <div className="card flex flex-col items-center w-full max-w-md m-auto mt-10 sm:mt-16 gap-6 p-6 sm:p-10 text-gray-800 animate-fade-up">
       {/* Title */}
-      <div className="inline-flex items-center gap-2 mb-2 mt-10">
-        <p className="prata-regular text-3xl">Profile</p>
+      <div className="inline-flex items-center gap-2">
+        <h1 className="prata-regular text-3xl">Profile</h1>
         <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
       </div>
 
       {/* Message */}
       {message && (
-        <div role="status" className={`w-full px-3 py-2 border ${message.type === "success" ? "border-green-700" : "border-red-700"}`}>
+        <div role="status" className={`w-full rounded-md px-4 py-3 border ${message.type === "success" ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}`}>
           <p className={`text-sm ${message.type === "success" ? "text-green-700" : "text-red-700"}`}>{message.text}</p>
         </div>
       )}
 
       {/* Account Form */}
       <form onSubmit={onSave} className="flex flex-col items-center w-full gap-4">
+        <p className="eyebrow self-start">Account details</p>
         <div className="w-full">
-          <label htmlFor="profile-name" className="block text-sm mb-1">Name</label>
+          <label htmlFor="profile-name" className="block text-sm font-medium text-gray-700 mb-1.5">Name</label>
           <input
             id="profile-name"
             type="text"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-800"
+            className="field"
             placeholder="Your name"
             autoComplete="name"
             required
           />
         </div>
         <div className="w-full">
-          <label htmlFor="profile-email" className="block text-sm mb-1">Email</label>
+          <label htmlFor="profile-email" className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
           <input
             id="profile-email"
             type="email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-800"
+            className="field"
             placeholder="you@example.com"
             autoComplete="email"
             required
           />
         </div>
-        <button type="submit" disabled={saving || loading} className="bg-black text-white font-light px-8 py-2 mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
+        <button type="submit" disabled={saving || loading} className="btn-primary w-full mt-1">
           {saving ? "Saving..." : "Save changes"}
         </button>
         {loading && <p className="text-xs opacity-70 mt-[-4px]">Loading profile...</p>}
       </form>
 
       {/* Divider */}
-      <div className="w-full h-px bg-gray-800" />
+      <div className="w-full h-px bg-line" />
 
       {/* Change Password */}
       <form onSubmit={onChangePassword} className="flex flex-col items-center w-full gap-4">
+        <p className="eyebrow self-start">Change password</p>
         <div className="w-full">
-          <label htmlFor="current-password" className="block text-sm mb-1">Current Password</label>
+          <label htmlFor="current-password" className="block text-sm font-medium text-gray-700 mb-1.5">Current Password</label>
           <input
             id="current-password"
             type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-800"
+            className="field"
             placeholder="Your current password"
             autoComplete="current-password"
             required
           />
         </div>
         <div className="w-full">
-          <label htmlFor="new-password" className="block text-sm mb-1">New Password</label>
+          <label htmlFor="new-password" className="block text-sm font-medium text-gray-700 mb-1.5">New Password</label>
           <input
             id="new-password"
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-800"
+            className="field"
             placeholder="Minimum 8 characters"
             autoComplete="new-password"
             required
           />
         </div>
         <div className="w-full">
-          <label htmlFor="confirm-password" className="block text-sm mb-1">Confirm New Password</label>
+          <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1.5">Confirm New Password</label>
           <input
             id="confirm-password"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-800"
+            className="field"
             placeholder="Re-enter new password"
             autoComplete="new-password"
             required
           />
         </div>
-        <button type="submit" disabled={changingPw} className="bg-black text-white font-light px-8 py-2 mt-2 disabled:opacity-60 disabled:cursor-not-allowed">
+        <button type="submit" disabled={changingPw} className="btn-primary w-full mt-1">
           {changingPw ? "Updating..." : "Update password"}
         </button>
       </form>

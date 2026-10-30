@@ -4,25 +4,142 @@
 @tailwind components;
 @tailwind utilities;
 
-a.active hr{
-   display: block; 
-}
-*{
-   font-family: Outfit;
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans text-ink bg-canvas;
+  }
+
+  ::selection {
+    @apply bg-brand-soft text-ink;
+  }
+
+  /* Visible focus for keyboard users only */
+  :focus-visible {
+    outline: 2px solid theme('colors.brand.DEFAULT');
+    outline-offset: 2px;
+  }
+
+  /* Slim scrollbar instead of hiding it, so long pages stay navigable */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #d6d1cc transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d6d1cc;
+    border-radius: 999px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-.prata-regular {
-  font-family: "Prata", serif;
-  font-weight: 400;
-  font-style: normal;
+@layer components {
+  .prata-regular {
+    @apply font-display font-normal;
+  }
+
+  /* Small uppercase label above headings and inside panels */
+  .eyebrow {
+    @apply text-[11px] font-medium tracking-[0.18em] uppercase text-gray-500;
+  }
+
+  /* Primary call-to-action: the brand's black button, with a gentle press response */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-ink text-white text-sm tracking-wide px-8 py-3
+      transition-all duration-200 hover:bg-black hover:shadow-lift active:scale-[0.98]
+      disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:active:scale-100;
+  }
+
+  /* Secondary, outlined action */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-ink text-sm tracking-wide px-8 py-3
+      transition-all duration-200 hover:bg-ink hover:text-white active:scale-[0.98];
+  }
+
+  /* Quiet text-style action */
+  .btn-link {
+    @apply text-sm text-gray-600 underline-offset-4 transition-colors hover:text-ink hover:underline;
+  }
+
+  /* White surface with a fine border and soft depth */
+  .card {
+    @apply bg-white border border-line rounded-lg shadow-soft;
+  }
+
+  /* Translucent white surface that lets the warm page tone through: summaries, grouped content */
+  .panel {
+    @apply bg-white/60 border border-line rounded-lg;
+  }
+
+  /* Text inputs across forms */
+  .field {
+    @apply w-full rounded-md border border-gray-300 bg-white px-3.5 py-2.5 text-sm placeholder:text-gray-400
+      outline-none transition-[border-color,box-shadow] duration-200
+      hover:border-gray-400 focus:border-ink focus:ring-4 focus:ring-brand-soft;
+  }
+
+  /* Selectable option such as a size */
+  .chip {
+    @apply min-w-12 rounded-md border px-4 py-2 text-sm transition-all duration-200;
+  }
+  .chip-idle {
+    @apply border-line bg-white/70 text-gray-700 hover:border-gray-400 hover:bg-white;
+  }
+  .chip-selected {
+    @apply border-ink bg-white text-ink shadow-soft;
+  }
+
+  /* Placeholder block shown while content loads */
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-[#ece6df];
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    animation: shimmer 1.4s infinite;
+  }
 }
 
-::-webkit-scrollbar{
-   display: none;
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
 }
-@media (max-width:640px){
-   a.active{
-      background-color: black;
-      color: white;
-   }
+
+/* Active desktop nav link underline */
+a.active hr {
+  display: block;
 }
+
+@media (max-width: 640px) {
+  a.active {
+    background-color: theme('colors.ink');
+    color: white;
+  }
+}
+
+/* Toast notifications in the store's typography and palette */
+.Toastify__toast {
+  font-family: theme('fontFamily.sans');
+  font-size: 14px;
+  color: theme('colors.ink');
+  border: 1px solid theme('colors.line');
+  border-radius: 10px;
+  box-shadow: theme('boxShadow.lift');
+}
+.Toastify__progress-bar--success { background: theme('colors.brand.DEFAULT'); }
+.Toastify__toast-icon svg { width: 18px; height: 18px; }

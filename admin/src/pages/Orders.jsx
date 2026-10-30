@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
-import { backendUrl, currency } from '../config'
+import { backendUrl, ORDER_STATUSES } from '../config'
+import { formatPrice } from '../utils'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets';
 
@@ -47,45 +48,35 @@ const Orders = ({ token }) => {
   }, [fetchAllOrders])
   return (
     <div>
-      <h3>Order Page</h3>
+      <h1 className='text-lg font-medium text-gray-800'>Orders <span className='text-sm font-normal text-gray-500'>({orders.length})</span></h1>
       {orders.length === 0 && <p className='mt-4 text-sm text-gray-500'>No orders yet.</p>}
       <div>
         {
           orders.map((order) => (
-            <div className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 text-xs sm:text-sm text-gray-700' key={order._id}>
-              <img className='w-12' src={assets.parcel_icon} alt="" />
+            <div className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start card p-5 md:p-7 my-3 text-xs sm:text-sm text-gray-700 transition-shadow hover:shadow-lift' key={order._id}>
+              <div className='w-12 h-12 rounded-full bg-cream border border-line flex items-center justify-center'><img className='w-6' src={assets.parcel_icon} alt="" /></div>
               <div>
                 <div>
-                  {order.items.map((item, index) => {
-                    if (index === order.items.length - 1) {
-                      return <p className='py-0.5' key={index}>{item.name} x {item.quantity} <span>{item.size}</span></p>
-                    }
-                    else {
-                      return <p className='py-0.5' key={index}>{item.name} x {item.quantity} <span>{item.size}</span> ,</p>
-
-                    }
-                  })}
+                  {order.items.map((item, index) => (
+                    <p className='py-0.5' key={index}>{item.name} × {item.quantity} <span className='text-gray-500'>({item.size})</span></p>
+                  ))}
                 </div>
-                <p className='mt-3 mb-2 font-medium'>{order.address.firstName + " " + order.address.lastName}</p>
+                <p className='mt-3 mb-2 font-medium'>{`${order.address.firstName} ${order.address.lastName}`}</p>
                 <div>
-                  <p>{order.address.street + ","}</p>
-                  <p>{order.address.city + ", " + order.address.state + ", " + order.address.country + ", " + order.address.zipcode}</p>
+                  <p>{order.address.street}</p>
+                  <p>{[order.address.city, order.address.state, order.address.country, order.address.zipcode].filter(Boolean).join(', ')}</p>
                 </div>
                 <p>{order.address.phone}</p>
               </div>
               <div>
-                <p className='text-sm sm:text-[15px]'>Items : { order.items.length }</p>
-                <p className='mt-3'>Method :{ order.paymentMethod }</p>
-                <p>Payment :{ order.payment ? 'Done' : 'Pending' }</p>
-                <p>Date : { new Date(order.date).toLocaleDateString() }</p>
+                <p className='text-sm sm:text-[15px]'>Items: {order.items.length}</p>
+                <p className='mt-3'>Method: {order.paymentMethod}</p>
+                <p>Payment: {order.payment ? 'Done' : 'Pending'}</p>
+                <p>Date: {new Date(order.date).toLocaleDateString()}</p>
               </div>
-              <p className='text-sm sm:text-[15px]'>{currency} {order.amount}</p>
-              <select onChange={(event)=>statusHandler(event,order._id)} value={order.status} aria-label='Order status' className='p-2 font-semibold'>
-                <option value="Order Placed">Order Placed</option>
-                <option value="Packing">Packing</option>
-                <option value="Shipped">Shipped</option>
-                <option value="Out for delivery">Out for delivery</option>
-                <option value="Delivered">Delivered</option>
+              <p className='text-sm sm:text-[15px] font-medium'>{formatPrice(order.amount)}</p>
+              <select onChange={(event)=>statusHandler(event,order._id)} value={order.status} aria-label='Order status' className='px-3 py-2 font-medium cursor-pointer'>
+                {ORDER_STATUSES.map((status) => <option key={status} value={status}>{status}</option>)}
               </select>
             </div>
           ))

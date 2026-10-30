@@ -17,6 +17,9 @@ if (missingEnv.length > 0) {
 
 // App Config
 const app= express()
+app.disable('x-powered-by')
+// Render and similar hosts sit behind one proxy; needed so rate limiting sees the real client IP
+app.set('trust proxy', 1)
 const port= process.env.PORT || 4000
 connectDB().catch((error) => {
     console.error('DB connection failed:', error.message)
@@ -31,7 +34,7 @@ const allowedOrigins = (process.env.CORS_ORIGINS || '')
     .filter(Boolean)
 
 // middlewares
-app.use(express.json())
+app.use(express.json({ limit: '100kb' }))
 app.use(cors(allowedOrigins.length > 0 ? { origin: allowedOrigins } : undefined))
 
 //api endpoints

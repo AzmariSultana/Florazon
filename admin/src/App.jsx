@@ -34,7 +34,7 @@ const App = () => {
     return () => axios.interceptors.response.eject(interceptor)
   },[token])
   return (
-    <div className='bg-gray-50 min-h-screen'>
+    <div className='min-h-screen'>
       <ToastContainer />
       {token === ""
         ? <Login setToken={setToken} />
@@ -43,7 +43,7 @@ const App = () => {
           <hr />
           <div className='flex'>
             <Sidebar />
-            <div className='w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base'>
+            <main className='w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base'>
               <Routes>
                 <Route path='/' element={<Navigate to='/add' replace />} />
                 <Route path='/add' element={<Add token={token} />} />
@@ -51,7 +51,7 @@ const App = () => {
                 <Route path='/orders' element={<Orders token={token} />} />
                 <Route path='*' element={<Navigate to='/add' replace />} />
               </Routes>
-            </div>
+            </main>
           </div>
         </>
       }

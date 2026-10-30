@@ -1,39 +1,29 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useMemo } from 'react'
 import { ShopContext } from '../context/ShopContext'
-import Title from './Title';
-import ProductItem from './ProductItem';
+import Title from './Title'
+import ProductGrid from './ProductGrid'
+
+const LIMIT = 5
 
 const RelatedProducts = ({ category, subCategory, currentId }) => {
-  const { products } = useContext(ShopContext);
-  const [related, setRelated] = useState([]);
+  const { products } = useContext(ShopContext)
 
-  useEffect(() => {
-    if (products.length > 0) {
-      let productsCopy = products.slice();
-      productsCopy = productsCopy.filter((item) => category === item.category);
-      productsCopy = productsCopy.filter((item) => subCategory === item.subCategory && item._id !== currentId);
-      setRelated(productsCopy.slice(0, 5));
-    }
-  }, [products, category, subCategory, currentId]);
+  // Closest matches first: same category and type, then same type, then anything else
+  const related = useMemo(() => {
+    const others = products.filter((item) => item._id !== currentId)
+    const rank = (item) => (item.subCategory === subCategory ? 0 : 2) + (item.category === category ? 0 : 1)
+    return [...others].sort((a, b) => rank(a) - rank(b)).slice(0, LIMIT)
+  }, [products, category, subCategory, currentId])
+
+  if (related.length === 0) return null
 
   return (
-    <div className='my-24'>
+    <section className='my-24'>
       <div className='text-center text-3xl py-2'>
         <Title text1={'RELATED'} text2={'PRODUCTS'} />
       </div>
-
-      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
-        {related.map((item) => (
-          <ProductItem
-            key={item._id}
-            id={item._id}
-            name={item.name}
-            price={item.price}
-            image={item.image}
-          />
-        ))}
-      </div>
-    </div>
+      <ProductGrid products={related} />
+    </section>
   )
 }
 

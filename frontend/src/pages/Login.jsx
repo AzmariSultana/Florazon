@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import useDocumentTitle from '../utils/useDocumentTitle'
 import { ShopContext } from '../context/ShopContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -7,6 +9,10 @@ const Login = () => {
   const [currentState, setCurrentState]= useState('Login');
   const { token, setToken, navigate, backendUrl } = useContext(ShopContext)
   const [loading, setLoading] = useState(false)
+  const location = useLocation()
+  // Pages that send users here can pass { state: { from } } to come back after logging in
+  const returnTo = location.state?.from || '/'
+  useDocumentTitle(currentState === 'Login' ? 'Login' : 'Create account')
 
   const [name,setName] = useState('')
   const [password,setPassword] = useState('')
@@ -44,29 +50,29 @@ const Login = () => {
 
   useEffect(()=>{
     if (token) {
-      navigate('/')
+      navigate(returnTo, { replace: true })
     }
-  },[token, navigate])
+  },[token, navigate, returnTo])
 
   return (
-    <form onSubmit={onSubmitHandler} className='flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800'>
-      <div className='inline-flex items-center gap-2 mb-2 mt-10'>
-        <p className='prata-regular text-3xl'>{currentState}</p>
+    <form onSubmit={onSubmitHandler} className='card flex flex-col items-center w-full max-w-md m-auto mt-10 sm:mt-16 gap-4 p-6 sm:p-10 text-gray-800 animate-fade-up'>
+      <div className='inline-flex items-center gap-2 mb-1'>
+        <h1 className='prata-regular text-3xl'>{currentState}</h1>
         <hr className='border-none h-[1.5px] w-8 bg-gray-800'/>
-
       </div>
-      {currentState=== 'Login' ? '' : <input onChange={(e)=>setName(e.target.value)} value={name} type="text" aria-label='Name' autoComplete='name' className='w-full px-3 py-2 border border-gray-800' placeholder='Name' required/>}
-      <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" aria-label='Email' autoComplete='email' className='w-full px-3 py-2 border border-gray-800' placeholder='Email' required/>
-      <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" aria-label='Password' minLength={currentState === 'Sign Up' ? 8 : undefined} autoComplete={currentState === 'Login' ? 'current-password' : 'new-password'} className='w-full px-3 py-2 border border-gray-800' placeholder='Password' required/>
-      <div className='w-full flex justify-between text-sm mt-[-8px]'>
+      <p className='text-sm text-gray-500 -mt-2 mb-2 text-center'>{currentState === 'Login' ? 'Welcome back. Sign in to see your cart and orders.' : 'Create an account to save your cart and track orders.'}</p>
+      {currentState=== 'Login' ? '' : <input onChange={(e)=>setName(e.target.value)} value={name} type="text" aria-label='Name' autoComplete='name' className='field' placeholder='Name' required/>}
+      <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" aria-label='Email' autoComplete='email' className='field' placeholder='Email' required/>
+      <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" aria-label='Password' minLength={currentState === 'Sign Up' ? 8 : undefined} autoComplete={currentState === 'Login' ? 'current-password' : 'new-password'} className='field' placeholder='Password' required/>
+      <div className='w-full flex justify-end text-sm -mt-1'>
         {
           currentState=== 'Login'
-          ? <button type='button' onClick={()=>setCurrentState('Sign Up')}>Create account</button>
-          : <button type='button' onClick={()=>setCurrentState('Login')}>Login here</button>
+          ? <button type='button' onClick={()=>setCurrentState('Sign Up')} className='btn-link'>Create account</button>
+          : <button type='button' onClick={()=>setCurrentState('Login')} className='btn-link'>Login here</button>
         }
 
       </div>
-      <button type='submit' disabled={loading} className='bg-black text-white font-light px-8 py-2 mt-4 disabled:opacity-60 disabled:cursor-not-allowed'>{loading ? 'Please wait...' : currentState=== 'Login' ? 'Sign In' : 'Sign Up'}</button>
+      <button type='submit' disabled={loading} className='btn-primary w-full mt-2'>{loading ? 'Please wait...' : currentState=== 'Login' ? 'Sign In' : 'Sign Up'}</button>
 
     </form>
   )
