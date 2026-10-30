@@ -8,8 +8,19 @@ Florazon is a full-stack e-commerce platform for ordering fresh flowers online, 
 ![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_8-47A248?logo=mongodb&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ![Florazon home page](docs/screenshots/storefront-home.jpg)
+
+## Live Demo
+
+| Application | URL |
+| --- | --- |
+| Storefront | [florazon.vercel.app](https://florazon.vercel.app) |
+| Admin panel | [florazon-admin.vercel.app](https://florazon-admin.vercel.app) |
+| REST API | [florazon.onrender.com](https://florazon.onrender.com) |
+
+The API is hosted on Render's free plan and sleeps when idle, so the first request after a quiet period can take up to a minute to load the products.
 
 ## Overview
 
@@ -195,7 +206,7 @@ The repository includes a Render Blueprint (`render.yaml`) that configures the s
 1. In MongoDB Atlas, open **Network Access** and allow connections from `0.0.0.0/0`. Render's free plan does not use fixed IP addresses.
 2. In Render, choose **New > Blueprint** and select this repository.
 3. Enter the requested environment variables: `MONGODB_URI`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY` and `CLOUDINARY_SECRET_KEY`. `JWT_SECRET` is generated automatically. Leave `CORS_ORIGINS` empty for now.
-4. Deploy. When the service is live, opening its URL (for example `https://florazon-api.onrender.com`) shows `API Working`.
+4. Deploy. When the service is live, opening its URL (for example `https://florazon.onrender.com`) shows `API Working`.
 
 On the free plan the service sleeps after a period of inactivity, so the first request afterwards can take up to a minute.
 
@@ -267,6 +278,10 @@ Florazon/
 - Product reviews and ratings
 - Automated tests and continuous integration
 
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 ## Author
 

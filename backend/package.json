@@ -9,7 +9,7 @@
     "seed": "node seed/seed.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "description": "Florazon REST API (Express + MongoDB)",
   "dependencies": {
     "bcrypt": "^6.0.0",
