@@ -46,7 +46,20 @@ The repository contains three independent applications:
 
 ## Screenshots
 
-The screenshots show sample catalogue data.
+The screenshots use the sample catalogue below.
+
+| Product | Description | Category | Sizes | Price (BDT) |
+| --- | --- | --- | --- | --- |
+| Lavender Dreams Bouquet | Purple, lilac and white roses with lilac stock, lisianthus buds and gypsophila in kraft paper with a lavender ribbon | Occasion | M, L | 3,200 |
+| Red & White Rose Bouquet | Red and white roses filled with gypsophila in natural kraft paper | Occasion | S, M, L | 2,500 |
+| Sunshine Gerbera Bouquet | Yellow, pink, lilac and cream gerberas with orange spray roses, daisies and solidago, finished with a pink ribbon | Gift-Type | S, M | 1,800 |
+| Lily & Red Rose Bouquet | White oriental lilies and red roses with gypsophila in a white wrap with a champagne satin ribbon | Occasion | M, L | 2,800 |
+| White Rose & Blue Gypsophila | White roses with blue-tinted gypsophila in white tissue wrapping | Gift-Type | M, L | 2,200 |
+| Pink Lily Romance | Pink stargazer lilies and pink roses with gypsophila in a blush wrap with a pink satin bow | Occasion | M, L | 2,900 |
+| Pastel Garden Bouquet | Peach roses, white gerberas, pink lisianthus, a pink lily, statice and eucalyptus in a white wrap | Gift-Type | M, L | 2,600 |
+| Gerbera Celebration Bouquet | Red, pink and yellow gerberas with white daisies, a peach rose and gypsophila in a pink wrap | Occasion | S, M | 1,900 |
+| Yellow Tulip Bouquet | Yellow tulips tied with a blue polka-dot ribbon | Gift-Type | S, M, L | 1,450 |
+| Yellow Garden Rose Bouquet | Yellow garden roses with gypsophila in white paper | Gift-Type | M, L | 2,200 |
 
 | Collection with filters | Product details |
 | --- | --- |
