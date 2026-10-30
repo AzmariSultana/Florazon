@@ -1,10 +1,6 @@
-<div align="center">
+# Florazon
 
-# 🌸 Florazon
-
-**A full-stack MERN e-commerce platform for ordering fresh flowers online.**
-
-*From our garden's grace to your heart's embrace.*
+Florazon is a full-stack e-commerce platform for ordering fresh flowers online, built with the MERN stack (MongoDB, Express, React, Node.js). It has a customer storefront, a separate admin panel for store management, and a REST API that both clients use.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
@@ -12,135 +8,110 @@
 ![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=nodedotjs&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_8-47A248?logo=mongodb&logoColor=white)
-![Cloudinary](https://img.shields.io/badge/Cloudinary-Images-3448C5?logo=cloudinary&logoColor=white)
 
-![Florazon storefront](docs/screenshots/home.jpg)
+![Florazon home page](docs/screenshots/home.jpg)
 
-</div>
+## Table of Contents
 
----
+- [Overview](#overview)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Technology Stack](#technology-stack)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [API Reference](#api-reference)
+- [Security](#security)
+- [Project Structure](#project-structure)
+- [Roadmap](#roadmap)
+- [Image Credits](#image-credits)
+- [Author](#author)
 
-## 📖 Table of Contents
+## Overview
 
-- [About the Project](#-about-the-project)
-- [Key Features](#-key-features)
-- [Screenshots](#-screenshots)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#-architecture)
-- [Getting Started](#-getting-started)
-- [Usage](#-usage)
-- [API Reference](#-api-reference)
-- [Security](#-security)
-- [Project Structure](#-project-structure)
-- [Roadmap](#-roadmap)
-- [Author](#-author)
+Florazon lets customers browse a catalogue of bouquets, single flowers, garlands and baskets, manage a cart that is saved to their account, and place Cash on Delivery orders. Store administrators use a dedicated panel to publish products, with images hosted on Cloudinary, and to move orders through each stage of delivery.
 
----
+The repository contains three independent applications:
 
-## 🌷 About the Project
-
-**Florazon** is an online flower shop built with the **MERN stack**. Customers can browse bouquets, single stems, garlands and baskets, filter and search the catalogue, manage a cart that syncs across devices, and place **Cash on Delivery** orders. Store owners use a separate **admin panel** to publish products (with images hosted on Cloudinary) and move orders through their delivery lifecycle.
-
-The project is split into three independent apps:
-
-| App | Purpose | Default URL |
+| Application | Description | Default URL |
 | --- | --- | --- |
-| **`frontend/`** | Customer-facing storefront | http://localhost:5173 |
-| **`admin/`** | Store management panel | http://localhost:5175 |
-| **`backend/`** | REST API shared by both clients | http://localhost:4000 |
+| `frontend/` | Customer storefront | http://localhost:5173 |
+| `admin/` | Store administration panel | http://localhost:5175 |
+| `backend/` | REST API used by both clients | http://localhost:4000 |
 
----
+## Features
 
-## ✨ Key Features
+### Customer Storefront
 
-### 🛍️ Customer storefront
-- **Account system**: sign up, log in and log out with JWT-based sessions. Expired sessions sign out automatically.
-- **Profile management**: update your name and email, and change your password (requires the current password).
-- **Product catalogue**: latest arrivals and best sellers on the home page.
-- **Search, filter & sort**: live search by name, filter by category (*Occasion*, *Gift-Type*) and type (*Single-Flower*, *Bouquet*, *Garland*, *Basket*), and sort by price.
-- **Product details**: image gallery, size selection, description and related products.
-- **Persistent cart**: add, update and remove items. Guests can shop before logging in, and their cart is merged into their account on sign-in.
-- **Checkout**: delivery details form with **Cash on Delivery** payment.
-- **Order history & tracking**: see every item ordered with live status (*Order Placed → Packing → Shipped → Out for delivery → Delivered*).
-- **Responsive design**: mobile-first layout with a slide-out navigation menu.
+- **Authentication:** customers register, log in and log out using JWT-based sessions. Expired sessions sign out automatically.
+- **Profile management:** customers can update their name and email, and change their password after confirming the current one.
+- **Product catalogue:** the home page shows the latest arrivals and best sellers.
+- **Search, filtering and sorting:** search by product name, filter by category (Occasion, Gift-Type) and type (Single-Flower, Bouquet, Garland, Basket), and sort by price.
+- **Product details:** each product has an image gallery, size selection, a description and related products.
+- **Persistent cart:** customers can add, update and remove items. Items added before logging in are merged into the account at sign-in.
+- **Checkout:** a delivery details form with Cash on Delivery payment.
+- **Order tracking:** order history shows the current status of each order, from Order Placed through Packing, Shipped and Out for delivery to Delivered.
+- **Responsive layout:** the storefront is optimised for desktop, tablet and mobile.
 
-### 🛠️ Admin panel
-- **Secure admin login**: credentials kept in server environment variables, with time-limited tokens.
-- **Add products**: up to 4 images per product (uploaded to **Cloudinary**), plus category, type, sizes, price and a best-seller flag.
-- **Manage catalogue**: list all products and remove them (with confirmation).
-- **Manage orders**: view every order with customer and address details, and update its delivery status.
+### Admin Panel
 
----
+- **Secure login:** admin credentials are kept in server environment variables, and admin tokens expire after a set time.
+- **Product creation:** admins add products with up to four images uploaded to Cloudinary, plus category, type, sizes, price and a best-seller flag.
+- **Catalogue management:** admins can view all products and remove them, with a confirmation step.
+- **Order management:** admins can review every order with customer and address details, and update its delivery status.
 
-## 📸 Screenshots
+## Screenshots
 
-> Screenshots use sample catalogue data.
+The screenshots show sample catalogue data.
 
 | Collection with filters | Product details |
 | --- | --- |
 | ![Collection page](docs/screenshots/collection.jpg) | ![Product page](docs/screenshots/product.jpg) |
 
-| Shopping cart | Order tracking |
+| Shopping cart | Order history |
 | --- | --- |
 | ![Cart page](docs/screenshots/cart.jpg) | ![Orders page](docs/screenshots/orders.jpg) |
 
-| Admin: add product | Admin: manage orders |
+| Admin: product list | Admin: order management |
 | --- | --- |
-| ![Admin add product](docs/screenshots/admin-add.jpg) | ![Admin orders](docs/screenshots/admin-orders.jpg) |
+| ![Admin product list](docs/screenshots/admin-list.jpg) | ![Admin orders](docs/screenshots/admin-orders.jpg) |
 
-<details>
-<summary><b>More screenshots</b></summary>
+| Admin: add product | Mobile view |
+| --- | --- |
+| ![Admin add product](docs/screenshots/admin-add.jpg) | <img src="docs/screenshots/mobile-home.jpg" alt="Mobile home page" width="300"> |
 
-<br>
-
-**Admin: product list**
-
-![Admin product list](docs/screenshots/admin-list.jpg)
-
-**Mobile home page**
-
-<img src="docs/screenshots/mobile-home.jpg" alt="Mobile home page" width="320">
-
-</details>
-
----
-
-## 🧰 Tech Stack
+## Technology Stack
 
 | Layer | Technologies |
 | --- | --- |
-| **Frontend & Admin** | React 19, React Router 7, Vite 7, Tailwind CSS 3, Axios, React Toastify |
-| **Backend** | Node.js, Express 5, Mongoose 8 |
-| **Database** | MongoDB (Atlas or local) |
-| **Auth & Security** | JSON Web Tokens, bcrypt password hashing, validator |
-| **File Uploads** | Multer + Cloudinary |
-| **Tooling** | ESLint 9, Nodemon, PostCSS / Autoprefixer |
+| Frontend and admin | React 19, React Router 7, Vite 7, Tailwind CSS 3, Axios, React Toastify |
+| Backend | Node.js, Express 5, Mongoose 8 |
+| Database | MongoDB (Atlas or self-hosted) |
+| Authentication and security | JSON Web Tokens, bcrypt, validator |
+| File uploads | Multer, Cloudinary |
+| Tooling | ESLint 9, Nodemon, PostCSS, Autoprefixer |
 
----
-
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart LR
     C["Customer storefront<br/>React + Vite"] -->|REST + JWT| API
     A["Admin panel<br/>React + Vite"] -->|REST + admin JWT| API
     API["Express API<br/>Node.js"] --> DB[("MongoDB")]
-    API -->|image upload| CL["Cloudinary"]
+    API -->|Image upload| CL["Cloudinary"]
 ```
 
-- **Stateless auth**: the API issues JWTs. Customer tokens expire after 7 days and admin tokens after 1 day.
-- **Server-side pricing**: order totals are recalculated from the database, never trusted from the client.
-- **Cart persistence**: carts are stored on the user document so they survive refreshes and follow the user across devices.
+- **Stateless authentication:** the API issues JWTs. Customer tokens are valid for 7 days and admin tokens for 1 day.
+- **Server-side pricing:** order totals are calculated from database prices and never taken from the client.
+- **Persistent carts:** carts are stored on the user record, so they survive page reloads and follow the customer across devices.
 
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) **20+** and npm
-- A [MongoDB](https://www.mongodb.com/atlas) database (Atlas free tier or local instance)
-- A [Cloudinary](https://cloudinary.com/) account (free tier is enough) for product images
+- [Node.js](https://nodejs.org/) 20 or later, with npm
+- A [MongoDB](https://www.mongodb.com/atlas) database (MongoDB Atlas or a local instance)
+- A [Cloudinary](https://cloudinary.com/) account for product image storage
 
 ### 1. Clone the repository
 
@@ -159,157 +130,152 @@ cd admin && npm install && cd ..
 
 ### 3. Configure environment variables
 
-Each app includes a `.env.example`. Copy it to `.env` and fill in your values.
+Each application includes a `.env.example` file. Copy it to `.env` in the same folder and provide your values.
 
-**`backend/.env`**
+**backend/.env**
 
 | Variable | Description |
 | --- | --- |
-| `PORT` | API port (default `4000`) |
+| `PORT` | Port for the API (default `4000`) |
 | `MONGODB_URI` | MongoDB connection string. The `florazon` database is selected automatically. |
 | `JWT_SECRET` | Long random string used to sign tokens |
-| `ADMIN_EMAIL` | Admin panel login email |
-| `ADMIN_PASSWORD` | Admin panel login password |
+| `ADMIN_EMAIL` | Email address for the admin panel login |
+| `ADMIN_PASSWORD` | Password for the admin panel login |
 | `CLOUDINARY_NAME` | Cloudinary cloud name |
 | `CLOUDINARY_API_KEY` | Cloudinary API key |
 | `CLOUDINARY_SECRET_KEY` | Cloudinary API secret |
 
-**`frontend/.env`** and **`admin/.env`**
+**frontend/.env** and **admin/.env**
 
 | Variable | Description |
 | --- | --- |
-| `VITE_BACKEND_URL` | URL of the API, e.g. `http://localhost:4000` |
+| `VITE_BACKEND_URL` | Base URL of the API, for example `http://localhost:4000` |
 
-> 🔒 `.env` files are git-ignored. Never commit real credentials.
+`.env` files are excluded from version control. Do not commit real credentials.
 
-### 4. Run the apps
+### 4. Start the applications
 
-Open three terminals:
+Run each application in its own terminal.
 
 ```bash
-# Terminal 1: API (auto-reloads on changes)
 cd backend
 npm run server
 ```
 
 ```bash
-# Terminal 2: customer storefront
 cd frontend
 npm run dev
 ```
 
 ```bash
-# Terminal 3: admin panel
 cd admin
 npm run dev
 ```
 
-### Available scripts
+### Available Scripts
 
 | Location | Command | Description |
 | --- | --- | --- |
-| `backend` | `npm start` | Start the API with Node |
-| `backend` | `npm run server` | Start the API with Nodemon (auto-reload) |
-| `frontend` / `admin` | `npm run dev` | Start the Vite dev server |
-| `frontend` / `admin` | `npm run build` | Create a production build in `dist/` |
-| `frontend` / `admin` | `npm run preview` | Preview the production build |
-| `frontend` / `admin` | `npm run lint` | Run ESLint |
+| `backend` | `npm start` | Start the API with Node.js |
+| `backend` | `npm run server` | Start the API with Nodemon (reloads on changes) |
+| `frontend`, `admin` | `npm run dev` | Start the Vite development server |
+| `frontend`, `admin` | `npm run build` | Create a production build in `dist/` |
+| `frontend`, `admin` | `npm run preview` | Serve the production build locally |
+| `frontend`, `admin` | `npm run lint` | Run ESLint |
 
----
+## Usage
 
-## 🧭 Usage
+1. **Add products:** open the admin panel at http://localhost:5175, sign in with `ADMIN_EMAIL` and `ADMIN_PASSWORD`, and use **Add Items** to upload images and product details.
+2. **Browse and shop:** open the storefront at http://localhost:5173, browse or search the collection, select a size and add items to the cart.
+3. **Check out:** create an account or log in, go to checkout, enter delivery details and place a Cash on Delivery order.
+4. **Fulfil orders:** in the admin panel, open **Orders** and update the order status. The customer sees the change under **My Orders**.
 
-1. **Add products as an admin.** Open http://localhost:5175, sign in with `ADMIN_EMAIL` / `ADMIN_PASSWORD`, then use **Add Items** to upload images and product details.
-2. **Shop as a customer.** Open http://localhost:5173, browse or search the **Collection**, choose a size and **Add to Cart**.
-3. **Check out.** Create an account or log in, proceed to checkout, enter delivery details and place a **Cash on Delivery** order.
-4. **Fulfil the order.** Back in the admin panel, open **Orders** and update the status. The customer sees it under **My Orders**.
+## API Reference
 
----
+All endpoints are prefixed with `/api`.
 
-## 🔌 API Reference
-
-All endpoints are prefixed with `/api`. Customer routes expect a `token` header (or `Authorization: Bearer <token>`). Admin routes expect the admin `token` header.
+- **Customer endpoints** require a `token` header, or `Authorization: Bearer <token>`.
+- **Admin endpoints** require the admin `token` header.
 
 | Method | Endpoint | Access | Description |
 | --- | --- | --- | --- |
-| `POST` | `/user/register` | Public | Create a customer account |
-| `POST` | `/user/login` | Public | Log in as a customer |
-| `POST` | `/user/admin` | Public | Log in as admin |
-| `GET` | `/user/me` | Customer | Get profile |
-| `PATCH` | `/user/me` | Customer | Update name / email |
-| `PATCH` | `/user/me/password` | Customer | Change password |
-| `GET` | `/product/list` | Public | List all products |
-| `POST` | `/product/single` | Public | Get one product |
-| `POST` | `/product/add` | Admin | Add a product (multipart, `image1`–`image4`) |
-| `POST` | `/product/remove` | Admin | Remove a product |
-| `POST` | `/cart/get` | Customer | Get cart |
-| `POST` | `/cart/add` | Customer | Add an item to the cart |
-| `POST` | `/cart/update` | Customer | Set an item's quantity |
-| `POST` | `/order/place` | Customer | Place a COD order |
-| `POST` | `/order/userorders` | Customer | List your orders |
-| `POST` | `/order/list` | Admin | List all orders |
-| `POST` | `/order/status` | Admin | Update order status |
+| POST | `/user/register` | Public | Register a customer account |
+| POST | `/user/login` | Public | Customer login |
+| POST | `/user/admin` | Public | Admin login |
+| GET | `/user/me` | Customer | Get the current profile |
+| PATCH | `/user/me` | Customer | Update name or email |
+| PATCH | `/user/me/password` | Customer | Change password |
+| GET | `/product/list` | Public | List all products |
+| POST | `/product/single` | Public | Get a single product |
+| POST | `/product/add` | Admin | Create a product (multipart form, fields `image1` to `image4`) |
+| POST | `/product/remove` | Admin | Delete a product |
+| POST | `/cart/get` | Customer | Get the cart |
+| POST | `/cart/add` | Customer | Add an item to the cart |
+| POST | `/cart/update` | Customer | Set the quantity of a cart item |
+| POST | `/order/place` | Customer | Place a Cash on Delivery order |
+| POST | `/order/userorders` | Customer | List the current customer's orders |
+| POST | `/order/list` | Admin | List all orders |
+| POST | `/order/status` | Admin | Update an order's status |
 
----
+## Security
 
-## 🔐 Security
+- **Passwords** are hashed with bcrypt, and changing a password requires the current one.
+- **JWT sessions** expire. Admin tokens carry a role claim and never contain credentials.
+- **Order totals** are calculated on the server, and item sizes and quantities are validated.
+- **MongoDB query filters** are sanitised to prevent operator injection.
+- **Cart input** is validated to prevent prototype pollution.
+- **Uploads** are limited to image files under 5 MB, and temporary files are deleted after upload.
 
-- Passwords hashed with **bcrypt**. Changing a password requires the current one.
-- **JWT** sessions with expiry. Admin tokens carry a role claim and never contain credentials.
-- **Server-side order pricing** prevents price tampering. Item sizes and quantities are validated.
-- MongoDB **query sanitisation** blocks operator injection.
-- Cart input is validated, which prevents prototype-pollution attacks.
-- Uploads are limited to **images under 5 MB**, and temporary files are cleaned up after upload.
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 Florazon/
-├── backend/                 # Express REST API
-│   ├── config/              # MongoDB & Cloudinary setup
-│   ├── controllers/         # Route handlers (user, product, cart, order)
-│   ├── middleware/          # Customer/admin auth, Multer uploads
-│   ├── models/              # Mongoose schemas
-│   ├── routes/              # API route definitions
-│   └── server.js            # App entry point
-├── frontend/                # Customer storefront (React + Vite)
+├── backend/                 Express REST API
+│   ├── config/              MongoDB and Cloudinary configuration
+│   ├── controllers/         Request handlers (user, product, cart, order)
+│   ├── middleware/          Customer and admin authentication, file uploads
+│   ├── models/              Mongoose schemas
+│   ├── routes/              Route definitions
+│   └── server.js            Application entry point
+├── frontend/                Customer storefront (React + Vite)
 │   └── src/
-│       ├── components/      # Navbar, product cards, search bar, …
-│       ├── context/         # ShopContext: cart, auth & products state
-│       └── pages/           # Home, Collection, Product, Cart, Checkout, Orders, Profile, …
-├── admin/                   # Admin panel (React + Vite)
+│       ├── components/      Shared UI components
+│       ├── context/         Global state: products, cart, authentication
+│       └── pages/           Application pages
+├── admin/                   Admin panel (React + Vite)
 │   └── src/
-│       ├── components/      # Login, Navbar, Sidebar
-│       └── pages/           # Add, List, Orders
-└── docs/screenshots/        # README images
+│       ├── components/      Login, navigation bar, sidebar
+│       └── pages/           Add, list and order management pages
+└── docs/screenshots/        Images used in this README
 ```
 
----
+## Roadmap
 
-## 🗺️ Roadmap
+- Online payment integration (for example SSLCommerz or Stripe) alongside Cash on Delivery
+- Editing existing products from the admin panel
+- Password reset by email
+- Sales dashboard with order and revenue statistics
+- Product reviews and ratings
+- Automated tests and continuous integration
 
-- [ ] Online payments (e.g. SSLCommerz / Stripe) alongside Cash on Delivery
-- [ ] Edit existing products from the admin panel
-- [ ] Password reset via email
-- [ ] Admin dashboard with sales statistics
-- [ ] Product reviews and ratings
-- [ ] Automated tests and CI
+## Image Credits
 
----
+The screenshots use sample catalogue data. The yellow tulip and yellow rose photographs are part of this repository. The other product photographs come from Wikimedia Commons and are used under the licences below.
 
-## 👩‍💻 Author
+| Product | Source file | Author | Licence |
+| --- | --- | --- | --- |
+| Red Rose Bunch | [Hand holding a bouquet of red roses](https://commons.wikimedia.org/wiki/File:Hand_holding_a_bouquet_of_red_roses.jpg) | Karthika Manikandan | CC0 |
+| Red & Yellow Rose Bundle | [Bouquet of red and yellow roses](https://commons.wikimedia.org/wiki/File:Bouquet_of_red_and_yellow_roses.jpg) | Karthika Manikandan | CC0 |
+| Mixed Tulip Bouquet | [Tulip-bouquet-vienna (Unsplash)](https://commons.wikimedia.org/wiki/File:Tulip-bouquet-vienna_%28Unsplash%29.jpg) | Gábor Juhász | CC0 |
+| Pink Tulip Basket | [A bouquet of pink tulips in a basket](https://commons.wikimedia.org/wiki/File:A_bouquet_of_pink_tulips_in_a_basket.jpg) | George E. Koronaios | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| Single Red Rose | [Red rose with black background](https://commons.wikimedia.org/wiki/File:Red_rose_with_black_background.jpg) | Laitche | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| Marigold Garland | [Marigold garlands](https://commons.wikimedia.org/wiki/File:Marigold_garlands.jpg) | পাপৰি বৰা | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| White Orchid Stem | [White Orchid 1 NBG](https://commons.wikimedia.org/wiki/File:White_Orchid_1_NBG.jpg) | PumpkinSky | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
+| Orange Gerbera Bunch | [Bunch of Sunflower](https://commons.wikimedia.org/wiki/File:Bunch_of_Sunflower.jpg) | ezhuttukari | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) |
+
+## Author
 
 **Azmari Sultana**
 
-- GitHub: [@AzmariSultana](https://github.com/AzmariSultana)
+- GitHub: [AzmariSultana](https://github.com/AzmariSultana)
 - Email: azmari.sultana47@gmail.com
-
-If you like this project, consider giving it a ⭐ on GitHub!
-
-<div align="center">
-
-**FL🌸RAZ🌸N**: *From our garden's grace to your heart's embrace.*
-
-</div>
