@@ -202,32 +202,6 @@ GitHub Pages only serves static files, so the Express API must be hosted separat
 
 In MongoDB Atlas, allow connections from the host under **Network Access**. Once the API is running, set its URL as `VITE_BACKEND_URL` as described above.
 
-## API Reference
-
-All endpoints are prefixed with `/api`.
-
-- **Customer endpoints** require a `token` header, or `Authorization: Bearer <token>`.
-- **Admin endpoints** require the admin `token` header.
-
-| Method | Endpoint | Access | Description |
-| --- | --- | --- | --- |
-| POST | `/user/register` | Public | Register a customer account |
-| POST | `/user/login` | Public | Customer login |
-| POST | `/user/admin` | Public | Admin login |
-| GET | `/user/me` | Customer | Get the current profile |
-| PATCH | `/user/me` | Customer | Update name or email |
-| PATCH | `/user/me/password` | Customer | Change password |
-| GET | `/product/list` | Public | List all products |
-| POST | `/product/single` | Public | Get a single product |
-| POST | `/product/add` | Admin | Create a product (multipart form, fields `image1` to `image4`) |
-| POST | `/product/remove` | Admin | Delete a product |
-| POST | `/cart/get` | Customer | Get the cart |
-| POST | `/cart/add` | Customer | Add an item to the cart |
-| POST | `/cart/update` | Customer | Set the quantity of a cart item |
-| POST | `/order/place` | Customer | Place a Cash on Delivery order |
-| POST | `/order/userorders` | Customer | List the current customer's orders |
-| POST | `/order/list` | Admin | List all orders |
-| POST | `/order/status` | Admin | Update an order's status |
 
 ## Security
 
