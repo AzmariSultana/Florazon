@@ -9,7 +9,7 @@ Florazon is a full-stack e-commerce platform for ordering fresh flowers online, 
 ![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_8-47A248?logo=mongodb&logoColor=white)
 
-![Florazon home page](docs/screenshots/home.jpg)
+![Florazon storefront collection](docs/screenshots/storefront-collection.jpg)
 
 ## Overview
 
@@ -58,24 +58,22 @@ The screenshots use the sample catalogue below.
 | Pink Lily Romance | Pink stargazer lilies and pink roses with gypsophila in a blush wrap with a pink satin bow | Occasion | M, L | 2,900 |
 | Pastel Garden Bouquet | Peach roses, white gerberas, pink lisianthus, a pink lily, statice and eucalyptus in a white wrap | Gift-Type | M, L | 2,600 |
 | Gerbera Celebration Bouquet | Red, pink and yellow gerberas with white daisies, a peach rose and gypsophila in a pink wrap | Occasion | S, M | 1,900 |
-| Yellow Tulip Bouquet | Yellow tulips tied with a blue polka-dot ribbon | Gift-Type | S, M, L | 1,450 |
-| Yellow Garden Rose Bouquet | Yellow garden roses with gypsophila in white paper | Gift-Type | M, L | 2,200 |
 
-| Collection with filters | Product details |
+| Product details | Shopping cart |
 | --- | --- |
-| ![Collection page](docs/screenshots/collection.jpg) | ![Product page](docs/screenshots/product.jpg) |
+| ![Product page](docs/screenshots/storefront-product.jpg) | ![Cart page](docs/screenshots/storefront-cart.jpg) |
 
-| Shopping cart | Order history |
+| Order history | Mobile view |
 | --- | --- |
-| ![Cart page](docs/screenshots/cart.jpg) | ![Orders page](docs/screenshots/orders.jpg) |
+| ![Orders page](docs/screenshots/storefront-orders.jpg) | <img src="docs/screenshots/storefront-mobile.jpg" alt="Mobile collection page" width="300"> |
 
 | Admin: product list | Admin: order management |
 | --- | --- |
-| ![Admin product list](docs/screenshots/admin-list.jpg) | ![Admin orders](docs/screenshots/admin-orders.jpg) |
+| ![Admin product list](docs/screenshots/admin-products.jpg) | ![Admin orders](docs/screenshots/admin-order-management.jpg) |
 
-| Admin: add product | Mobile view |
-| --- | --- |
-| ![Admin add product](docs/screenshots/admin-add.jpg) | <img src="docs/screenshots/mobile-home.jpg" alt="Mobile home page" width="300"> |
+| Admin: add product |
+| --- |
+| ![Admin add product](docs/screenshots/admin-add-product.jpg) |
 
 ## Technology Stack
 
