@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { STORE } from '../constants'
 
@@ -25,6 +25,8 @@ const Sprig = ({ className = '' }) => (
 )
 
 const Footer = () => {
+  // Product pages show a fixed purchase bar on phones; extra bottom space keeps the footer clear of it
+  const onProductPage = useLocation().pathname.startsWith('/product/')
   return (
     // Full-bleed band like the header: negative margins cancel the page gutter
     <footer className='relative mt-28 -mx-[var(--gutter)] px-[var(--gutter)] overflow-hidden border-t border-line/80'>
@@ -32,7 +34,7 @@ const Footer = () => {
       <Sprig className='pointer-events-none absolute -left-5 bottom-4 w-14 sm:w-28 -rotate-12 opacity-90' />
       <Sprig className='pointer-events-none absolute -right-5 -top-2 sm:top-6 w-14 sm:w-28 rotate-[200deg] -scale-x-100 opacity-90' />
 
-      <div className='relative flex flex-col items-center py-14 sm:py-16 text-center'>
+      <div className={`relative flex flex-col items-center py-14 sm:py-16 text-center ${onProductPage ? 'pb-32 sm:pb-32 lg:pb-16' : ''}`}>
         <Link to='/' className='transition-opacity hover:opacity-80'>
           <img src={assets.logo} className='w-[128px]' width={489} height={83} alt='Florazon home' loading='lazy' />
         </Link>
