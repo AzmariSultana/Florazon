@@ -56,11 +56,13 @@ const Login = () => {
 
   return (
     <form onSubmit={onSubmitHandler} className='card flex flex-col items-center w-full max-w-md m-auto mt-10 sm:mt-16 gap-4 p-6 sm:p-10 text-gray-800 animate-fade-up'>
-      <div className='inline-flex items-center gap-2 mb-1'>
-        <h1 className='prata-regular text-3xl'>{currentState}</h1>
-        <hr className='border-none h-[1.5px] w-8 bg-gray-800'/>
+      <div className='text-center'>
+        <p className='eyebrow'>{currentState === 'Login' ? 'Welcome back' : 'Join Florazon'}</p>
+        <h1 className='mt-2 font-display text-4xl text-ink'>
+          {currentState === 'Login' ? <>Sign <span className='text-brand'>in</span></> : <>Create <span className='text-brand'>account</span></>}
+        </h1>
       </div>
-      <p className='text-sm text-gray-500 -mt-2 mb-2 text-center'>{currentState === 'Login' ? 'Welcome back. Sign in to see your cart and orders.' : 'Create an account to save your cart and track orders.'}</p>
+      <p className='text-sm text-gray-500 -mt-1 mb-2 text-center'>{currentState === 'Login' ? 'Sign in to see your cart and orders.' : 'Save your cart and follow every order.'}</p>
       {currentState=== 'Login' ? '' : <input onChange={(e)=>setName(e.target.value)} value={name} type="text" aria-label='Name' autoComplete='name' className='field' placeholder='Name' required/>}
       <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" aria-label='Email' autoComplete='email' className='field' placeholder='Email' required/>
       <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" aria-label='Password' minLength={currentState === 'Sign Up' ? 8 : undefined} autoComplete={currentState === 'Login' ? 'current-password' : 'new-password'} className='field' placeholder='Password' required/>
@@ -68,11 +70,11 @@ const Login = () => {
         {
           currentState=== 'Login'
           ? <button type='button' onClick={()=>setCurrentState('Sign Up')} className='btn-link'>Create account</button>
-          : <button type='button' onClick={()=>setCurrentState('Login')} className='btn-link'>Login here</button>
+          : <button type='button' onClick={()=>setCurrentState('Login')} className='btn-link'>I already have an account</button>
         }
 
       </div>
-      <button type='submit' disabled={loading} className='btn-primary w-full mt-2'>{loading ? 'Please wait...' : currentState=== 'Login' ? 'Sign In' : 'Sign Up'}</button>
+      <button type='submit' disabled={loading} className='btn-primary w-full mt-2'>{loading ? 'Please wait...' : currentState=== 'Login' ? 'Sign in' : 'Create account'}</button>
 
     </form>
   )

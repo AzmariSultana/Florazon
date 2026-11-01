@@ -4,11 +4,13 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 
 const NAV_LINKS = [
-  { to: '/', label: 'HOME' },
-  { to: '/collection', label: 'COLLECTION' },
-  { to: '/about', label: 'ABOUT' },
-  { to: '/contact', label: 'CONTACT' },
+  { to: '/', label: 'Home' },
+  { to: '/collection', label: 'Collection' },
+  { to: '/about', label: 'About' },
+  { to: '/contact', label: 'Contact' },
 ]
+
+const menuItemClass = 'text-left px-3 py-2 rounded-xl transition-colors hover:bg-blush/60 hover:text-ink'
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false)
@@ -17,7 +19,7 @@ const Navbar = () => {
   const location = useLocation()
   const cartCount = getCartCount()
 
-  // Show the header's border and shadow only once content scrolls beneath it
+  // Frost the header and give it a hairline only once content scrolls beneath it
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
     onScroll()
@@ -50,75 +52,100 @@ const Navbar = () => {
   return (
     <>
     {/* Full-bleed sticky bar: negative margins cancel the page gutter so the glass spans the viewport */}
-    <header className={`sticky top-0 z-40 -mx-4 px-4 sm:-mx-[5vw] sm:px-[5vw] md:-mx-[7vw] md:px-[7vw] lg:-mx-[9vw] lg:px-[9vw] flex items-center justify-between py-4 font-medium bg-canvas/80 backdrop-blur-md backdrop-saturate-150 border-b transition-[border-color,box-shadow] duration-300 ${scrolled ? 'border-line shadow-[0_6px_20px_-14px_rgba(43,43,43,0.25)]' : 'border-transparent'}`}>
-      <Link to='/'><img src={assets.logo} className='w-36' width={640} height={217} alt="Florazon home" /></Link>
+    <header className={`sticky top-0 z-40 -mx-[var(--gutter)] px-[var(--gutter)] border-b transition-all duration-500 ease-petal ${scrolled ? 'bg-canvas/75 backdrop-blur-xl backdrop-saturate-150 border-line/80 shadow-[0_8px_24px_-18px_rgba(60,40,45,0.3)]' : 'bg-transparent border-transparent'}`}>
+      <div className={`flex items-center justify-between transition-[padding] duration-500 ease-petal ${scrolled ? 'py-3' : 'py-5'}`}>
+        <Link to='/' className='shrink-0'><img src={assets.logo} className='w-[108px] sm:w-[118px]' width={489} height={83} alt="Florazon home" /></Link>
 
-      <nav aria-label='Main'>
-        <ul className='hidden sm:flex gap-6 text-[13px] tracking-wide text-gray-600'>
-          {NAV_LINKS.map((link) => (
-            <li key={link.to}>
-              <NavLink to={link.to} className='flex flex-col items-center gap-1 transition-colors hover:text-ink [&.active]:text-ink'>
-                <p>{link.label}</p>
-                <hr className='w-2/4 border-none h-[1.5px] bg-ink hidden' />
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
+        <nav aria-label='Main' className='hidden md:block'>
+          <ul className='flex items-center gap-1 rounded-full border border-white/80 bg-white/50 p-1 shadow-glass backdrop-blur-md text-[13px] tracking-wide text-gray-600'>
+            {NAV_LINKS.map((link) => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  end={link.to === '/'}
+                  className={({ isActive }) => `block rounded-full px-5 py-2 transition-all duration-300 ease-petal ${isActive ? 'bg-ink text-white shadow-soft' : 'hover:bg-white hover:text-ink'}`}
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      <div className='flex items-center gap-6'>
-        <button type='button' onClick={openSearch} aria-label='Search products' className='transition-opacity hover:opacity-70'>
-          <img src={assets.search_icon} className='w-5' alt="" />
-        </button>
-
-        <div className='group relative'>
-          <button
-            type='button'
-            onClick={() => navigate(token ? '/user-profile' : '/login')}
-            aria-label={token ? 'My account' : 'Log in'}
-            aria-haspopup={token ? 'menu' : undefined}
-            className='transition-opacity hover:opacity-70'
-          >
-            <img className='w-5' src={assets.profile_icon} alt="" />
+        <div className='flex items-center gap-1 sm:gap-2'>
+          <button type='button' onClick={openSearch} aria-label='Search products' className='icon-btn'>
+            <img src={assets.search_icon} className='w-[18px]' alt="" />
           </button>
-          {token && (
-            // Opens on hover and on keyboard focus
-            <div className='invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-200 absolute right-0 pt-4 z-20'>
-              <div className='card flex flex-col gap-1 w-40 p-2 text-sm text-gray-600' role='menu'>
-                <button type='button' role='menuitem' onClick={() => navigate('/user-profile')} className='text-left px-3 py-2 rounded-md transition-colors hover:bg-cream hover:text-ink'>My Profile</button>
-                <button type='button' role='menuitem' onClick={() => navigate('/orders')} className='text-left px-3 py-2 rounded-md transition-colors hover:bg-cream hover:text-ink'>Orders</button>
-                <hr className='my-1 border-line' />
-                <button type='button' role='menuitem' onClick={logout} className='text-left px-3 py-2 rounded-md transition-colors hover:bg-cream hover:text-ink'>Logout</button>
+
+          <div className='group relative'>
+            <button
+              type='button'
+              onClick={() => navigate(token ? '/user-profile' : '/login')}
+              aria-label={token ? 'My account' : 'Log in'}
+              aria-haspopup={token ? 'menu' : undefined}
+              className='icon-btn'
+            >
+              <img className='w-[18px]' src={assets.profile_icon} alt="" />
+            </button>
+            {token && (
+              // Opens on hover and on keyboard focus
+              <div className='invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-300 ease-petal absolute right-0 pt-3 z-20'>
+                <div className='flex flex-col gap-0.5 w-44 p-2 rounded-2xl border border-white/80 bg-white/85 backdrop-blur-xl shadow-lift text-sm text-gray-600' role='menu'>
+                  <button type='button' role='menuitem' onClick={() => navigate('/user-profile')} className={menuItemClass}>My Profile</button>
+                  <button type='button' role='menuitem' onClick={() => navigate('/orders')} className={menuItemClass}>Orders</button>
+                  <hr className='my-1 border-line' />
+                  <button type='button' role='menuitem' onClick={logout} className={menuItemClass}>Logout</button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
+          <Link to='/cart' className='icon-btn' aria-label={`Cart (${cartCount} items)`}>
+            <img src={assets.cart_icon} className='w-[18px] min-w-[18px]' alt="" />
+            {cartCount > 0 && (
+              <span key={cartCount} className='absolute top-0.5 right-0.5 min-w-[18px] h-[18px] px-1 text-center leading-[18px] rounded-full bg-brand text-white text-[10px] font-semibold ring-2 ring-canvas animate-fade-up'>{cartCount}</span>
+            )}
+          </Link>
+
+          <button type='button' onClick={() => setVisible(true)} className='icon-btn md:hidden' aria-label='Open menu' aria-expanded={visible}>
+            <img src={assets.menu_icon} className='w-[18px]' alt="" />
+          </button>
         </div>
-
-        <Link to='/cart' className='relative transition-opacity hover:opacity-70' aria-label={`Cart (${cartCount} items)`}>
-          <img src={assets.cart_icon} className='w-5 min-w-5' alt="" />
-          <p className={`absolute right-[-6px] bottom-[-6px] min-w-4 h-4 px-1 text-center leading-4 rounded-full text-[9px] font-semibold transition-colors ${cartCount > 0 ? 'bg-brand text-white' : 'bg-ink text-white'}`}>{cartCount}</p>
-        </Link>
-
-        <button type='button' onClick={() => setVisible(true)} className='sm:hidden' aria-label='Open menu' aria-expanded={visible}>
-          <img src={assets.menu_icon} className='w-5' alt="" />
-        </button>
       </div>
     </header>
 
-      {/* Sidebar menu for small screens, kept outside the header because its backdrop blur would trap
+      {/* Menu for small screens, kept outside the header because its backdrop blur would trap
           "fixed" positioning. "invisible" keeps the links out of the tab order while closed. */}
       <div
-        className={`fixed top-0 right-0 bottom-0 z-50 overflow-hidden bg-canvas transition-all duration-300 ease-out ${visible ? 'w-full visible' : 'w-0 invisible'}`}
+        className={`fixed inset-0 z-50 md:hidden transition-[visibility] duration-500 ${visible ? 'visible' : 'invisible'}`}
         aria-hidden={!visible}
       >
-        <nav aria-label='Mobile' className='flex flex-col text-gray-600 pt-2'>
-          <button type='button' onClick={() => setVisible(false)} className='flex items-center gap-4 p-3'>
-            <img className='h-4 rotate-180' src={assets.dropdown_icon} alt="" />
-            <p>Back</p>
-          </button>
-          {NAV_LINKS.map((link) => (
-            <NavLink key={link.to} onClick={() => setVisible(false)} className='py-3.5 pl-6 border-b border-line text-sm tracking-wide transition-colors' to={link.to}>{link.label}</NavLink>
-          ))}
+        <div onClick={() => setVisible(false)} className={`absolute inset-0 bg-ink/20 backdrop-blur-sm transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`} />
+        <nav
+          aria-label='Mobile'
+          className={`absolute top-0 right-0 bottom-0 w-[85%] max-w-sm flex flex-col bg-canvas px-6 pt-5 pb-8 shadow-lift transition-transform duration-500 ease-petal ${visible ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <div className='flex items-center justify-between'>
+            <img src={assets.logo} className='w-24' width={489} height={83} alt="" />
+            <button type='button' onClick={() => setVisible(false)} className='icon-btn' aria-label='Close menu'>
+              <img className='w-3.5' src={assets.cross_icon} alt="" />
+            </button>
+          </div>
+          <div className='mt-10 flex flex-col'>
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                onClick={() => setVisible(false)}
+                className={({ isActive }) => `flex items-center justify-between py-4 border-b border-line font-display text-2xl transition-colors ${isActive ? 'text-brand' : 'text-ink hover:text-brand'}`}
+              >
+                {link.label}
+                <span aria-hidden='true' className='text-base text-gray-400'>&rarr;</span>
+              </NavLink>
+            ))}
+          </div>
+          <Link to='/collection' onClick={() => setVisible(false)} className='btn-primary mt-auto'>Shop the collection</Link>
         </nav>
       </div>
     </>

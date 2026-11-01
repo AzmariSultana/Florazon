@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import Title from "../components/Title";
+import EmptyState from "../components/EmptyState";
 import axios from "axios";
 import { ShopContext } from "../context/ShopContext";
 import useDocumentTitle from "../utils/useDocumentTitle";
@@ -118,14 +119,13 @@ export default function Profile() {
 
   if (!token) {
     return (
-      <div className="card flex flex-col items-center w-full max-w-md m-auto mt-10 sm:mt-16 gap-4 p-6 sm:p-10 text-gray-800">
-        <div className="inline-flex items-center gap-2 mb-1">
-          <h1 className="prata-regular text-3xl">Profile</h1>
-          <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
-        </div>
-        <div className="panel w-full px-4 py-3">
-          <p className="text-sm">You need to <Link to="/login" state={{ from: "/user-profile" }} className="underline">log in</Link> to view this page.</p>
-        </div>
+      <div className="pt-6 sm:pt-10">
+        <Title as="h1" eyebrow="Your account" text1={"MY"} text2={"PROFILE"} size="text-4xl sm:text-5xl" />
+        <EmptyState
+          title="Sign in to manage your profile"
+          text="Update your details and password in one place."
+          action={{ to: "/login", state: { from: "/user-profile" }, label: "Log in" }}
+        />
       </div>
     );
   }
@@ -133,14 +133,14 @@ export default function Profile() {
   return (
     <div className="card flex flex-col items-center w-full max-w-md m-auto mt-10 sm:mt-16 gap-6 p-6 sm:p-10 text-gray-800 animate-fade-up">
       {/* Title */}
-      <div className="inline-flex items-center gap-2">
-        <h1 className="prata-regular text-3xl">Profile</h1>
-        <hr className="border-none h-[1.5px] w-8 bg-gray-800" />
+      <div className="text-center">
+        <p className="eyebrow">Your account</p>
+        <h1 className="mt-2 font-display text-4xl text-ink">My <span className="text-brand">Profile</span></h1>
       </div>
 
       {/* Message */}
       {message && (
-        <div role="status" className={`w-full rounded-md px-4 py-3 border ${message.type === "success" ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}`}>
+        <div role="status" className={`w-full rounded-2xl px-4 py-3 border ${message.type === "success" ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}`}>
           <p className={`text-sm ${message.type === "success" ? "text-green-700" : "text-red-700"}`}>{message.text}</p>
         </div>
       )}

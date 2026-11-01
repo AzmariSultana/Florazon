@@ -25,13 +25,15 @@ const ScrollToTop = () => {
 }
 
 const App = () => {
+  const { pathname } = useLocation()
   return (
-    <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
+    <div className='px-[var(--gutter)]'>
       <ScrollToTop />
       <ToastContainer position='top-right' autoClose={3000} />
       <Navbar />
       <SearchBar />
-      <main>
+      {/* Keyed by path so each page fades in when navigated to */}
+      <main key={pathname} className='animate-page-in'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/collection' element={<Collection />} />

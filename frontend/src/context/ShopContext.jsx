@@ -2,6 +2,7 @@ import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { optionPrice } from "../utils/productOptions";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const ShopContext = createContext();
@@ -38,7 +39,7 @@ const ShopContextProvider = (props) => {
 
     const addToCart = async (itemId, size) => {
         if (!size) {
-            toast.error('Select Product Size');
+            toast.error('Please choose an option first');
             return;
         }
         let cartData = structuredClone(cartItems);
@@ -104,7 +105,7 @@ const ShopContextProvider = (props) => {
             if (!itemInfo) continue;
             for (const item in cartItems[items]) {
                 if (cartItems[items][item] > 0) {
-                    totalAmount += itemInfo.price * cartItems[items][item];
+                    totalAmount += optionPrice(itemInfo, item) * cartItems[items][item];
                 }
             }
         }

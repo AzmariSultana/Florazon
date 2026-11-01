@@ -1,43 +1,52 @@
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/assets'
 import Title from '../components/Title'
-import ProductItem from '../components/ProductItem'
-import { CATEGORIES, SUB_CATEGORIES } from '../constants'
+import ProductGrid, { ProductGridSkeleton } from '../components/ProductGrid'
+import { CATEGORIES, SUB_CATEGORIES, TYPES, categoryLabel } from '../constants'
 import StatusMessage, { LOAD_ERROR_TEXT } from '../components/StatusMessage'
-import { ProductGridSkeleton } from '../components/ProductGrid'
 import useDocumentTitle from '../utils/useDocumentTitle'
 
 const SORT_OPTIONS = [
-  { value: 'relevant', label: 'Sort by: Relevant' },
-  { value: 'low-high', label: 'Sort by: Low to High' },
-  { value: 'high-low', label: 'Sort by: High to Low' },
+  { value: 'relevant', label: 'Sort: Relevant' },
+  { value: 'low-high', label: 'Price: Low to High' },
+  { value: 'high-low', label: 'Price: High to Low' },
 ]
 
-const toggle = (list, value) => (list.includes(value) ? list.filter((item) => item !== value) : [...list, value])
+const GRID_COLUMNS = 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
 
-const FilterGroup = ({ title, options, selected, onToggle, open, className = '' }) => (
-  <fieldset className={`panel px-5 py-4 ${open ? '' : 'hidden'} sm:block ${className}`}>
-    <legend className='sr-only'>{title}</legend>
-    <p className='eyebrow mb-3' aria-hidden='true'>{title}</p>
-    <div className='flex flex-col gap-2.5 text-sm text-gray-600'>
-      {options.map((option) => (
-        <label key={option} className='flex items-center gap-2.5 cursor-pointer transition-colors hover:text-ink'>
-          <input className='w-3.5 h-3.5 accent-[#2b2b2b] cursor-pointer' type='checkbox' value={option} checked={selected.includes(option)} onChange={() => onToggle(option)} />
-          {option}
-        </label>
-      ))}
-    </div>
-  </fieldset>
+// Pill-shaped select matching the type tabs
+const PillSelect = ({ label, value, onChange, children }) => (
+  <div className='relative flex-1 sm:flex-none'>
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      aria-label={label}
+      className='h-11 w-full appearance-none rounded-full border border-white/80 bg-white/70 pl-5 pr-10 text-sm text-ink shadow-glass backdrop-blur-md cursor-pointer outline-none transition-colors hover:bg-white focus-visible:ring-2 focus-visible:ring-brand'
+    >
+      {children}
+    </select>
+    <img src={assets.dropdown_icon} alt='' className='pointer-events-none absolute right-4 top-1/2 h-2.5 -translate-y-1/2 rotate-90 opacity-60' />
+  </div>
 )
 
 const Collection = () => {
   const { products, productsStatus, search, showSearch } = useContext(ShopContext)
+  const location = useLocation()
   useDocumentTitle('Collection')
-  const [showFilter, setShowFilter] = useState(false)
-  const [category, setCategory] = useState([])
-  const [subCategory, setSubCategory] = useState([])
+  const [category, setCategory] = useState('')
+  // Category tiles on the home page and footer links arrive with a type already chosen
+  const [type, setType] = useState(() => location.state?.subCategory || '')
   const [sortType, setSortType] = useState('relevant')
+
+  // Links that arrive while this page is already open (e.g. from the footer) start a fresh view of their type
+  useEffect(() => {
+    if (location.state && 'subCategory' in location.state) {
+      setType(location.state.subCategory || '')
+      setCategory('')
+    }
+  }, [location.state])
 
   // Filtering and sorting are derived together so a sort survives filter/search changes
   const filterProducts = useMemo(() => {
@@ -46,12 +55,8 @@ const Collection = () => {
     if (showSearch && search) {
       productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
     }
-    if (category.length > 0) {
-      productsCopy = productsCopy.filter(item => category.includes(item.category))
-    }
-    if (subCategory.length > 0) {
-      productsCopy = productsCopy.filter(item => subCategory.includes(item.subCategory))
-    }
+    if (category) productsCopy = productsCopy.filter(item => item.category === category)
+    if (type) productsCopy = productsCopy.filter(item => item.subCategory === type)
 
     switch (sortType) {
       case 'low-high':
@@ -61,44 +66,83 @@ const Collection = () => {
       default:
         return productsCopy
     }
-  }, [products, search, showSearch, category, subCategory, sortType])
+  }, [products, search, showSearch, category, type, sortType])
+
+  const filtered = Boolean(category || type)
+  const clearFilters = () => { setCategory(''); setType('') }
+
+  // Tabs show how many designs each type holds; a chosen type also sets the page heading
+  const typeCounts = useMemo(() => Object.fromEntries(SUB_CATEGORIES.map((t) => [t, products.filter((item) => item.subCategory === t).length])), [products])
+  const tabs = [{ value: '', label: 'All', count: products.length }, ...SUB_CATEGORIES.filter((t) => typeCounts[t] > 0).map((t) => ({ value: t, label: TYPES[t].label, count: typeCounts[t] }))]
+  const [headingStart, headingEnd] = type ? ['SHOP', TYPES[type].plural] : ['ALL', 'COLLECTIONS']
 
   return (
-    <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
-      {/* Filter Options */}
-      <aside className='min-w-60 sm:sticky sm:top-24 sm:self-start'>
-        <button type='button' onClick={() => setShowFilter(!showFilter)} aria-expanded={showFilter} className='my-2 text-xl flex items-center gap-2 tracking-wide'>
-          FILTERS
-          <img className={`h-3 sm:hidden transition-transform ${showFilter ? 'rotate-90' : ''}`} src={assets.dropdown_icon} alt="" />
-        </button>
-        <FilterGroup title='CATEGORIES' options={CATEGORIES} selected={category} onToggle={(v) => setCategory(prev => toggle(prev, v))} open={showFilter} className='mt-6' />
-        <FilterGroup title='TYPE' options={SUB_CATEGORIES} selected={subCategory} onToggle={(v) => setSubCategory(prev => toggle(prev, v))} open={showFilter} className='my-5' />
-      </aside>
+    <div className='pt-6 sm:pt-10'>
+      <Title
+        key={type || 'all'}
+        as='h1'
+        eyebrow='Shop'
+        text1={headingStart}
+        text2={headingEnd}
+        size='text-4xl sm:text-5xl'
+        subtitle={type ? TYPES[type].note : 'Single flowers, mixed bouquets, garlands and baskets, arranged by hand.'}
+      />
 
-      {/* Products */}
-      <div className='flex-1'>
-        <div className='flex flex-wrap items-start justify-between gap-3 text-base sm:text-2xl mb-4'>
-          <Title as='h1' text1={'ALL'} text2={'COLLECTIONS'} />
-          <select
-            value={sortType}
-            onChange={(e) => setSortType(e.target.value)}
-            aria-label='Sort products'
-            className='field w-auto py-2 pr-8 cursor-pointer'
-          >
+      {/* One toolbar: type tabs on the left, category and sort on the right */}
+      <div className='flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between'>
+        <nav aria-label='Flower types' className='-mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+          <div className='inline-flex gap-1 rounded-full border border-white/80 bg-white/55 p-1 shadow-glass backdrop-blur-md'>
+            {tabs.map((tab) => {
+              const active = tab.value === type
+              return (
+                <button
+                  key={tab.label}
+                  type='button'
+                  aria-pressed={active}
+                  onClick={() => setType(tab.value)}
+                  className={`flex h-9 shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 sm:px-5 text-sm transition-all duration-300 ease-petal ${active ? 'bg-ink text-white shadow-soft' : 'text-gray-600 hover:bg-white hover:text-ink'}`}
+                >
+                  {tab.label}
+                  <span className={`rounded-full px-1.5 py-0.5 text-[10px] leading-none ${active ? 'bg-white/20 text-white' : 'bg-blush/70 text-gray-600'}`}>{tab.count}</span>
+                </button>
+              )
+            })}
+          </div>
+        </nav>
+
+        <div className='flex gap-2'>
+          <PillSelect label='Filter by category' value={category} onChange={setCategory}>
+            <option value=''>All categories</option>
+            {CATEGORIES.map((c) => <option key={c} value={c}>{categoryLabel(c)}</option>)}
+          </PillSelect>
+          <PillSelect label='Sort products' value={sortType} onChange={setSortType}>
             {SORT_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-          </select>
+          </PillSelect>
         </div>
-
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-8'>
-          {filterProducts.map((item) => (
-            <ProductItem key={item._id} name={item.name} id={item._id} price={item.price} image={item.image} />
-          ))}
-        </div>
-
-        {productsStatus === 'loading' && <ProductGridSkeleton count={8} className='grid-cols-2 md:grid-cols-3 lg:grid-cols-4' />}
-        {productsStatus === 'error' && <StatusMessage retry>{LOAD_ERROR_TEXT}</StatusMessage>}
-        {productsStatus === 'ready' && filterProducts.length === 0 && <StatusMessage>No products match your filters.</StatusMessage>}
       </div>
+
+      <div className='mt-6 mb-6 flex items-center justify-between gap-3 border-b border-line/80 pb-4 text-sm'>
+        <p className='text-gray-500' aria-live='polite'>
+          {productsStatus === 'ready' && (
+            <>
+              Showing <span className='font-medium text-ink'>{filterProducts.length}</span> {filterProducts.length === 1 ? 'design' : 'designs'}
+              {category && <> in <span className='text-ink'>{categoryLabel(category)}</span></>}
+            </>
+          )}
+        </p>
+        {filtered && <button type='button' onClick={clearFilters} className='btn-link text-xs'>Clear filters</button>}
+      </div>
+
+      {productsStatus === 'ready' && <ProductGrid key={`${sortType}-${category}-${type}`} products={filterProducts} className={GRID_COLUMNS} />}
+      {productsStatus === 'loading' && <ProductGridSkeleton count={8} className={GRID_COLUMNS} />}
+      {productsStatus === 'error' && <StatusMessage retry>{LOAD_ERROR_TEXT}</StatusMessage>}
+      {productsStatus === 'ready' && filterProducts.length === 0 && (
+        <div className='panel py-16 text-center'>
+          <p className='font-display text-2xl text-ink'>No flowers match these filters.</p>
+          <p className='mt-2 text-sm text-gray-500'>Try another category or search for something else.</p>
+          {filtered && <button type='button' onClick={clearFilters} className='btn-outline mt-6'>Clear filters</button>}
+        </div>
+      )}
     </div>
   )
 }

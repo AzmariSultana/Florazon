@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { assets } from '../assets/assets'
 import axios from 'axios'
-import { backendUrl, CATEGORIES, SUB_CATEGORIES, SIZES } from '../config'
+import { backendUrl, CATEGORIES, SUB_CATEGORIES, SOLD_AS } from '../config'
 import { toast } from 'react-toastify'
 
 const IMAGE_SLOTS = 4
@@ -15,7 +15,9 @@ const Add = ({ token }) => {
   const [category, setCategory] = useState(CATEGORIES[0])
   const [subCategory, setSubCategory] = useState(SUB_CATEGORIES[0])
   const [bestseller, setBestseller] = useState(false)
-  const [sizes, setSizes] = useState([])
+  // Single stems or a bouquet in sizes; every option of the chosen set is on by default
+  const [soldAs, setSoldAs] = useState('bouquet')
+  const [sizes, setSizes] = useState(SOLD_AS.bouquet.options)
   const [submitting, setSubmitting] = useState(false)
 
   // Build preview URLs once per file and release them when the files change
@@ -30,7 +32,7 @@ const Add = ({ token }) => {
     setDescription('')
     setPrice('')
     setImages(emptyImages())
-    setSizes([])
+    setSizes(SOLD_AS[soldAs].options)
     setBestseller(false)
   }
 
@@ -42,7 +44,7 @@ const Add = ({ token }) => {
       return
     }
     if (sizes.length === 0) {
-      toast.error('Please select at least one size')
+      toast.error('Please select at least one option')
       return
     }
 
@@ -119,15 +121,31 @@ const Add = ({ token }) => {
         </div>
 
         <div>
-          <label htmlFor='product-price' className='block mb-2'>Product Price</label>
+          <label htmlFor='product-price' className='block mb-2'>Base price</label>
           <input id='product-price' onChange={(e) => setPrice(e.target.value)} value={price} className='w-full px-3 py-2 sm:w-[120px]' type='number' min='1' placeholder='25' required />
         </div>
       </div>
 
       <div>
-        <p className='mb-2' id='sizes-label'>Product Sizes</p>
+        <p className='mb-2' id='sold-as-label'>Sold as</p>
+        <div className='flex flex-wrap gap-3 mb-4' role='radiogroup' aria-labelledby='sold-as-label'>
+          {Object.entries(SOLD_AS).map(([key, value]) => (
+            <button
+              type='button'
+              role='radio'
+              key={key}
+              aria-checked={soldAs === key}
+              onClick={() => { setSoldAs(key); setSizes(value.options) }}
+              className={`px-4 py-1.5 rounded-md border text-sm transition-all ${soldAs === key ? 'bg-ink border-ink text-white' : 'bg-cream border-line hover:border-gray-400'}`}
+            >
+              {value.label}
+            </button>
+          ))}
+        </div>
+        <p className='mb-1' id='sizes-label'>{soldAs === 'stems' ? 'Stem options' : 'Bouquet sizes'}</p>
+        <p className='mb-3 text-xs text-gray-500'>The first option sells at the base price; larger options are priced automatically.</p>
         <div className='flex flex-wrap gap-3' role='group' aria-labelledby='sizes-label'>
-          {SIZES.map((size) => (
+          {SOLD_AS[soldAs].options.map((size) => (
             <button
               type='button'
               key={size}

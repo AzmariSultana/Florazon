@@ -42,7 +42,7 @@ The repository contains three independent applications:
 - **Profile management:** customers can update their name and email, and change their password after confirming the current one.
 - **Product catalogue:** the home page shows the latest arrivals and best sellers.
 - **Search, filtering and sorting:** search by product name, filter by category (Occasion, Gift-Type) and type (Single-Flower, Bouquet, Garland, Basket), and sort by price.
-- **Product details:** each product has an image gallery, size selection, a description and related products.
+- **Product details:** each product has an image gallery, a choice of bouquet size (Standard, Deluxe, Premium) or number of stems (1, 3, 6) priced from the base price, a description and related products.
 - **Persistent cart:** customers can add, update and remove items. Items added before logging in are merged into the account at sign-in.
 - **Checkout:** a delivery details form with Cash on Delivery payment.
 - **Order tracking:** order history shows the current status of each order, from Order Placed through Packing, Shipped and Out for delivery to Delivered.
@@ -51,7 +51,7 @@ The repository contains three independent applications:
 ### Admin Panel
 
 - **Secure login:** admin credentials are kept in server environment variables, and admin tokens expire after a set time.
-- **Product creation:** admins add products with up to four images uploaded to Cloudinary, plus category, type, sizes, price and a best-seller flag.
+- **Product creation:** admins add products with up to four images uploaded to Cloudinary, plus category, type, how it is sold (bouquet sizes or single stems), base price and a best-seller flag.
 - **Catalogue management:** admins can view all products and remove them, with a confirmation step.
 - **Order management:** admins can review every order with customer and address details, and update its delivery status.
 
@@ -191,7 +191,7 @@ The script adds products that are not in the database yet and never deletes anyt
 ## Usage
 
 1. **Add products:** load the catalogue with `npm run seed`, or open the admin panel at http://localhost:5175, sign in with `ADMIN_EMAIL` and `ADMIN_PASSWORD`, and use **Add Items** to upload images and product details.
-2. **Browse and shop:** open the storefront at http://localhost:5173, browse or search the collection, select a size and add items to the cart.
+2. **Browse and shop:** open the storefront at http://localhost:5173, browse or search the collection, choose a bouquet size or number of stems and add items to the cart.
 3. **Check out:** create an account or log in, go to checkout, enter delivery details and place a Cash on Delivery order.
 4. **Fulfil orders:** in the admin panel, open **Orders** and update the order status. The customer sees the change under **My Orders**.
 
@@ -240,7 +240,7 @@ Save the change to redeploy the API. From then on, the API only accepts browser 
 
 - **Passwords** are hashed with bcrypt, and changing a password requires the current one.
 - **JWT sessions** expire. Admin tokens carry a role claim and never contain credentials.
-- **Order totals** are calculated on the server, and item sizes and quantities are validated.
+- **Order totals** are calculated on the server, pricing each item by its chosen option, and quantities are validated.
 - **MongoDB query filters** are sanitised to prevent operator injection.
 - **Cart input** is validated to prevent prototype pollution.
 - **Uploads** are limited to image files under 5 MB, and temporary files are deleted after upload.

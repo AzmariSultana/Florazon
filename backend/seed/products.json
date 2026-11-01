@@ -5,7 +5,7 @@
     "price": 2400,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": true,
     "image": "red-rose-pink-carnation-bouquet.jpg"
   },
@@ -14,8 +14,8 @@
     "description": "Dusky pink chrysanthemums with dark centres, filled out with clouds of gypsophila and wrapped in peach paper. A soft, cheerful gift for any day.",
     "price": 1300,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["S", "M"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-chrysanthemum-bouquet.jpg"
   },
@@ -25,7 +25,7 @@
     "price": 650,
     "category": "Gift-Type",
     "subCategory": "Single-Flower",
-    "sizes": ["One size"],
+    "sizes": ["1 Stem", "3 Stems", "6 Stems"],
     "bestseller": false,
     "image": "single-pink-lily.jpg"
   },
@@ -35,7 +35,7 @@
     "price": 1900,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["M"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "hot-pink-rose-carnation-bouquet.jpg"
   },
@@ -44,8 +44,8 @@
     "description": "Three salmon-pink gerberas with gypsophila, wrapped in pink paper and newsprint and finished with a pink ribbon.",
     "price": 900,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["S"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-gerbera-trio.jpg"
   },
@@ -54,8 +54,8 @@
     "description": "Three pink roses surrounded by gypsophila in lilac-pink wrapping, tied with natural twine.",
     "price": 1000,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["S"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-rose-trio.jpg"
   },
@@ -65,7 +65,7 @@
     "price": 1600,
     "category": "Gift-Type",
     "subCategory": "Bouquet",
-    "sizes": ["S", "M"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-gerbera-lily-bouquet.jpg"
   },
@@ -75,7 +75,7 @@
     "price": 3400,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": true,
     "image": "mint-meadow-mixed-bouquet.jpg"
   },
@@ -85,7 +85,7 @@
     "price": 2800,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-lily-gerbera-bouquet.jpg"
   },
@@ -95,7 +95,7 @@
     "price": 700,
     "category": "Gift-Type",
     "subCategory": "Single-Flower",
-    "sizes": ["One size"],
+    "sizes": ["1 Stem", "3 Stems", "6 Stems"],
     "bestseller": false,
     "image": "single-sunflower.jpg"
   },
@@ -104,8 +104,8 @@
     "description": "A bunch of fresh yellow tulips in butter-yellow and white wrapping, tied with a white organza ribbon.",
     "price": 2000,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["M"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "yellow-tulip-bouquet.jpg"
   },
@@ -115,7 +115,7 @@
     "price": 3000,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "lavender-gerbera-rose-bouquet.jpg"
   },
@@ -124,8 +124,8 @@
     "description": "Fifteen yellow roses with gypsophila and fresh greenery, wrapped in cream paper and tied with a yellow satin ribbon.",
     "price": 3300,
     "category": "Occasion",
-    "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": true,
     "image": "yellow-rose-bouquet.jpg"
   },
@@ -134,8 +134,8 @@
     "description": "Pink tulips with a few white tulips and gypsophila in soft pink wrapping, finished with a pink satin ribbon.",
     "price": 2400,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["M"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-tulip-bouquet.jpg"
   },
@@ -144,8 +144,8 @@
     "description": "Three blue-dyed roses surrounded by gypsophila and wrapped in pale blue paper. A striking, unusual gift.",
     "price": 1500,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["S"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "blue-rose-bouquet.jpg"
   },
@@ -155,7 +155,7 @@
     "price": 3600,
     "category": "Gift-Type",
     "subCategory": "Bouquet",
-    "sizes": ["L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": true,
     "image": "sunflower-sunshine-bouquet.jpg"
   },
@@ -164,8 +164,8 @@
     "description": "Red and pink roses with generous gypsophila in peach wrapping, a classic mix for birthdays and anniversaries.",
     "price": 2000,
     "category": "Occasion",
-    "subCategory": "Bouquet",
-    "sizes": ["M"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "red-pink-rose-bouquet.jpg"
   },
@@ -175,7 +175,7 @@
     "price": 2500,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "sunflower-lily-mixed-bouquet.jpg"
   },
@@ -184,8 +184,8 @@
     "description": "Pink and white roses with gypsophila in soft pink tissue wrapping.",
     "price": 2100,
     "category": "Occasion",
-    "subCategory": "Bouquet",
-    "sizes": ["M"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-white-rose-bouquet.jpg"
   },
@@ -194,8 +194,8 @@
     "description": "White oriental lilies in full bloom and bud, wrapped in kraft paper and newsprint and tied with a polka-dot ribbon.",
     "price": 2300,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["M"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "white-lily-bouquet.jpg"
   },
@@ -205,7 +205,7 @@
     "price": 3800,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": true,
     "image": "grand-mixed-celebration-bouquet.jpg"
   },
@@ -214,8 +214,8 @@
     "description": "Two-tone pink roses with gypsophila, wrapped in white paper.",
     "price": 1900,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["M"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-rose-bouquet.jpg"
   },
@@ -225,7 +225,7 @@
     "price": 4200,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": true,
     "image": "sunflower-gerbera-grand-bouquet.jpg"
   },
@@ -235,7 +235,7 @@
     "price": 3200,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "lavender-dreams-bouquet.jpg"
   },
@@ -244,8 +244,8 @@
     "description": "Classic red and white roses generously filled with gypsophila and wrapped in natural kraft paper.",
     "price": 2500,
     "category": "Occasion",
-    "subCategory": "Bouquet",
-    "sizes": ["S", "M", "L"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "red-white-rose-bouquet.jpg"
   },
@@ -255,7 +255,7 @@
     "price": 1800,
     "category": "Gift-Type",
     "subCategory": "Bouquet",
-    "sizes": ["S", "M"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "sunshine-gerbera-bouquet.jpg"
   },
@@ -265,7 +265,7 @@
     "price": 2800,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "lily-red-rose-bouquet.jpg"
   },
@@ -274,8 +274,8 @@
     "description": "White roses paired with blue-tinted gypsophila in soft white tissue wrapping.",
     "price": 2200,
     "category": "Gift-Type",
-    "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "white-rose-blue-gypsophila.jpg"
   },
@@ -285,7 +285,7 @@
     "price": 2900,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pink-lily-romance.jpg"
   },
@@ -295,7 +295,7 @@
     "price": 2600,
     "category": "Gift-Type",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "pastel-garden-bouquet.jpg"
   },
@@ -305,7 +305,7 @@
     "price": 1900,
     "category": "Occasion",
     "subCategory": "Bouquet",
-    "sizes": ["S", "M"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "gerbera-celebration-bouquet.jpg"
   },
@@ -314,8 +314,8 @@
     "description": "Eleven velvet red roses with gypsophila and eucalyptus in kraft and sheer wrapping, tied with a burgundy ribbon and a \"for you\" card.",
     "price": 3500,
     "category": "Occasion",
-    "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "subCategory": "Single-Flower",
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": true,
     "image": "classic-red-rose-bouquet.jpg"
   },
@@ -325,7 +325,7 @@
     "price": 2700,
     "category": "Gift-Type",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "blush-pastel-bouquet.jpg"
   },
@@ -335,8 +335,188 @@
     "price": 2700,
     "category": "Gift-Type",
     "subCategory": "Bouquet",
-    "sizes": ["M", "L"],
+    "sizes": ["Standard", "Deluxe", "Premium"],
     "bestseller": false,
     "image": "white-lily-pink-rose-bouquet.jpg"
+  },
+  {
+    "name": "Blush Lily Garden Crate",
+    "description": "Pink lilies, pink gerberas and peach roses with purple stock, white snapdragons and carnations, arranged in a rustic wooden crate. A lush centrepiece for birthdays, anniversaries and celebrations at home.",
+    "price": 4200,
+    "category": "Occasion",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "blush-lily-garden-crate.jpeg"
+  },
+  {
+    "name": "Coral Gerbera & Lily Basket",
+    "description": "Red and peach gerberas with pink lilies, lilac stock, pink hydrangea, purple roses and eucalyptus in a woven rectangular basket. Bright, generous and ready to display the moment it arrives.",
+    "price": 3800,
+    "category": "Gift-Type",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "coral-gerbera-lily-basket.jpeg"
+  },
+  {
+    "name": "Gerbera Garden Basket",
+    "description": "A wide white wicker basket filled with magenta, pink, peach and cream gerberas, a pink lily and fresh greenery, finished with a white bow on the handle. A cheerful choice for congratulations and get-well wishes.",
+    "price": 3200,
+    "category": "Occasion",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "gerbera-garden-basket.jpeg"
+  },
+  {
+    "name": "Spring Meadow Basket",
+    "description": "Tulips in pink, yellow and blue with peach and pink ranunculus, yellow gerberas, blue hydrangea, lilac sprays and eucalyptus in a handled wicker basket with a kraft gift tag. A garden-fresh mix that feels like spring.",
+    "price": 4500,
+    "category": "Gift-Type",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "spring-meadow-basket.jpeg"
+  },
+  {
+    "name": "Pink Lily Petite Basket",
+    "description": "Pink lilies with red carnations, pink spray roses, white lisianthus and gypsophila in a small wicker basket tied with soft pink tulle. A sweet, compact gift for a desk, bedside or dining table.",
+    "price": 2600,
+    "category": "Gift-Type",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "pink-lily-petite-basket.jpeg"
+  },
+  {
+    "name": "Rose Abundance Basket",
+    "description": "A handled wicker basket brimming with pink roses, white button chrysanthemums and clouds of gypsophila. Romantic and full, made for anniversaries, proposals and heartfelt thank-yous.",
+    "price": 3900,
+    "category": "Occasion",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "rose-abundance-basket.jpeg"
+  },
+  {
+    "name": "Rose Romance Garland Pair",
+    "description": "A pair of garlands made with deep red and pale pink roses, separated by gold bead accents and finished with a rose tassel. An elegant choice for wedding garland exchanges and engagement ceremonies.",
+    "price": 5500,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "rose-romance-garland-pair.jpeg"
+  },
+  {
+    "name": "Pink Lotus & Gypsophila Garland Pair",
+    "description": "A pair of garlands with rows of pink lotus buds, white floral bands and full sections of gypsophila, ending in a lotus tassel. Graceful and traditional for weddings, holud and engagement ceremonies.",
+    "price": 6500,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "pink-lotus-gypsophila-garland-pair.jpeg"
+  },
+  {
+    "name": "Jasmine, Rose & Lotus Garland Pair",
+    "description": "A pair of white jasmine garlands with bands of red rose buds and pink lotus buds, finished with a lotus tassel. Fragrant and classic for weddings and welcome ceremonies.",
+    "price": 6000,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "jasmine-rose-lotus-garland-pair.jpeg"
+  },
+  {
+    "name": "Lotus Pearl Garland Pair",
+    "description": "A pair of garlands with pink lotus buds alternating with gypsophila clusters, ending in strands of pearls and gold beads. Soft, delicate and photogenic for wedding and engagement ceremonies.",
+    "price": 5800,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "lotus-pearl-garland-pair.jpeg"
+  },
+  {
+    "name": "Tri-Rose Wedding Garland Pair",
+    "description": "A pair of garlands made with red, pale pink and white roses and gypsophila, finished with a cluster of rose tassels. A timeless pairing for wedding garland exchanges.",
+    "price": 5200,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "tri-rose-wedding-garland-pair.jpeg"
+  },
+  {
+    "name": "Jasmine & Magenta Rose Garland Pair",
+    "description": "A pair of full white jasmine garlands with bands of magenta roses and gypsophila, a rose pendant at the centre and rose tassels below. Rich and fragrant for weddings and grand celebrations.",
+    "price": 6200,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "jasmine-magenta-rose-garland-pair.jpeg"
+  },
+  {
+    "name": "Blush Heart Flower Box",
+    "description": "Pink carnations, lavender roses and pink and white daisies with fresh greenery, arranged in a pink heart-shaped box and tied with an ivory satin ribbon. A sweet, keepsake gift for anniversaries and birthdays.",
+    "price": 3400,
+    "category": "Gift-Type",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "blush-heart-flower-box.jpeg"
+  },
+  {
+    "name": "Lily & Rose Hatbox",
+    "description": "Pink stargazer lilies in bloom and bud with deep red roses and pink daisy chrysanthemums, arranged in a white hatbox finished with a red satin bow. Elegant and ready to display.",
+    "price": 4300,
+    "category": "Gift-Type",
+    "subCategory": "Basket",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "lily-rose-hatbox.jpeg"
+  },
+  {
+    "name": "Crimson Lily & Rose Bouquet",
+    "description": "Red roses and white lilies with clouds of gypsophila, wrapped in crimson paper and tied with a white satin ribbon. A classic, romantic pairing for anniversaries and celebrations.",
+    "price": 3200,
+    "category": "Occasion",
+    "subCategory": "Bouquet",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "crimson-lily-rose-bouquet.jpeg"
+  },
+  {
+    "name": "Blush Alstroemeria & Rose Bouquet",
+    "description": "Red roses with pink carnations, pink alstroemeria, gypsophila and eucalyptus in soft pink wrapping, finished with a pink satin bow. A tender, romantic gift for someone special.",
+    "price": 2600,
+    "category": "Gift-Type",
+    "subCategory": "Bouquet",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "blush-alstroemeria-rose-bouquet.jpeg"
+  },
+  {
+    "name": "Pure Jasmine Garland Pair",
+    "description": "A pair of all-white garlands made with jasmine buds and white blossoms, finished with gold accents and a jasmine tassel. Fragrant, simple and graceful for weddings and engagement ceremonies.",
+    "price": 4800,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "pure-jasmine-garland-pair.jpeg"
+  },
+  {
+    "name": "Jasmine & Blush Bloom Garland Pair",
+    "description": "A pair of white jasmine garlands with bands of soft pink blooms and pink tassels at the ends. Delicate and pretty for weddings, holud and engagement ceremonies.",
+    "price": 5200,
+    "category": "Occasion",
+    "subCategory": "Garland",
+    "sizes": ["Standard", "Deluxe", "Premium"],
+    "bestseller": false,
+    "image": "jasmine-blush-garland-pair.jpeg"
   }
 ]

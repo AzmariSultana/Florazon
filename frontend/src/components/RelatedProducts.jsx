@@ -3,7 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from './Title'
 import ProductGrid from './ProductGrid'
 
-const LIMIT = 5
+const LIMIT = 4
 
 const RelatedProducts = ({ category, subCategory, currentId }) => {
   const { products } = useContext(ShopContext)
@@ -18,9 +18,9 @@ const RelatedProducts = ({ category, subCategory, currentId }) => {
   if (related.length === 0) return null
 
   return (
-    <section className='my-24'>
-      <div className='text-center text-3xl py-2'>
-        <Title text1={'RELATED'} text2={'PRODUCTS'} />
+    <section className='mt-24'>
+      <div className='text-center'>
+        <Title align='center' eyebrow='You may also love' text1={'RELATED'} text2={'PRODUCTS'} />
       </div>
       <ProductGrid products={related} />
     </section>

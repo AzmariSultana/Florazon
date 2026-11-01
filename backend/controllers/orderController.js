@@ -3,6 +3,7 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js"
 import productModel from "../models/productModel.js";
 import { DELIVERY_FEE, ORDER_STATUSES } from "../config/constants.js";
+import { optionPrice, resolveOption } from "../config/productOptions.js";
 
 
 // Placing orders using COD Method
@@ -35,11 +36,11 @@ const placeOrder = async (req, res) => {
       if (!product) {
         return res.status(400).json({ success: false, message: "A product in your cart is no longer available" });
       }
-      if (!product.sizes.includes(item.size)) {
-        return res.status(400).json({ success: false, message: `Size ${item.size} is not available for ${product.name}` });
-      }
-      orderItems.push({ ...product, size: item.size, quantity });
-      subtotal += product.price * quantity;
+      // Price each line by its option (stems or tier); unknown options fall back to the base option
+      const option = resolveOption(product, item.size);
+      const unitPrice = optionPrice(product, option.label);
+      orderItems.push({ ...product, size: option.label, price: unitPrice, quantity });
+      subtotal += unitPrice * quantity;
     }
 
     const orderData = {

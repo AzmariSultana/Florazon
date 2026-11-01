@@ -2,11 +2,11 @@ import React from 'react'
 
 // Centered message for loading and error states, with an optional retry
 const StatusMessage = ({ children, retry = false }) => (
-  <div className='py-20 text-center text-gray-500' role='status'>
+  <div className='panel my-10 py-16 px-6 text-center text-gray-500' role='status'>
     <p>{children}</p>
     {retry && (
       <button type='button' onClick={() => window.location.reload()} className='btn-outline mt-6'>
-        TRY AGAIN
+        Try again
       </button>
     )}
   </div>

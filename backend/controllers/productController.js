@@ -2,6 +2,7 @@ import fs from "fs/promises"
 import mongoose from "mongoose"
 import { v2 as cloudinary } from "cloudinary"
 import productModel from "../models/productModel.js"
+import { OPTION_SETS } from "../config/productOptions.js"
 
 // function for add product
 const addProduct = async (req, res) => {
@@ -18,8 +19,10 @@ const addProduct = async (req, res) => {
         if (!Number.isFinite(parsedPrice) || parsedPrice <= 0) {
             return res.json({ success: false, message: "Please enter a valid price" })
         }
-        if (!Array.isArray(parsedSizes) || parsedSizes.length === 0) {
-            return res.json({ success: false, message: "Please select at least one size" })
+        // All chosen options must come from one set: single stems or bouquet sizes
+        const fromOneSet = OPTION_SETS.some((set) => parsedSizes.every((label) => set.some((option) => option.label === label)))
+        if (!Array.isArray(parsedSizes) || parsedSizes.length === 0 || !fromOneSet) {
+            return res.json({ success: false, message: "Please choose stem options or bouquet sizes" })
         }
 
         const files = req.files || {}

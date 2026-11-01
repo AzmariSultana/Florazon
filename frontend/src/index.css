@@ -5,6 +5,27 @@
 @tailwind utilities;
 
 @layer base {
+  /* Page gutter shared by the page wrapper and the full-bleed header and footer. On wide monitors the
+     content stops growing at 1320px and stays centred, so lines and grids never stretch too far. */
+  :root {
+    --gutter: 1rem;
+  }
+  @media (min-width: 640px) {
+    :root { --gutter: 5vw; }
+  }
+  @media (min-width: 768px) {
+    :root { --gutter: 7vw; }
+  }
+  @media (min-width: 1024px) {
+    :root { --gutter: max(9vw, calc((100vw - 1320px) / 2)); }
+  }
+
+  /* Decorative shapes may run past the screen edge (e.g. the hero halo); clip, which keeps sticky working */
+  html,
+  body {
+    overflow-x: clip;
+  }
+
   html {
     color-scheme: light;
     -webkit-font-smoothing: antialiased;
@@ -12,8 +33,14 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Ivory page washed with faint rose and sage light in the top corners */
   body {
     @apply font-sans text-ink bg-canvas;
+    background-image:
+      radial-gradient(56rem 36rem at 0% -8%, rgba(244, 214, 222, 0.55), transparent 62%),
+      radial-gradient(48rem 34rem at 100% 4%, rgba(222, 232, 212, 0.6), transparent 60%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
   }
 
   ::selection {
@@ -23,26 +50,27 @@
   /* Visible focus for keyboard users only */
   :focus-visible {
     outline: 2px solid theme('colors.brand.DEFAULT');
-    outline-offset: 2px;
+    outline-offset: 3px;
   }
 
   /* Slim scrollbar instead of hiding it, so long pages stay navigable */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #d6d1cc transparent;
+    scrollbar-color: #dcd2ca transparent;
   }
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #d6d1cc;
+    background: #dcd2ca;
     border-radius: 999px;
   }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
   }
@@ -55,20 +83,26 @@
 
   /* Small uppercase label above headings and inside panels */
   .eyebrow {
-    @apply text-[11px] font-medium tracking-[0.18em] uppercase text-gray-500;
+    @apply text-[11px] font-medium tracking-[0.2em] uppercase text-gray-500;
   }
 
-  /* Primary call-to-action: the brand's black button, with a gentle press response */
+  /* Frosted pill label, e.g. above the hero heading or on a product image */
+  .tag {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/65 px-3.5 py-1.5
+      text-[11px] font-medium tracking-[0.16em] uppercase text-gray-600 backdrop-blur-sm;
+  }
+
+  /* Primary call-to-action: a deep ink pill that warms to rose on hover */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-ink text-white text-sm tracking-wide px-8 py-3
-      transition-all duration-200 hover:bg-black hover:shadow-lift active:scale-[0.98]
-      disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:shadow-none disabled:active:scale-100;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink text-white text-sm font-medium tracking-wide px-8 py-3.5
+      transition-all duration-300 ease-petal hover:bg-brand-dark hover:shadow-lift hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]
+      disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:shadow-none disabled:hover:translate-y-0;
   }
 
-  /* Secondary, outlined action */
+  /* Secondary, outlined pill */
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-ink text-sm tracking-wide px-8 py-3
-      transition-all duration-200 hover:bg-ink hover:text-white active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/80 bg-white/40 text-sm font-medium tracking-wide px-8 py-3.5
+      transition-all duration-300 ease-petal hover:bg-ink hover:text-white active:scale-[0.98];
   }
 
   /* Quiet text-style action */
@@ -76,37 +110,55 @@
     @apply text-sm text-gray-600 underline-offset-4 transition-colors hover:text-ink hover:underline;
   }
 
-  /* White surface with a fine border and soft depth */
-  .card {
-    @apply bg-white border border-line rounded-lg shadow-soft;
+  /* Round icon button used in the header and the quantity stepper */
+  .icon-btn {
+    @apply relative inline-flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ease-petal
+      hover:bg-white hover:shadow-soft active:scale-95;
   }
 
-  /* Translucent white surface that lets the warm page tone through: summaries, grouped content */
+  /* White surface with a fine border and soft depth */
+  .card {
+    @apply bg-white/90 border border-line rounded-3xl shadow-soft;
+  }
+
+  /* Frosted surface that lets the floral background through: summaries, filters, grouped content */
   .panel {
-    @apply bg-white/60 border border-line rounded-lg;
+    @apply bg-white/55 border border-white/80 rounded-3xl shadow-glass backdrop-blur-md;
   }
 
   /* Text inputs across forms */
   .field {
-    @apply w-full rounded-md border border-gray-300 bg-white px-3.5 py-2.5 text-sm placeholder:text-gray-400
+    @apply w-full rounded-xl border border-line bg-white/90 px-4 py-3 text-sm placeholder:text-gray-400
       outline-none transition-[border-color,box-shadow] duration-200
-      hover:border-gray-400 focus:border-ink focus:ring-4 focus:ring-brand-soft;
+      hover:border-gray-300 focus:border-brand/60 focus:ring-4 focus:ring-brand-soft;
+  }
+
+  .field-label {
+    @apply block text-xs font-medium tracking-wide text-gray-600 mb-1.5;
   }
 
   /* Selectable option such as a size */
   .chip {
-    @apply min-w-12 rounded-md border px-4 py-2 text-sm transition-all duration-200;
+    @apply min-w-12 rounded-full border px-5 py-2 text-sm transition-all duration-300 ease-petal;
   }
   .chip-idle {
     @apply border-line bg-white/70 text-gray-700 hover:border-gray-400 hover:bg-white;
   }
   .chip-selected {
-    @apply border-ink bg-white text-ink shadow-soft;
+    @apply border-ink bg-ink text-white shadow-soft;
+  }
+
+  /* Image frame that zooms its picture while the surrounding .group is hovered */
+  .zoom-frame {
+    @apply relative overflow-hidden bg-blush/50;
+  }
+  .zoom-frame img {
+    @apply transition-transform duration-700 ease-petal group-hover:scale-[1.06];
   }
 
   /* Placeholder block shown while content loads */
   .skeleton {
-    @apply relative overflow-hidden rounded-md bg-[#ece6df];
+    @apply relative overflow-hidden rounded-2xl bg-[#efe6e0];
   }
   .skeleton::after {
     content: '';
@@ -120,16 +172,15 @@
   100% { transform: translateX(100%); }
 }
 
-/* Active desktop nav link underline */
-a.active hr {
-  display: block;
+/* Quantity inputs use their own stepper buttons instead of the browser spinners */
+input[type='number'].no-spin::-webkit-inner-spin-button,
+input[type='number'].no-spin::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-
-@media (max-width: 640px) {
-  a.active {
-    background-color: theme('colors.ink');
-    color: white;
-  }
+input[type='number'].no-spin {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* Toast notifications in the store's typography and palette */
@@ -138,7 +189,7 @@ a.active hr {
   font-size: 14px;
   color: theme('colors.ink');
   border: 1px solid theme('colors.line');
-  border-radius: 10px;
+  border-radius: 16px;
   box-shadow: theme('boxShadow.lift');
 }
 .Toastify__progress-bar--success { background: theme('colors.brand.DEFAULT'); }
