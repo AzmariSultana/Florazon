@@ -2,12 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { formatPrice, imageUrl } from '../utils/format'
 import { typeLabel } from '../constants'
+import StarRating from './StarRating'
 
 // Card images load a size that suits the column width, and a sharper one on high-resolution screens
 const SIZES = '(min-width: 1280px) 22vw, (min-width: 1024px) 28vw, (min-width: 768px) 30vw, 46vw'
 const srcSet = (url) => `${imageUrl(url, 400)} 400w, ${imageUrl(url, 700)} 700w, ${imageUrl(url, 1000)} 1000w`
 
-const ProductItem = ({ id, image, name, price, bestseller, subCategory, badge }) => {
+const ProductItem = ({ id, image, name, price, bestseller, subCategory, badge, rating }) => {
   const [first, second] = Array.isArray(image) ? image : []
 
   return (
@@ -45,6 +46,12 @@ const ProductItem = ({ id, image, name, price, bestseller, subCategory, badge })
       <div className='flex flex-1 flex-col px-1 pt-4'>
         {subCategory && <p className='eyebrow text-[10px]'>{typeLabel(subCategory)}</p>}
         <p className='mt-1.5 line-clamp-2 min-h-[2.6em] text-sm sm:text-[15px] leading-[1.3] text-ink transition-colors group-hover:text-brand'>{name}</p>
+        {rating?.count > 0 && (
+          <p className='mt-1.5 flex items-center gap-1.5 text-xs text-gray-500'>
+            <StarRating rating={rating.average} size='h-3 w-3' />
+            <span><span className='font-medium text-ink'>{rating.average.toFixed(1)}</span> ({rating.count})</span>
+          </p>
+        )}
         <div className='mt-2 flex items-center justify-between gap-2'>
           <p className='text-sm sm:text-[15px] font-medium text-ink'><span className='mr-1 text-[11px] font-normal text-gray-500'>from</span>{formatPrice(price)}</p>
           <span aria-hidden='true' className='flex h-7 w-7 items-center justify-center rounded-full border border-line text-xs text-gray-500 transition-all duration-300 group-hover:border-ink group-hover:bg-ink group-hover:text-white'>&rarr;</span>

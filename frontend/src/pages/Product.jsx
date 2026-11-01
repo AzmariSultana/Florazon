@@ -5,6 +5,9 @@ import { ShopContext } from '../context/ShopContext'
 import RelatedProducts from '../components/RelatedProducts'
 import Reveal from '../components/Reveal'
 import Lightbox from '../components/Lightbox'
+import ReviewsSection from '../components/ReviewsSection'
+import StarRating from '../components/StarRating'
+import { getProductRating } from '../utils/reviews'
 import { formatPrice, imageUrl } from '../utils/format'
 import StatusMessage, { LOAD_ERROR_TEXT } from '../components/StatusMessage'
 import useDocumentTitle from '../utils/useDocumentTitle'
@@ -57,8 +60,8 @@ const PhotoStage = ({ src, alt, badge, onOpen }) => {
       type='button'
       onClick={onOpen}
       aria-label={`View ${alt} full screen`}
-      style={{ aspectRatio: ratio, width: `calc(min(72vh, 680px) * ${ratio})` }}
-      className='group relative mx-auto lg:mx-0 block max-w-full lg:max-w-[min(100%,580px)] overflow-hidden rounded-[1.75rem] bg-blush/40 shadow-soft cursor-zoom-in'
+      style={{ aspectRatio: ratio, width: `min(580px, var(--photo-cap), calc(min(72vh, 680px) * ${ratio}))` }}
+      className='group relative mx-auto lg:mx-0 block max-w-full [--photo-cap:100%] lg:[--photo-cap:44vw] overflow-hidden rounded-[1.75rem] bg-blush/40 shadow-soft cursor-zoom-in'
     >
       <div key={src} className='absolute inset-0 animate-fade-up'>
         <img
@@ -167,6 +170,7 @@ const Product = () => {
   const byStems = isSoldByStem(productData)
   const unitPrice = optionPrice(productData, size)
   const lineTotal = unitPrice * quantity
+  const rating = getProductRating(productData)
   const careTips = byStems ? CARE_TIPS.stems : CARE_TIPS[productData.subCategory] || CARE_TIPS.Bouquet
 
   // Adds the chosen option and quantity; one item uses the usual add, more set the cart line directly
@@ -235,6 +239,13 @@ const Product = () => {
         <div className='min-w-0 animate-fade-up [animation-delay:120ms]'>
           <p className='eyebrow'>{typeLabel(productData.subCategory)} &middot; {categoryLabel(productData.category)}</p>
           <h1 className='mt-3 font-display text-[1.9rem] sm:text-[2.25rem] xl:text-[2.5rem] leading-[1.12] text-ink'>{productData.name}</h1>
+          {rating.count > 0 && (
+            <a href='#reviews' className='group mt-3 inline-flex items-center gap-2 text-sm text-gray-600'>
+              <StarRating rating={rating.average} />
+              <span className='font-medium text-ink'>{rating.average.toFixed(1)}</span>
+              <span className='underline-offset-4 group-hover:text-brand group-hover:underline'>{rating.count} reviews</span>
+            </a>
+          )}
 
           <div className='mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1'>
             <p className='font-display text-[1.75rem] leading-none text-brand' aria-live='polite'>{formatPrice(unitPrice)}</p>
@@ -375,6 +386,8 @@ const Product = () => {
           )}
         </div>
       </Reveal>
+
+      <ReviewsSection product={productData} />
 
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} currentId={productData._id} />
 

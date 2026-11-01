@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductItem from './ProductItem'
 import Reveal from './Reveal'
+import { getProductRating } from '../utils/reviews'
 
 const DEFAULT_COLUMNS = 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
 
@@ -9,7 +10,7 @@ const ProductGrid = ({ products, className = DEFAULT_COLUMNS, badge }) => (
   <div className={`grid ${className} gap-x-4 gap-y-10 sm:gap-x-6`}>
     {products.map((item, i) => (
       <Reveal key={item._id} delay={(i % 4) * 80}>
-        <ProductItem id={item._id} name={item.name} image={item.image} price={item.price} bestseller={item.bestseller} subCategory={item.subCategory} badge={badge} />
+        <ProductItem id={item._id} name={item.name} image={item.image} price={item.price} bestseller={item.bestseller} subCategory={item.subCategory} badge={badge} rating={getProductRating(item)} />
       </Reveal>
     ))}
   </div>
