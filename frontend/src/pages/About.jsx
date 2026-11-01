@@ -140,18 +140,18 @@ const About = () => {
       </Reveal>
 
       {/* Mission */}
-      <Reveal as='section' className='relative mt-24 overflow-hidden rounded-4xl bg-gradient-to-br from-blush via-cream to-sage-soft border border-white/80 px-4 sm:px-6 py-16 sm:py-20 text-center shadow-soft'>
-        <Blossom className='absolute -left-6 -top-6 h-32 w-32 text-brand/40 rotate-12' />
-        <Blossom className='absolute -right-8 -bottom-8 h-40 w-40 text-sage/40 -rotate-12' />
+      <Reveal as='section' className='relative mx-auto mt-24 max-w-4xl overflow-hidden rounded-4xl bg-gradient-to-br from-blush via-cream to-sage-soft border border-white/80 px-5 sm:px-8 py-11 sm:py-14 text-center shadow-soft'>
+        <Blossom className='absolute -left-5 -top-5 h-20 w-20 sm:h-24 sm:w-24 text-brand/40 rotate-12' />
+        <Blossom className='absolute -right-6 -bottom-6 h-24 w-24 sm:h-28 sm:w-28 text-sage/40 -rotate-12' />
         <div className='relative'>
           <p className='eyebrow'>Our mission</p>
-          <blockquote className='mt-6 font-display text-[clamp(0.9rem,4.1vw,1.25rem)] sm:text-3xl leading-relaxed text-ink'>
+          <blockquote className='mt-4 font-display text-[clamp(0.9rem,4.1vw,1.25rem)] sm:text-[1.65rem] leading-relaxed text-ink'>
             We bring fresh flowers, bright and true,<br />
             To share the love we hold for you.<br />
             With every bloom, a smile we send,<br />
             <span className='text-brand'>Connecting hearts from start to end.</span>
           </blockquote>
-          <Blossom className='mx-auto mt-8 h-6 w-6 text-brand' />
+          <Blossom className='mx-auto mt-6 h-5 w-5 text-brand' />
         </div>
       </Reveal>
 

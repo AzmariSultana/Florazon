@@ -13,17 +13,17 @@ const NewsletterBox = () => {
   }
 
   return (
-    <section className='relative mt-24 overflow-hidden rounded-4xl bg-gradient-to-br from-blush via-cream to-sage-soft border border-white/80 px-4 sm:px-6 py-16 sm:py-20 text-center shadow-soft'>
-      <Blossom className='absolute -left-6 -top-6 h-32 w-32 text-brand/40 rotate-12' />
-      <Blossom className='absolute -right-8 -bottom-8 h-40 w-40 text-sage/40 -rotate-12' />
+    <section className='relative mx-auto mt-24 max-w-4xl overflow-hidden rounded-4xl bg-gradient-to-br from-blush via-cream to-sage-soft border border-white/80 px-5 sm:px-8 py-11 sm:py-14 text-center shadow-soft'>
+      <Blossom className='absolute -left-5 -top-5 h-20 w-20 sm:h-24 sm:w-24 text-brand/40 rotate-12' />
+      <Blossom className='absolute -right-6 -bottom-6 h-24 w-24 sm:h-28 sm:w-28 text-sage/40 -rotate-12' />
       <div className='relative'>
         <p className='eyebrow'>Newsletter</p>
-        <h2 className='mt-6 font-display text-2xl sm:text-3xl leading-relaxed text-ink'>
+        <h2 className='mt-4 font-display text-[1.3rem] sm:text-[1.75rem] leading-snug text-ink'>
           A bloom of savings:<br />
           <span className='text-brand'>20% off when you subscribe.</span>
         </h2>
-        <p className='mt-3 text-sm sm:text-base text-gray-500'>Be the first to smell what&apos;s new.</p>
-        <form onSubmit={onSubmitHandler} className='w-full max-w-md flex flex-col sm:flex-row items-stretch gap-2 mx-auto mt-8 sm:rounded-full sm:border sm:border-white/80 sm:bg-white/70 sm:p-1.5 sm:shadow-glass sm:backdrop-blur-md'>
+        <p className='mt-2 text-sm text-gray-500'>Be the first to smell what&apos;s new.</p>
+        <form onSubmit={onSubmitHandler} className='w-full max-w-md flex flex-col sm:flex-row items-stretch gap-2 mx-auto mt-6 sm:rounded-full sm:border sm:border-white/80 sm:bg-white/70 sm:p-1.5 sm:shadow-glass sm:backdrop-blur-md'>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -35,7 +35,7 @@ const NewsletterBox = () => {
           />
           <button type='submit' className='btn-primary px-8 py-3'>Subscribe</button>
         </form>
-        <Blossom className='mx-auto mt-8 h-6 w-6 text-brand' />
+        <Blossom className='mx-auto mt-6 h-5 w-5 text-brand' />
       </div>
     </section>
   )
