@@ -13,7 +13,8 @@ import { DELIVERY_FEE, categoryLabel, typeLabel } from '../constants'
 const SIZE_LABELS = { Garland: 'Garland size', Basket: 'Basket size' }
 const MAX_QUANTITY = 20
 
-// Main photo, shown whole on a soft mat like a framed print, magnifying towards the pointer on hover
+// Main photo in one consistent frame: the whole photo is shown (never cropped), and any space around it
+// is filled with a soft, blurred copy of the same photo so there are no empty bands. Zoom is hover-only.
 const PhotoStage = ({ src, alt, badge }) => {
   const [origin, setOrigin] = useState('50% 50%')
   const onMove = (e) => {
@@ -21,20 +22,23 @@ const PhotoStage = ({ src, alt, badge }) => {
     setOrigin(`${((e.clientX - rect.left) / rect.width) * 100}% ${((e.clientY - rect.top) / rect.height) * 100}%`)
   }
   return (
-    <div className='relative flex items-center justify-center rounded-[2rem] border border-white/80 bg-gradient-to-br from-blush/70 via-cream to-sage-soft/70 p-3 sm:p-5 shadow-soft'>
-      {badge && <span className='tag absolute left-5 top-5 sm:left-7 sm:top-7 z-10'>{badge}</span>}
-      {/* The photo keeps its own shape (never cropped); tall photos are capped to the screen height */}
-      <div onMouseMove={onMove} onMouseLeave={() => setOrigin('50% 50%')} className='group overflow-hidden rounded-2xl shadow-soft cursor-zoom-in'>
-        {/* The fade runs on a wrapper: an animation's held transform would override the zoom */}
-        <div key={src} className='animate-fade-up'>
-          <img
-            className='block h-auto w-auto max-w-full max-h-[min(72vh,700px)] object-contain transition-transform duration-500 ease-petal group-hover:scale-[1.5]'
-            style={{ transformOrigin: origin }}
-            src={src}
-            alt={alt}
-          />
-        </div>
+    <div
+      onMouseMove={onMove}
+      onMouseLeave={() => setOrigin('50% 50%')}
+      className='group relative w-full overflow-hidden rounded-[1.75rem] bg-blush/40 shadow-soft cursor-zoom-in aspect-[4/5] sm:aspect-[5/4] lg:aspect-auto lg:h-[min(calc(100vh-150px),700px)]'
+    >
+      <img aria-hidden='true' alt='' src={src} className='absolute inset-0 h-full w-full scale-125 object-cover blur-3xl opacity-90 saturate-[1.15]' />
+      <div aria-hidden='true' className='absolute inset-0 bg-cream/10' />
+      {/* The fade runs on a wrapper: an animation's held transform would override the zoom */}
+      <div key={src} className='absolute inset-0 animate-fade-up'>
+        <img
+          className='h-full w-full object-contain transition-transform duration-500 ease-petal group-hover:scale-[1.5]'
+          style={{ transformOrigin: origin }}
+          src={src}
+          alt={alt}
+        />
       </div>
+      {badge && <span className='tag absolute left-4 top-4 z-10'>{badge}</span>}
     </div>
   )
 }
@@ -42,9 +46,9 @@ const PhotoStage = ({ src, alt, badge }) => {
 // Pill-shaped quantity control
 const QuantityStepper = ({ value, onChange }) => {
   const step = (delta) => onChange(Math.min(MAX_QUANTITY, Math.max(1, value + delta)))
-  const buttonClass = 'flex h-11 w-11 items-center justify-center rounded-full text-lg text-gray-600 transition-colors hover:bg-blush/60 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent'
+  const buttonClass = 'flex h-10 w-10 items-center justify-center rounded-full text-lg text-gray-600 transition-colors hover:bg-blush/60 hover:text-ink disabled:opacity-30 disabled:hover:bg-transparent'
   return (
-    <div className='inline-flex h-[3.25rem] shrink-0 items-center rounded-full border border-line bg-white/80 px-1' role='group' aria-label='Quantity'>
+    <div className='inline-flex h-12 shrink-0 items-center rounded-full border border-line bg-white/80 px-1' role='group' aria-label='Quantity'>
       <button type='button' onClick={() => step(-1)} disabled={value <= 1} aria-label='Decrease quantity' className={buttonClass}>&minus;</button>
       <span className='w-8 text-center text-sm font-medium text-ink' aria-live='polite'>{value}</span>
       <button type='button' onClick={() => step(1)} disabled={value >= MAX_QUANTITY} aria-label='Increase quantity' className={buttonClass}>+</button>
@@ -157,11 +161,11 @@ const Product = () => {
         {/* Product information */}
         <div className='min-w-0 animate-fade-up [animation-delay:120ms]'>
           <p className='eyebrow'>{typeLabel(productData.subCategory)} &middot; {categoryLabel(productData.category)}</p>
-          <h1 className='mt-3 font-display text-[2rem] sm:text-4xl xl:text-[2.75rem] leading-[1.12] text-ink'>{productData.name}</h1>
+          <h1 className='mt-3 font-display text-[2rem] sm:text-[2.4rem] xl:text-[2.6rem] leading-[1.12] text-ink'>{productData.name}</h1>
 
-          <div className='mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1'>
-            <p className='font-display text-3xl text-brand' aria-live='polite'>{formatPrice(unitPrice)}</p>
-            <p className='text-sm text-gray-500'>{size} &middot; delivery {formatPrice(DELIVERY_FEE)} &middot; cash on delivery</p>
+          <div className='mt-5'>
+            <p className='font-display text-[2rem] leading-none text-brand' aria-live='polite'>{formatPrice(unitPrice)}</p>
+            <p className='mt-2 text-xs sm:text-sm text-gray-500'>Price for {size} &middot; {formatPrice(DELIVERY_FEE)} delivery &middot; Cash on delivery</p>
           </div>
 
           <p className='mt-6 max-w-prose text-[15px] sm:text-base text-gray-600 leading-relaxed'>{productData.description}</p>
@@ -202,11 +206,11 @@ const Product = () => {
           <div className='mt-8 flex flex-col gap-3'>
             <div className='flex gap-3'>
               <QuantityStepper value={quantity} onChange={setQuantity} />
-              <button type='button' onClick={() => addSelection()} className='btn-primary h-[3.25rem] flex-1 px-5'>
+              <button type='button' onClick={() => addSelection()} className='btn-primary h-12 flex-1 px-5'>
                 Add to cart <span className='font-normal opacity-70'>&middot;</span> {formatPrice(lineTotal)}
               </button>
             </div>
-            <button type='button' onClick={() => addSelection(true)} className='btn-outline h-[3.25rem] w-full'>Buy now</button>
+            <button type='button' onClick={() => addSelection(true)} className='btn-outline h-12 w-full'>Buy now</button>
           </div>
 
           {/* Details */}
