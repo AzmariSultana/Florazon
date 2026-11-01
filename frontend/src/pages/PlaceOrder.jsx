@@ -6,6 +6,8 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { DELIVERY_FEE } from '../constants'
 import useDocumentTitle from '../utils/useDocumentTitle'
+import { formatPrice, imageUrl } from '../utils/format'
+import { optionPrice, resolveOption } from '../utils/productOptions'
 
 // Delivery form layout: each inner array is one row of inputs
 const FIELD_ROWS = [
@@ -18,13 +20,43 @@ const FIELD_ROWS = [
 ]
 
 const EMPTY_FORM = Object.fromEntries(FIELD_ROWS.flat().map((field) => [field.name, '']))
+const MESSAGE_LIMIT = 200
+
+// A date as YYYY-MM-DD in the visitor's own time zone, for the delivery date picker
+const localDate = (offsetDays = 0) => {
+  const d = new Date()
+  d.setDate(d.getDate() + offsetDays)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+const StepHeading = ({ step, children, note }) => (
+  <div className='mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-1'>
+    <div className='flex items-center gap-3'>
+      <span className='flex h-7 w-7 items-center justify-center rounded-full bg-ink text-xs text-white'>{step}</span>
+      <h2 className='font-display text-xl text-ink'>{children}</h2>
+    </div>
+    {note && <p className='text-xs text-gray-500'>{note}</p>}
+  </div>
+)
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState('cod')
   const [submitting, setSubmitting] = useState(false)
   const { navigate, backendUrl, token, cartItems, setCartItems, getCartAmount, products, handleApiError } = useContext(ShopContext)
   const [formData, setFormData] = useState(EMPTY_FORM)
+  const [deliveryDate, setDeliveryDate] = useState(localDate(0))
+  const [giftMessage, setGiftMessage] = useState('')
   useDocumentTitle('Checkout')
+
+  // The items being ordered, for the summary beside the form
+  const lines = []
+  for (const id in cartItems) {
+    const product = products.find((p) => p._id === id)
+    if (!product) continue
+    for (const size in cartItems[id]) {
+      if (cartItems[id][size] > 0) lines.push({ product, option: resolveOption(product, size).label, quantity: cartItems[id][size] })
+    }
+  }
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target
@@ -58,7 +90,8 @@ const PlaceOrder = () => {
     }
 
     const orderData = {
-      address: formData,
+      // Delivery day and card message travel with the address, so they appear on the order for the florist
+      address: { ...formData, deliveryDate, giftMessage: giftMessage.trim() },
       items: orderItems,
       amount: getCartAmount() + DELIVERY_FEE
     }
@@ -83,6 +116,21 @@ const PlaceOrder = () => {
     }
   }
 
+  const orderLines = lines.length > 0 && (
+    <ul className='mt-5 flex max-h-64 flex-col gap-3 overflow-y-auto'>
+      {lines.map(({ product, option, quantity }) => (
+        <li key={product._id + option} className='flex items-center gap-3'>
+          <img src={imageUrl(product.image?.[0], 120)} alt='' loading='lazy' className='h-14 w-12 shrink-0 rounded-xl object-cover bg-blush/40' />
+          <div className='min-w-0 flex-1'>
+            <p className='truncate text-sm text-ink'>{product.name}</p>
+            <p className='text-xs text-gray-500'>{option} &times; {quantity}</p>
+          </div>
+          <p className='shrink-0 text-sm text-ink'>{formatPrice(optionPrice(product, option) * quantity)}</p>
+        </li>
+      ))}
+    </ul>
+  )
+
   return (
     <form onSubmit={onSubmitHandler} className='pt-6 sm:pt-10'>
       <Title as='h1' eyebrow='Checkout' text1={'DELIVERY'} text2={'INFORMATION'} size='text-4xl sm:text-5xl' />
@@ -91,10 +139,7 @@ const PlaceOrder = () => {
         <div className='flex flex-col gap-6'>
           {/* Delivery details */}
           <section className='card p-6 sm:p-8'>
-            <div className='flex items-center gap-3 mb-6'>
-              <span className='flex h-7 w-7 items-center justify-center rounded-full bg-ink text-xs text-white'>1</span>
-              <h2 className='font-display text-xl text-ink'>Where should we deliver?</h2>
-            </div>
+            <StepHeading step={1}>Where should we deliver?</StepHeading>
             <div className='flex flex-col gap-4'>
               {FIELD_ROWS.map((row) => (
                 <div key={row.map((f) => f.name).join('-')} className='grid gap-4 sm:grid-flow-col sm:auto-cols-fr'>
@@ -119,12 +164,35 @@ const PlaceOrder = () => {
             </div>
           </section>
 
+          {/* Delivery day and card message */}
+          <section className='card p-6 sm:p-8'>
+            <StepHeading step={2} note='Arranged by hand on the day you choose'>Delivery day &amp; card</StepHeading>
+            <div className='grid gap-4 sm:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]'>
+              <div>
+                <label htmlFor='checkout-date' className='field-label'>Delivery date</label>
+                <input id='checkout-date' type='date' required min={localDate(0)} max={localDate(30)} value={deliveryDate} onChange={(e) => setDeliveryDate(e.target.value)} className='field' />
+              </div>
+              <div>
+                <div className='flex items-baseline justify-between'>
+                  <label htmlFor='checkout-message' className='field-label'>Card message <span className='font-normal text-gray-500'>(optional)</span></label>
+                  <span className='text-[11px] text-gray-500' aria-live='polite'>{giftMessage.length}/{MESSAGE_LIMIT}</span>
+                </div>
+                <textarea
+                  id='checkout-message'
+                  rows={3}
+                  maxLength={MESSAGE_LIMIT}
+                  value={giftMessage}
+                  onChange={(e) => setGiftMessage(e.target.value)}
+                  placeholder='We will write it on a card and tuck it in with your flowers.'
+                  className='field resize-none leading-relaxed'
+                />
+              </div>
+            </div>
+          </section>
+
           {/* Payment */}
           <section className='card p-6 sm:p-8'>
-            <div className='flex items-center gap-3 mb-6'>
-              <span className='flex h-7 w-7 items-center justify-center rounded-full bg-ink text-xs text-white'>2</span>
-              <h2 className='font-display text-xl text-ink'>Payment method</h2>
-            </div>
+            <StepHeading step={3}>Payment method</StepHeading>
             <div role='radiogroup' aria-label='Payment method'>
               <div
                 onClick={() => setMethod('cod')}
@@ -146,7 +214,7 @@ const PlaceOrder = () => {
 
         {/* Summary */}
         <div className='lg:sticky lg:top-24'>
-          <CartTotal>
+          <CartTotal items={orderLines}>
             <button type='submit' disabled={submitting} className='btn-primary w-full mt-7'>{submitting ? 'Placing order...' : 'Place order'}</button>
             <p className='mt-4 text-center text-xs text-gray-500'>Hand-arranged on the day of delivery.</p>
           </CartTotal>

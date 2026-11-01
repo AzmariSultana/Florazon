@@ -3,7 +3,8 @@ import { ShopContext } from '../context/ShopContext'
 import { DELIVERY_FEE } from '../constants'
 import { formatPrice } from '../utils/format'
 
-const CartTotal = ({ children }) => {
+// items: optional content shown above the totals (e.g. the order lines at checkout)
+const CartTotal = ({ children, items }) => {
   const { getCartAmount, getCartCount } = useContext(ShopContext)
   const subtotal = getCartAmount()
   const total = subtotal === 0 ? 0 : subtotal + DELIVERY_FEE
@@ -15,13 +16,14 @@ const CartTotal = ({ children }) => {
         <h2 className='font-display text-2xl text-ink'>Order <span className='text-brand'>summary</span></h2>
         <p className='text-xs text-gray-500'>{count} {count === 1 ? 'item' : 'items'}</p>
       </div>
+      {items}
       <dl className='flex flex-col gap-3.5 mt-6 text-sm text-gray-600'>
         <div className='flex justify-between'>
           <dt>Subtotal</dt>
           <dd className='text-ink'>{formatPrice(subtotal)}</dd>
         </div>
         <div className='flex justify-between'>
-          <dt>Shipping Fee</dt>
+          <dt>Delivery</dt>
           <dd className='text-ink'>{formatPrice(DELIVERY_FEE)}</dd>
         </div>
         <div className='h-px bg-line my-1' />

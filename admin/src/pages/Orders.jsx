@@ -67,12 +67,16 @@ const Orders = ({ token }) => {
                   <p>{[order.address.city, order.address.state, order.address.country, order.address.zipcode].filter(Boolean).join(', ')}</p>
                 </div>
                 <p>{order.address.phone}</p>
+                {order.address.giftMessage && (
+                  <p className='mt-3 rounded-lg bg-brand-soft px-3 py-2 italic text-ink'>Card: “{order.address.giftMessage}”</p>
+                )}
               </div>
               <div>
                 <p className='text-sm sm:text-[15px]'>Items: {order.items.length}</p>
                 <p className='mt-3'>Method: {order.paymentMethod}</p>
                 <p>Payment: {order.payment ? 'Done' : 'Pending'}</p>
-                <p>Date: {new Date(order.date).toLocaleDateString()}</p>
+                <p>Ordered: {new Date(order.date).toLocaleDateString()}</p>
+                {order.address.deliveryDate && <p className='font-medium text-ink'>Deliver on: {new Date(`${order.address.deliveryDate}T00:00:00`).toLocaleDateString()}</p>}
               </div>
               <p className='text-sm sm:text-[15px] font-medium'>{formatPrice(order.amount)}</p>
               <select onChange={(event)=>statusHandler(event,order._id)} value={order.status} aria-label='Order status' className='px-3 py-2 font-medium cursor-pointer'>

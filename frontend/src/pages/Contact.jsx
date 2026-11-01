@@ -38,7 +38,7 @@ const CONTACT_CARDS = [
 const EMPTY_FORM = { name: '', email: '', phone: '', topic: TOPICS[0], message: '' }
 
 const Contact = () => {
-  useDocumentTitle('Contact')
+  useDocumentTitle('Contact', 'Contact Florazon in Merul Badda, Dhaka, for orders, custom arrangements, delivery questions and event flowers.')
   const [form, setForm] = useState(EMPTY_FORM)
 
   const onChange = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -129,7 +129,7 @@ const Contact = () => {
               <input id='contact-email' name='email' type='email' value={form.email} onChange={onChange} autoComplete='email' required className='field h-12' />
             </div>
             <div>
-              <label htmlFor='contact-phone' className='field-label'>Phone <span className='text-gray-400 font-normal'>(optional)</span></label>
+              <label htmlFor='contact-phone' className='field-label'>Phone <span className='text-gray-500 font-normal'>(optional)</span></label>
               <input id='contact-phone' name='phone' type='tel' value={form.phone} onChange={onChange} autoComplete='tel' className='field h-12' />
             </div>
             <div>

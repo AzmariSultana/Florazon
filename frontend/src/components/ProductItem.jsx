@@ -46,7 +46,7 @@ const ProductItem = ({ id, image, name, price, bestseller, subCategory, badge })
         {subCategory && <p className='eyebrow text-[10px]'>{typeLabel(subCategory)}</p>}
         <p className='mt-1.5 line-clamp-2 min-h-[2.6em] text-sm sm:text-[15px] leading-[1.3] text-ink transition-colors group-hover:text-brand'>{name}</p>
         <div className='mt-2 flex items-center justify-between gap-2'>
-          <p className='text-sm sm:text-[15px] font-medium text-ink'><span className='mr-1 text-[11px] font-normal text-gray-400'>from</span>{formatPrice(price)}</p>
+          <p className='text-sm sm:text-[15px] font-medium text-ink'><span className='mr-1 text-[11px] font-normal text-gray-500'>from</span>{formatPrice(price)}</p>
           <span aria-hidden='true' className='flex h-7 w-7 items-center justify-center rounded-full border border-line text-xs text-gray-500 transition-all duration-300 group-hover:border-ink group-hover:bg-ink group-hover:text-white'>&rarr;</span>
         </div>
       </div>

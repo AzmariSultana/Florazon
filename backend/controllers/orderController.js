@@ -23,6 +23,18 @@ const placeOrder = async (req, res) => {
     if (!address || typeof address !== "object") {
       return res.status(400).json({ success: false, message: "Delivery address is required" });
     }
+    // Optional delivery day (YYYY-MM-DD, not in the past) and card message (up to 200 characters)
+    if (address.deliveryDate !== undefined) {
+      const day = /^\d{4}-\d{2}-\d{2}$/.test(address.deliveryDate) ? new Date(`${address.deliveryDate}T23:59:59Z`) : null;
+      if (!day || Number.isNaN(day.getTime()) || day.getTime() < Date.now() - 86400000) {
+        return res.status(400).json({ success: false, message: "Please choose a valid delivery date" });
+      }
+    }
+    if (address.giftMessage !== undefined) {
+      if (typeof address.giftMessage !== "string" || address.giftMessage.length > 200) {
+        return res.status(400).json({ success: false, message: "The card message can be up to 200 characters" });
+      }
+    }
 
     // Rebuild items from the database so prices can't be tampered with client-side
     const orderItems = [];

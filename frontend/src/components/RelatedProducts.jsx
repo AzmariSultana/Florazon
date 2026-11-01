@@ -22,7 +22,7 @@ const RelatedProducts = ({ category, subCategory, currentId }) => {
       <div className='text-center'>
         <Title align='center' eyebrow='You may also love' text1={'RELATED'} text2={'PRODUCTS'} />
       </div>
-      <ProductGrid products={related} />
+      <ProductGrid products={related} className='grid-cols-2 md:grid-cols-4' />
     </section>
   )
 }

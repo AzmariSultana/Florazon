@@ -34,7 +34,7 @@ const PillSelect = ({ label, value, onChange, children }) => (
 const Collection = () => {
   const { products, productsStatus, search, showSearch } = useContext(ShopContext)
   const location = useLocation()
-  useDocumentTitle('Collection')
+  useDocumentTitle('Collection', 'Browse 50+ hand-tied designs: single flowers, mixed bouquets, wedding garlands and flower baskets, each in three sizes.')
   const [category, setCategory] = useState('')
   // Category tiles on the home page and footer links arrive with a type already chosen
   const [type, setType] = useState(() => location.state?.subCategory || '')

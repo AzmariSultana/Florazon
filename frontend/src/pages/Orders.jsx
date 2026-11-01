@@ -39,6 +39,7 @@ const Orders = () => {
               status: order.status,
               payment: order.payment,
               paymentMethod: order.paymentMethod,
+              deliveryDate: order.address?.deliveryDate,
               date: order.date
             })
           })
@@ -86,7 +87,8 @@ const Orders = () => {
                   <p>Quantity: {item.quantity}</p>
                   <p>{item.size}</p>
                 </div>
-                <p className='mt-1.5 text-gray-500'>Date: <span className='text-gray-700'>{new Date(item.date).toDateString()}</span></p>
+                <p className='mt-1.5 text-gray-500'>Ordered: <span className='text-gray-700'>{new Date(item.date).toDateString()}</span></p>
+                {item.deliveryDate && <p className='mt-0.5 text-gray-500'>Delivery: <span className='text-gray-700'>{new Date(`${item.deliveryDate}T00:00:00`).toDateString()}</span></p>}
                 <p className='mt-0.5 text-gray-500'>Payment: <span className='text-gray-700'>{item.paymentMethod}</span></p>
               </div>
             </div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://florazon.vercel.app/sitemap.xml

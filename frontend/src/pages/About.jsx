@@ -34,7 +34,7 @@ const PROMISES = [
 ]
 
 const About = () => {
-  useDocumentTitle('About')
+  useDocumentTitle('About', 'The story behind Florazon: fresh flowers chosen at first light and arranged by hand on the day of delivery.')
   const { products } = useContext(ShopContext)
 
   // Real figures from the live catalogue, plus the store's standing promises

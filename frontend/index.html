@@ -2,13 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Florazon - order fresh bouquets, single flowers, garlands and flower baskets online." />
-    <title>Florazon</title>
+    <title>Florazon | Fresh flowers, hand-tied in Dhaka</title>
+    <meta name="description" content="Order fresh, hand-tied flowers from Florazon: single stems, mixed bouquets, wedding garlands and flower baskets, delivered with cash on delivery." />
+    <meta name="theme-color" content="#f8f4f0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Link previews when the site is shared -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Florazon" />
+    <meta property="og:title" content="Florazon | Fresh flowers, hand-tied in Dhaka" />
+    <meta property="og:description" content="Single stems, mixed bouquets, wedding garlands and flower baskets, arranged by hand on the day of delivery." />
+    <meta property="og:image" content="https://florazon.vercel.app/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Connect early to the font and image hosts, then load the fonts without blocking the page -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://res.cloudinary.com" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..700&family=Prata&display=swap" />
   </head>
   <body>
     <div id="root"></div>
+    <noscript>Florazon needs JavaScript to show the flower collection.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

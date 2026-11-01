@@ -60,8 +60,8 @@ const PhotoStage = ({ src, alt, badge }) => {
     <div
       onMouseMove={onMove}
       onMouseLeave={() => setOrigin('50% 50%')}
-      style={{ aspectRatio: ratio, width: `min(100%, calc(min(72vh, 680px) * ${ratio}))` }}
-      className='group relative mx-auto overflow-hidden rounded-[1.75rem] bg-blush/40 shadow-soft cursor-zoom-in'
+      style={{ aspectRatio: ratio, width: `calc(min(72vh, 680px) * ${ratio})` }}
+      className='group relative mx-auto lg:mx-0 max-w-full lg:max-w-[min(100%,580px)] overflow-hidden rounded-[1.75rem] bg-blush/40 shadow-soft cursor-zoom-in'
     >
       {/* The fade runs on a wrapper: an animation's held transform would override the zoom */}
       <div key={src} className='absolute inset-0 animate-fade-up'>
@@ -111,7 +111,32 @@ const Product = () => {
     window.scrollTo(0, 0)
   }, [productId, products])
 
-  useDocumentTitle(productData ? productData.name : 'Product')
+  useDocumentTitle(productData ? productData.name : 'Product', productData ? productData.description : undefined)
+
+  // Product structured data, so search results can show the price and availability
+  useEffect(() => {
+    if (!productData) return
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: productData.name,
+      description: productData.description,
+      image: productData.image,
+      category: typeLabel(productData.subCategory),
+      brand: { '@type': 'Brand', name: 'Florazon' },
+      offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'BDT',
+        lowPrice: optionPrice(productData, getProductOptions(productData)[0].label),
+        highPrice: Math.max(...getProductOptions(productData).map((o) => optionPrice(productData, o.label))),
+        availability: 'https://schema.org/InStock',
+      },
+    })
+    document.head.appendChild(script)
+    return () => script.remove()
+  }, [productData])
 
   if (!productData) {
     return (
@@ -169,7 +194,7 @@ const Product = () => {
   const details = [
     ['Collection', typeLabel(productData.subCategory)],
     ['Category', categoryLabel(productData.category)],
-    ['Options', options.map((o) => `${o.label} ${formatPrice(optionPrice(productData, o.label))}`).join(' · ')],
+    ['Arranged', 'By hand, on the day of delivery'],
   ]
 
   return (
@@ -182,7 +207,7 @@ const Product = () => {
         <span className='truncate text-gray-700' aria-current='page'>{productData.name}</span>
       </nav>
 
-      <div className='grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-start gap-8 lg:gap-12 xl:gap-16'>
+      <div className='grid lg:grid-cols-[auto_minmax(0,1fr)] items-start gap-8 lg:gap-12 xl:gap-16'>
         {/* Gallery */}
         <div className='min-w-0 lg:sticky lg:top-24 animate-fade-up'>
           <PhotoStage src={imageUrl(image, 1000)} alt={productData.name} badge={productData.bestseller ? 'Bestseller' : null} />
@@ -294,7 +319,6 @@ const Product = () => {
             <>
               <div>
                 <h2 className='font-display text-2xl text-ink'>About this <span className='text-brand'>{byStems ? 'stem' : typeLabel(productData.subCategory).toLowerCase()}</span></h2>
-                <p className='mt-3 text-[15px] text-gray-600 leading-relaxed'>{productData.description}</p>
                 <p className='mt-3 text-[15px] text-gray-600 leading-relaxed'>
                   {byStems
                     ? 'Each stem is chosen for freshness and wrapped by hand on the day of delivery.'
