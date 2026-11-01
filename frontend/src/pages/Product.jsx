@@ -26,11 +26,13 @@ const ZoomImage = ({ src, alt }) => {
     setOrigin(`${((e.clientX - rect.left) / rect.width) * 100}% ${((e.clientY - rect.top) / rect.height) * 100}%`)
   }
   return (
-    <div onMouseMove={onMove} onMouseLeave={() => setOrigin('50% 50%')} className='group flex-1 overflow-hidden rounded-3xl bg-blush/50 shadow-soft cursor-zoom-in aspect-[4/5]'>
+    // The whole photo is always visible: the frame takes the photo's own shape and is centred,
+    // with the height capped so tall photos never run off the screen. Zoom happens only on hover.
+    <div onMouseMove={onMove} onMouseLeave={() => setOrigin('50% 50%')} className='group relative mx-auto w-fit max-w-full min-w-0 overflow-hidden rounded-3xl bg-blush/40 shadow-soft cursor-zoom-in'>
       {/* The fade runs on a wrapper: an animation's held transform would override the zoom */}
-      <div key={src} className='h-full w-full animate-fade-up'>
+      <div key={src} className='animate-fade-up'>
         <img
-          className='h-full w-full object-cover transition-transform duration-500 ease-petal group-hover:scale-[1.6]'
+          className='block h-auto w-auto max-w-full max-h-[min(78vh,760px)] object-contain transition-transform duration-500 ease-petal group-hover:scale-[1.5]'
           style={{ transformOrigin: origin }}
           src={src}
           alt={alt}
@@ -94,7 +96,7 @@ const Product = () => {
       </nav>
       <div className='grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 lg:gap-14 animate-fade-up'>
         {/* Gallery */}
-        <div className='flex flex-col-reverse sm:flex-row gap-3 sm:gap-4'>
+        <div className='flex min-w-0 flex-col-reverse sm:flex-row sm:items-start gap-3 sm:gap-4 lg:self-start lg:sticky lg:top-24'>
           {images.length > 1 && (
             <div className='flex sm:flex-col gap-3 overflow-x-auto sm:overflow-visible p-1 -m-1 sm:w-[5.5rem] shrink-0'>
               {images.map((item, index) => (
