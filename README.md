@@ -1,6 +1,6 @@
 # Florazon
 
-Florazon is a full-stack e-commerce platform for ordering fresh flowers online, built with the MERN stack (MongoDB, Express, React, Node.js). It has a customer storefront, a separate admin panel for store management, and a REST API that both clients use.
+Florazon is a full-stack e-commerce platform for a flower shop, built with the MERN stack (MongoDB, Express, React, Node.js). Customers browse hand-tied bouquets, single flowers, wedding garlands and flower baskets, choose a bouquet size or number of stems, and order with Cash on Delivery. Store staff manage products and deliveries from a separate admin panel.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
@@ -10,7 +10,7 @@ Florazon is a full-stack e-commerce platform for ordering fresh flowers online, 
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_8-47A248?logo=mongodb&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-![Florazon home page](docs/screenshots/storefront-home.jpg)
+![Florazon storefront home page](docs/screenshots/storefront-home.jpg)
 
 ## Live Demo
 
@@ -20,13 +20,11 @@ Florazon is a full-stack e-commerce platform for ordering fresh flowers online, 
 | Admin panel | [florazon-admin.vercel.app](https://florazon-admin.vercel.app) |
 | REST API | [florazon.onrender.com](https://florazon.onrender.com) |
 
-The API is hosted on Render's free plan and sleeps when idle, so the first request after a quiet period can take up to a minute to load the products.
+The API runs on Render's free plan and sleeps when idle, so the first visit after a quiet period can take up to a minute to load the products.
 
 ## Overview
 
-Florazon lets customers browse a catalogue of bouquets, single flowers, garlands and baskets, manage a cart that is saved to their account, and place Cash on Delivery orders. Store administrators use a dedicated panel to publish products, with images hosted on Cloudinary, and to move orders through each stage of delivery.
-
-The repository contains three independent applications:
+The repository contains three independent applications that share one REST API:
 
 | Application | Description | Default URL |
 | --- | --- | --- |
@@ -34,44 +32,64 @@ The repository contains three independent applications:
 | `admin/` | Store administration panel | http://localhost:5175 |
 | `backend/` | REST API used by both clients | http://localhost:4000 |
 
+The catalogue holds 52 products across four collections:
+
+| Collection | What it contains |
+| --- | --- |
+| Single Flower | Single stems and bouquets of one flower variety, such as all roses or all tulips |
+| Mixed Bouquet | Hand-tied arrangements that combine several kinds of flowers |
+| Garland | Fresh flower garlands sold in matching pairs for weddings and ceremonies |
+| Basket | Arrangements in a keepsake basket, crate or gift box |
+
 ## Features
 
 ### Customer Storefront
 
-- **Authentication:** customers register, log in and log out using JWT-based sessions. Expired sessions sign out automatically.
-- **Profile management:** customers can update their name and email, and change their password after confirming the current one.
-- **Product catalogue:** the home page shows the latest arrivals and best sellers.
-- **Search, filtering and sorting:** search by product name, filter by category (Occasion, Gift-Type) and type (Single-Flower, Bouquet, Garland, Basket), and sort by price.
-- **Product details:** each product has an image gallery, a choice of bouquet size (Standard, Deluxe, Premium) or number of stems (1, 3, 6) priced from the base price, a description and related products.
-- **Persistent cart:** customers can add, update and remove items. Items added before logging in are merged into the account at sign-in.
-- **Checkout:** a delivery details form with Cash on Delivery payment.
-- **Order tracking:** order history shows the current status of each order, from Order Placed through Packing, Shipped and Out for delivery to Delivered.
-- **Responsive layout:** the storefront is optimised for desktop, tablet and mobile.
+- **Shop by collection:** the home page introduces the four collections, the newest arrivals and the best sellers.
+- **Collection browsing:** type tabs with live counts, a category filter (Occasion, Gift Type), price sorting and name search, all in one toolbar.
+- **Flower options:** every product offers either a bouquet size or a number of stems, with the price for each option shown before it is added to the cart (see [Flower options and pricing](#flower-options-and-pricing)).
+- **Product pages:** an image gallery with hover zoom, option cards, a description and related products.
+- **Persistent cart:** quantity steppers, a running order summary, and a cart that is saved to the account. Items added before signing in are merged into the account at sign-in.
+- **Checkout and orders:** a delivery form with Cash on Delivery, and an order history that shows each order's status, from Order Placed through Packing, Shipped and Out for delivery to Delivered.
+- **Accounts:** registration, sign-in with JWT sessions that expire automatically, and a profile page for updating details and changing the password.
+- **Contact page:** store details, a message form that opens the visitor's email app with the message ready to send, and a map with directions.
+- **Responsive design:** layouts tested from 360px phones to 2560px monitors, with subtle scroll and page transitions that respect the reduced-motion setting.
 
 ### Admin Panel
 
 - **Secure login:** admin credentials are kept in server environment variables, and admin tokens expire after a set time.
-- **Product creation:** admins add products with up to four images uploaded to Cloudinary, plus category, type, how it is sold (bouquet sizes or single stems), base price and a best-seller flag.
-- **Catalogue management:** admins can view all products and remove them, with a confirmation step.
-- **Order management:** admins can review every order with customer and address details, and update its delivery status.
+- **Product creation:** up to four images uploaded to Cloudinary, plus name, description, category, collection, base price, a best-seller flag, and whether the product is sold as a bouquet (in sizes) or as single stems.
+- **Catalogue management:** a list of every product, with removal behind a confirmation step.
+- **Order management:** every order with its items, chosen options, customer and address, and a status control for each stage of delivery.
 
 ## Screenshots
 
-| Collection with filters | Product details |
+| Collection | Product with options |
 | --- | --- |
-| ![Collection page](docs/screenshots/storefront-collection.jpg) | ![Product page](docs/screenshots/storefront-product.jpg) |
+| ![Collection page with type tabs and filters](docs/screenshots/storefront-collection.jpg) | ![Product page with bouquet size options](docs/screenshots/storefront-product.jpg) |
 
 | Shopping cart | Order history |
 | --- | --- |
-| ![Cart page](docs/screenshots/storefront-cart.jpg) | ![Orders page](docs/screenshots/storefront-orders.jpg) |
+| ![Cart with chosen options and order summary](docs/screenshots/storefront-cart.jpg) | ![Order history with delivery status](docs/screenshots/storefront-orders.jpg) |
 
-| Admin: product list | Admin: order management |
+| Admin: products | Admin: orders |
 | --- | --- |
-| ![Admin product list](docs/screenshots/admin-products.jpg) | ![Admin orders](docs/screenshots/admin-order-management.jpg) |
+| ![Admin product list](docs/screenshots/admin-products.jpg) | ![Admin order management](docs/screenshots/admin-order-management.jpg) |
 
-| Admin: add product | Mobile view |
+| Admin: add product | Mobile |
 | --- | --- |
-| ![Admin add product](docs/screenshots/admin-add-product.jpg) | <img src="docs/screenshots/storefront-mobile.jpg" alt="Mobile collection page" width="300"> |
+| ![Admin add product form](docs/screenshots/admin-add-product.jpg) | <img src="docs/screenshots/storefront-mobile.jpg" alt="Storefront home page on a phone" width="300"> |
+
+## Flower Options and Pricing
+
+Each product is sold in one of two ways, and every option is priced from the product's base price:
+
+| Sold as | Options | Price |
+| --- | --- | --- |
+| Bouquet (bouquets, garlands and baskets) | Standard (as pictured), Deluxe, Premium | 1×, 1.4×, 1.8× the base price |
+| Single stems | 1 Stem, 3 Stems, 6 Stems | 1×, 2.8×, 5.4× the base price |
+
+Prices are rounded to the nearest ৳10. For example, a ৳3,200 bouquet costs ৳4,480 as Deluxe and ৳5,760 as Premium. The rules live in `backend/config/productOptions.js`, and the storefront uses an identical copy in `frontend/src/utils/productOptions.js` to show prices. The server always recalculates the order total.
 
 ## Technology Stack
 
@@ -80,7 +98,7 @@ The repository contains three independent applications:
 | Frontend and admin | React 19, React Router 7, Vite 7, Tailwind CSS 3, Axios, React Toastify |
 | Backend | Node.js, Express 5, Mongoose 8 |
 | Database | MongoDB (Atlas or self-hosted) |
-| Authentication and security | JSON Web Tokens, bcrypt, validator |
+| Authentication and security | JSON Web Tokens, bcrypt, validator, express-rate-limit |
 | File uploads | Multer, Cloudinary |
 | Tooling | ESLint 9, Nodemon, PostCSS, Autoprefixer |
 
@@ -95,7 +113,7 @@ flowchart LR
 ```
 
 - **Stateless authentication:** the API issues JWTs. Customer tokens are valid for 7 days and admin tokens for 1 day.
-- **Server-side pricing:** order totals are calculated from database prices and never taken from the client.
+- **Server-side pricing:** order totals are rebuilt from database prices and each item's chosen option, never taken from the client.
 - **Persistent carts:** carts are stored on the user record, so they survive page reloads and follow the customer across devices.
 
 ## Getting Started
@@ -123,7 +141,7 @@ cd admin && npm install && cd ..
 
 ### 3. Configure environment variables
 
-Each application includes a `.env.example` file. Copy it to `.env` in the same folder and provide your values.
+Each application includes a `.env.example` file. Copy it to `.env` in the same folder and fill in your values.
 
 **backend/.env**
 
@@ -137,6 +155,7 @@ Each application includes a `.env.example` file. Copy it to `.env` in the same f
 | `CLOUDINARY_NAME` | Cloudinary cloud name |
 | `CLOUDINARY_API_KEY` | Cloudinary API key |
 | `CLOUDINARY_SECRET_KEY` | Cloudinary API secret |
+| `CORS_ORIGINS` | Optional. Comma-separated list of allowed site origins in production |
 
 **frontend/.env** and **admin/.env**
 
@@ -144,7 +163,7 @@ Each application includes a `.env.example` file. Copy it to `.env` in the same f
 | --- | --- |
 | `VITE_BACKEND_URL` | Base URL of the API, for example `http://localhost:4000` |
 
-`.env` files are excluded from version control. Do not commit real credentials.
+`.env` files are excluded from version control. Never commit real credentials.
 
 ### 4. Start the applications
 
@@ -167,14 +186,14 @@ npm run dev
 
 ### 5. Load the product catalogue
 
-With `backend/.env` configured, import the catalogue into MongoDB. Each photo is uploaded to Cloudinary.
+With `backend/.env` configured, import the catalogue from `backend/seed/products.json`. Each photo in `backend/seed/images/` is uploaded to Cloudinary.
 
 ```bash
 cd backend
 npm run seed
 ```
 
-The script adds products that are not in the database yet and never deletes anything. Run `npm run seed -- --update` to refresh existing products with the catalogue data. Each run ends with a report of duplicate products, products that are not in the catalogue, and products without an image.
+The script only adds products that are not in the database yet and never deletes anything. To apply changes to existing products, such as a new price or description, run `npm run seed -- --update`. Each run ends with a report of duplicates, products missing from the catalogue, and products without an image.
 
 ### Available Scripts
 
@@ -190,10 +209,10 @@ The script adds products that are not in the database yet and never deletes anyt
 
 ## Usage
 
-1. **Add products:** load the catalogue with `npm run seed`, or open the admin panel at http://localhost:5175, sign in with `ADMIN_EMAIL` and `ADMIN_PASSWORD`, and use **Add Items** to upload images and product details.
-2. **Browse and shop:** open the storefront at http://localhost:5173, browse or search the collection, choose a bouquet size or number of stems and add items to the cart.
-3. **Check out:** create an account or log in, go to checkout, enter delivery details and place a Cash on Delivery order.
-4. **Fulfil orders:** in the admin panel, open **Orders** and update the order status. The customer sees the change under **My Orders**.
+1. **Add products:** run `npm run seed`, or sign in to the admin panel at http://localhost:5175 with `ADMIN_EMAIL` and `ADMIN_PASSWORD` and use **Add Items**.
+2. **Shop:** open the storefront at http://localhost:5173, pick a collection, choose a bouquet size or number of stems, and add items to the cart.
+3. **Check out:** create an account or sign in, enter delivery details and place a Cash on Delivery order.
+4. **Fulfil orders:** in the admin panel, open **Orders** and update each order's status. The customer sees the change under **My Orders**.
 
 ## Deployment
 
@@ -206,9 +225,7 @@ The repository includes a Render Blueprint (`render.yaml`) that configures the s
 1. In MongoDB Atlas, open **Network Access** and allow connections from `0.0.0.0/0`. Render's free plan does not use fixed IP addresses.
 2. In Render, choose **New > Blueprint** and select this repository.
 3. Enter the requested environment variables: `MONGODB_URI`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `CLOUDINARY_NAME`, `CLOUDINARY_API_KEY` and `CLOUDINARY_SECRET_KEY`. `JWT_SECRET` is generated automatically. Leave `CORS_ORIGINS` empty for now.
-4. Deploy. When the service is live, opening its URL (for example `https://florazon.onrender.com`) shows `API Working`.
-
-On the free plan the service sleeps after a period of inactivity, so the first request afterwards can take up to a minute.
+4. Deploy. When the service is live, its URL (for example `https://florazon.onrender.com`) shows `API Working`.
 
 ### 2. Storefront and admin panel on Vercel
 
@@ -220,7 +237,7 @@ Create two Vercel projects from this repository, one for each application. Each 
 | Framework Preset | Vite (detected) | Vite (detected) |
 | Environment variable | `VITE_BACKEND_URL` = Render API URL | `VITE_BACKEND_URL` = Render API URL |
 
-Enter the API URL without a trailing slash. Vite includes environment variables at build time, so redeploy a project after changing its `VITE_BACKEND_URL`.
+Enter the API URL without a trailing slash. Vite reads environment variables at build time, so redeploy a project after changing its `VITE_BACKEND_URL`.
 
 ### 3. Connect the API to the frontends
 
@@ -230,7 +247,7 @@ Return to the Render service and set `CORS_ORIGINS` to both Vercel URLs, separat
 https://florazon.vercel.app,https://florazon-admin.vercel.app
 ```
 
-Save the change to redeploy the API. From then on, the API only accepts browser requests from these two sites.
+Saving the change redeploys the API. From then on, it only accepts browser requests from these two sites.
 
 ### Alternative: GitHub Pages
 
@@ -240,9 +257,10 @@ Save the change to redeploy the API. From then on, the API only accepts browser 
 
 - **Passwords** are hashed with bcrypt, and changing a password requires the current one.
 - **JWT sessions** expire. Admin tokens carry a role claim and never contain credentials.
-- **Order totals** are calculated on the server, pricing each item by its chosen option, and quantities are validated.
-- **MongoDB query filters** are sanitised to prevent operator injection.
-- **Cart input** is validated to prevent prototype pollution.
+- **Rate limiting** protects the sign-in, registration and password endpoints.
+- **Order totals** are calculated on the server from database prices and each item's option, and quantities are validated.
+- **Product options** submitted from the admin panel are checked against the allowed sets.
+- **MongoDB query filters** are sanitised to prevent operator injection, and cart input is validated to prevent prototype pollution.
 - **Uploads** are limited to image files under 5 MB, and temporary files are deleted after upload.
 
 ## Project Structure
@@ -250,34 +268,36 @@ Save the change to redeploy the API. From then on, the API only accepts browser 
 ```
 Florazon/
 ├── backend/                 Express REST API
-│   ├── config/              MongoDB and Cloudinary configuration
+│   ├── config/              Database, Cloudinary, constants and flower option pricing
 │   ├── controllers/         Request handlers (user, product, cart, order)
-│   ├── middleware/          Customer and admin authentication, file uploads
+│   ├── middleware/          Authentication, rate limiting and file uploads
 │   ├── models/              Mongoose schemas
 │   ├── routes/              Route definitions
-│   ├── seed/                Product catalogue data, optimised photos and import script
+│   ├── seed/                Product catalogue, product photos and import script
 │   └── server.js            Application entry point
 ├── frontend/                Customer storefront (React + Vite)
 │   └── src/
-│       ├── components/      Shared UI components
-│       ├── context/         Global state: products, cart, authentication
-│       └── pages/           Application pages
+│       ├── assets/          Logo, icons and cut-out imagery
+│       ├── components/      Shared UI: navigation, product cards, hero, footer
+│       ├── context/         Global state: products, cart and authentication
+│       ├── pages/           Home, collection, product, cart, checkout and account pages
+│       └── utils/           Formatting and flower option pricing
 ├── admin/                   Admin panel (React + Vite)
 │   └── src/
-│       ├── components/      Login, navigation bar, sidebar
+│       ├── components/      Login, navigation bar and sidebar
 │       └── pages/           Add, list and order management pages
 └── docs/screenshots/        Images used in this README
 ```
 
 ## Roadmap
 
-- Online payment integration (for example SSLCommerz or Stripe) alongside Cash on Delivery
+- Online payments (for example SSLCommerz or Stripe) alongside Cash on Delivery
 - Editing existing products from the admin panel
+- Sending contact form messages directly from the site
 - Password reset by email
 - Sales dashboard with order and revenue statistics
 - Product reviews and ratings
 - Automated tests and continuous integration
-
 
 ## License
 
