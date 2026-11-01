@@ -41,7 +41,6 @@ const Login = () => {
         }
       }
     } catch (error) {
-      console.log(error)
       toast.error(error.response?.data?.message || error.message)
     } finally {
       setLoading(false)
@@ -63,9 +62,20 @@ const Login = () => {
         </h1>
       </div>
       <p className='text-sm text-gray-500 -mt-1 mb-2 text-center'>{currentState === 'Login' ? 'Sign in to see your cart and orders.' : 'Save your cart and follow every order.'}</p>
-      {currentState=== 'Login' ? '' : <input onChange={(e)=>setName(e.target.value)} value={name} type="text" aria-label='Name' autoComplete='name' className='field' placeholder='Name' required/>}
-      <input onChange={(e)=>setEmail(e.target.value)} value={email} type="email" aria-label='Email' autoComplete='email' className='field' placeholder='Email' required/>
-      <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" aria-label='Password' minLength={currentState === 'Sign Up' ? 8 : undefined} autoComplete={currentState === 'Login' ? 'current-password' : 'new-password'} className='field' placeholder='Password' required/>
+      {currentState === 'Login' ? null : (
+        <div className='w-full'>
+          <label htmlFor='login-name' className='field-label'>Name</label>
+          <input id='login-name' onChange={(e)=>setName(e.target.value)} value={name} type="text" autoComplete='name' className='field' required/>
+        </div>
+      )}
+      <div className='w-full'>
+        <label htmlFor='login-email' className='field-label'>Email address</label>
+        <input id='login-email' onChange={(e)=>setEmail(e.target.value)} value={email} type="email" autoComplete='email' className='field' required/>
+      </div>
+      <div className='w-full'>
+        <label htmlFor='login-password' className='field-label'>Password</label>
+        <input id='login-password' onChange={(e)=>setPassword(e.target.value)} value={password} type="password" minLength={currentState === 'Sign Up' ? 8 : undefined} autoComplete={currentState === 'Login' ? 'current-password' : 'new-password'} className='field' placeholder={currentState === 'Sign Up' ? 'At least 8 characters' : undefined} required/>
+      </div>
       <div className='w-full flex justify-end text-sm -mt-1'>
         {
           currentState=== 'Login'

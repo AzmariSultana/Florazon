@@ -149,7 +149,7 @@ export default function Profile() {
       <form onSubmit={onSave} className="flex flex-col items-center w-full gap-4">
         <p className="eyebrow self-start">Account details</p>
         <div className="w-full">
-          <label htmlFor="profile-name" className="block text-sm font-medium text-gray-700 mb-1.5">Name</label>
+          <label htmlFor="profile-name" className="field-label">Name</label>
           <input
             id="profile-name"
             type="text"
@@ -162,7 +162,7 @@ export default function Profile() {
           />
         </div>
         <div className="w-full">
-          <label htmlFor="profile-email" className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+          <label htmlFor="profile-email" className="field-label">Email</label>
           <input
             id="profile-email"
             type="email"
@@ -187,7 +187,7 @@ export default function Profile() {
       <form onSubmit={onChangePassword} className="flex flex-col items-center w-full gap-4">
         <p className="eyebrow self-start">Change password</p>
         <div className="w-full">
-          <label htmlFor="current-password" className="block text-sm font-medium text-gray-700 mb-1.5">Current Password</label>
+          <label htmlFor="current-password" className="field-label">Current password</label>
           <input
             id="current-password"
             type="password"
@@ -200,7 +200,7 @@ export default function Profile() {
           />
         </div>
         <div className="w-full">
-          <label htmlFor="new-password" className="block text-sm font-medium text-gray-700 mb-1.5">New Password</label>
+          <label htmlFor="new-password" className="field-label">New password</label>
           <input
             id="new-password"
             type="password"
@@ -213,7 +213,7 @@ export default function Profile() {
           />
         </div>
         <div className="w-full">
-          <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700 mb-1.5">Confirm New Password</label>
+          <label htmlFor="confirm-password" className="field-label">Confirm new password</label>
           <input
             id="confirm-password"
             type="password"

@@ -4,6 +4,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
 import CartTotal from '../components/CartTotal'
+import EmptyState from '../components/EmptyState'
 import { formatPrice, imageUrl } from '../utils/format'
 import StatusMessage, { LOAD_ERROR_TEXT } from '../components/StatusMessage'
 import useDocumentTitle from '../utils/useDocumentTitle'
@@ -68,14 +69,7 @@ const Cart = () => {
       ) : productsStatus === 'error' ? (
         <StatusMessage retry>{LOAD_ERROR_TEXT}</StatusMessage>
       ) : cartData.length === 0 ? (
-        <div className='panel py-20 px-6 text-center'>
-          <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blush to-sage-soft'>
-            <img src={assets.cart_icon} alt="" className='w-6 opacity-70' />
-          </div>
-          <p className='font-display text-2xl text-ink'>Your cart is empty.</p>
-          <p className='mt-2 text-sm text-gray-500'>Find something lovely in the collection.</p>
-          <Link to='/collection' className='btn-primary mt-8'>Browse collection</Link>
-        </div>
+        <EmptyState title='Your cart is empty.' text='Find something lovely in the collection.' action={{ to: '/collection', label: 'Browse collection' }} />
       ) : (
         <div className='grid lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-10 items-start mt-8'>
           <ul className='flex flex-col gap-3'>

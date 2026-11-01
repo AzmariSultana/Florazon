@@ -46,7 +46,7 @@ const Footer = () => {
           <a href={`mailto:${STORE.email}`} className='break-all transition-colors hover:text-brand'>{STORE.email}</a>
         </p>
 
-        <p className='mt-10 text-xs text-gray-500'>Copyright {new Date().getFullYear()} © Florazon. All rights reserved.</p>
+        <p className='mt-10 text-xs text-gray-500'>&copy; {new Date().getFullYear()} Florazon. All rights reserved.</p>
       </div>
     </footer>
   )

@@ -27,7 +27,7 @@ const ShopContextProvider = (props) => {
 
     // Shared handler for failed API calls: an expired/invalid session logs the user out
     const handleApiError = useCallback((error) => {
-        console.log(error)
+        console.error(error)
         if (error.response?.status === 401) {
             logout()
             toast.error('Your session has expired. Please log in again.', { toastId: 'session-expired' })
@@ -129,7 +129,7 @@ const ShopContextProvider = (props) => {
                     toast.error(response.data.message)
                 }
             } catch (error) {
-                console.log(error)
+                console.error(error)
                 // Pages show an inline message with a retry button for this state
                 setProductsStatus('error')
             }

@@ -186,9 +186,9 @@ const Product = () => {
   }
 
   const promises = [
-    { icon: ICONS.truck, title: 'Delivered fresh', text: `${formatPrice(DELIVERY_FEE)} · arranged that day` },
+    { icon: ICONS.truck, title: 'Delivered fresh', text: `Flat ${formatPrice(DELIVERY_FEE)} delivery` },
     { icon: ICONS.cash, title: 'Cash on delivery', text: 'Pay when it arrives' },
-    { icon: ICONS.exchange, title: '1-day exchange', text: 'Easy and hassle free' },
+    { icon: ICONS.exchange, title: '1-day exchange', text: 'Swapped if not right' },
   ]
 
   const tabs = [

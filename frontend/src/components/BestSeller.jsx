@@ -2,10 +2,15 @@ import React, { useContext, useMemo } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import Title from './Title'
 import ProductGrid from './ProductGrid'
+import { newestProducts } from '../utils/catalog'
 
 const BestSeller = () => {
   const { products } = useContext(ShopContext)
-  const bestSeller = useMemo(() => products.filter((item) => item.bestseller).slice(0, 4), [products])
+  // Skip the designs already shown under New Arrivals, so the two rows never repeat a product
+  const bestSeller = useMemo(() => {
+    const shown = new Set(newestProducts(products).map((item) => item._id))
+    return products.filter((item) => item.bestseller && !shown.has(item._id)).slice(0, 4)
+  }, [products])
 
   if (bestSeller.length === 0) return null
 

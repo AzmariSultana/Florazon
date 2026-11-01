@@ -2,7 +2,6 @@ import React, { useContext, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
-import NewsletterBox from '../components/NewsletterBox'
 import Blossom from '../components/Blossom'
 import { ShopContext } from '../context/ShopContext'
 import { formatPrice } from '../utils/format'
@@ -24,7 +23,7 @@ const PROMISES = [
   {
     icon: <><rect x='3' y='7' width='18' height='13' rx='2.5' /><path d='M8 7V5a4 4 0 0 1 8 0v2' /></>,
     title: 'Effortless ordering',
-    text: 'Choose a design, pick a size, pay on delivery. Sending flowers should feel as simple as it is thoughtful.',
+    text: 'Choose a design, pick your stems or size, pay on delivery. Sending flowers should feel as simple as it is thoughtful.',
   },
   {
     icon: <path d='M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z' />,
@@ -171,7 +170,6 @@ const About = () => {
         </div>
       </Reveal>
 
-      <Reveal><NewsletterBox /></Reveal>
     </div>
   )
 }

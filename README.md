@@ -45,22 +45,25 @@ The catalogue holds 52 products across four collections:
 
 ### Customer Storefront
 
-- **Shop by collection:** the home page introduces the four collections, the newest arrivals and the best sellers.
+- **Home page:** a hero with cut-out arrangements, the store's promises, the four collections, two signature arrangements, the newest arrivals and the best sellers. Each row shows different products, so nothing repeats.
 - **Collection browsing:** type tabs with live counts, a category filter (Occasion, Gift Type), price sorting and name search, all in one toolbar.
 - **Flower options:** every product offers either a bouquet size or a number of stems, with the price for each option shown before it is added to the cart (see [Flower options and pricing](#flower-options-and-pricing)).
-- **Product pages:** an image gallery with hover zoom, option cards, a description and related products.
+- **Product pages:** the full, uncropped photo with a full-screen viewer (zoom, pan, pinch and keyboard controls), option cards, Buy now, tabs for details, delivery and flower care, and similar flowers.
+- **Ratings and reviews:** star ratings on product cards and a reviews section with an average, a rating breakdown and sorting. The reviews are currently sample data and are labelled as such on the page.
 - **Persistent cart:** quantity steppers, a running order summary, and a cart that is saved to the account. Items added before signing in are merged into the account at sign-in.
-- **Checkout and orders:** a delivery form with Cash on Delivery, and an order history that shows each order's status, from Order Placed through Packing, Shipped and Out for delivery to Delivered.
+- **Checkout and orders:** a delivery form, a chosen delivery date and an optional card message, Cash on Delivery, and an order history that shows each order's status, from Order Placed through Packing, Shipped and Out for delivery to Delivered.
 - **Accounts:** registration, sign-in with JWT sessions that expire automatically, and a profile page for updating details and changing the password.
 - **Contact page:** store details, a message form that opens the visitor's email app with the message ready to send, and a map with directions.
 - **Responsive design:** layouts tested from 360px phones to 2560px monitors, with subtle scroll and page transitions that respect the reduced-motion setting.
+- **Accessibility and SEO:** a skip link, labelled form fields and controls, keyboard support, page titles and descriptions, Open Graph tags, a sitemap and `robots.txt`.
+- **Performance:** pages load on first visit (route-based code splitting), and Cloudinary serves each image in WebP or AVIF at the width the layout needs.
 
 ### Admin Panel
 
 - **Secure login:** admin credentials are kept in server environment variables, and admin tokens expire after a set time.
 - **Product creation:** up to four images uploaded to Cloudinary, plus name, description, category, collection, base price, a best-seller flag, and whether the product is sold as a bouquet (in sizes) or as single stems.
 - **Catalogue management:** a list of every product, with removal behind a confirmation step.
-- **Order management:** every order with its items, chosen options, customer and address, and a status control for each stage of delivery.
+- **Order management:** every order with its items, chosen options, customer and address, delivery date and card message, and a status control for each stage of delivery.
 
 ## Screenshots
 
@@ -68,9 +71,13 @@ The catalogue holds 52 products across four collections:
 | --- | --- |
 | ![Collection page with type tabs and filters](docs/screenshots/storefront-collection.jpg) | ![Product page with bouquet size options](docs/screenshots/storefront-product.jpg) |
 
-| Shopping cart | Order history |
+| Ratings and reviews | Shopping cart |
 | --- | --- |
-| ![Cart with chosen options and order summary](docs/screenshots/storefront-cart.jpg) | ![Order history with delivery status](docs/screenshots/storefront-orders.jpg) |
+| ![Reviews section with average rating and breakdown](docs/screenshots/storefront-reviews.jpg) | ![Cart with chosen options and order summary](docs/screenshots/storefront-cart.jpg) |
+
+| Checkout | Order history |
+| --- | --- |
+| ![Checkout with delivery details, delivery date and card message](docs/screenshots/storefront-checkout.jpg) | ![Order history with delivery status](docs/screenshots/storefront-orders.jpg) |
 
 | Admin: products | Admin: orders |
 | --- | --- |
@@ -211,7 +218,7 @@ The script only adds products that are not in the database yet and never deletes
 
 1. **Add products:** run `npm run seed`, or sign in to the admin panel at http://localhost:5175 with `ADMIN_EMAIL` and `ADMIN_PASSWORD` and use **Add Items**.
 2. **Shop:** open the storefront at http://localhost:5173, pick a collection, choose a bouquet size or number of stems, and add items to the cart.
-3. **Check out:** create an account or sign in, enter delivery details and place a Cash on Delivery order.
+3. **Check out:** create an account or sign in, enter delivery details, choose a delivery date, add a card message if you like, and place a Cash on Delivery order.
 4. **Fulfil orders:** in the admin panel, open **Orders** and update each order's status. The customer sees the change under **My Orders**.
 
 ## Deployment
@@ -281,7 +288,7 @@ Florazon/
 │       ├── components/      Shared UI: navigation, product cards, hero, footer
 │       ├── context/         Global state: products, cart and authentication
 │       ├── pages/           Home, collection, product, cart, checkout and account pages
-│       └── utils/           Formatting and flower option pricing
+│       └── utils/           Formatting, flower option pricing, catalogue helpers and reviews
 ├── admin/                   Admin panel (React + Vite)
 │   └── src/
 │       ├── components/      Login, navigation bar and sidebar
@@ -296,7 +303,7 @@ Florazon/
 - Sending contact form messages directly from the site
 - Password reset by email
 - Sales dashboard with order and revenue statistics
-- Product reviews and ratings
+- Verified customer reviews stored in the database, replacing the sample reviews
 - Automated tests and continuous integration
 
 ## License

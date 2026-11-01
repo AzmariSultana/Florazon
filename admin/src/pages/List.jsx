@@ -20,7 +20,7 @@ const List = ({token}) => {
       }
 
     } catch (error) {
-      console.log(error)
+      console.error(error)
       // 401s are handled globally in App (auto-logout)
       if (error.response?.status !== 401) toast.error(error.response?.data?.message || error.message)
     }
@@ -40,7 +40,7 @@ const List = ({token}) => {
         toast.error(response.data.message)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       // 401s are handled globally in App (auto-logout)
       if (error.response?.status !== 401) toast.error(error.response?.data?.message || error.message)
     }

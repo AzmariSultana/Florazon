@@ -32,15 +32,15 @@ const PillSelect = ({ label, value, onChange, children }) => (
 )
 
 const Collection = () => {
-  const { products, productsStatus, search, showSearch } = useContext(ShopContext)
+  const { products, productsStatus, search, setSearch, showSearch } = useContext(ShopContext)
   const location = useLocation()
-  useDocumentTitle('Collection', 'Browse 50+ hand-tied designs: single flowers, mixed bouquets, wedding garlands and flower baskets, each in three sizes.')
+  useDocumentTitle('Collection', 'Browse 50+ hand-tied designs: single flowers, mixed bouquets, wedding garlands and flower baskets, each with a choice of stems or sizes.')
   const [category, setCategory] = useState('')
-  // Category tiles on the home page and footer links arrive with a type already chosen
+  // Category tiles on the home page arrive with a type already chosen
   const [type, setType] = useState(() => location.state?.subCategory || '')
   const [sortType, setSortType] = useState('relevant')
 
-  // Links that arrive while this page is already open (e.g. from the footer) start a fresh view of their type
+  // Links that arrive while this page is already open start a fresh view of their type
   useEffect(() => {
     if (location.state && 'subCategory' in location.state) {
       setType(location.state.subCategory || '')
@@ -68,8 +68,9 @@ const Collection = () => {
     }
   }, [products, search, showSearch, category, type, sortType])
 
-  const filtered = Boolean(category || type)
-  const clearFilters = () => { setCategory(''); setType('') }
+  const searching = Boolean(showSearch && search)
+  const filtered = Boolean(category || type || searching)
+  const clearFilters = () => { setCategory(''); setType(''); setSearch('') }
 
   // Tabs show how many designs each type holds; a chosen type also sets the page heading
   const typeCounts = useMemo(() => Object.fromEntries(SUB_CATEGORIES.map((t) => [t, products.filter((item) => item.subCategory === t).length])), [products])
@@ -127,6 +128,7 @@ const Collection = () => {
             <>
               Showing <span className='font-medium text-ink'>{filterProducts.length}</span> {filterProducts.length === 1 ? 'design' : 'designs'}
               {category && <> in <span className='text-ink'>{categoryLabel(category)}</span></>}
+              {searching && <> for &ldquo;<span className='text-ink'>{search}</span>&rdquo;</>}
             </>
           )}
         </p>
@@ -139,7 +141,7 @@ const Collection = () => {
       {productsStatus === 'ready' && filterProducts.length === 0 && (
         <div className='panel py-16 text-center'>
           <p className='font-display text-2xl text-ink'>No flowers match these filters.</p>
-          <p className='mt-2 text-sm text-gray-500'>Try another category or search for something else.</p>
+          <p className='mt-2 text-sm text-gray-500'>Try another type or category, or search for a different flower.</p>
           {filtered && <button type='button' onClick={clearFilters} className='btn-outline mt-6'>Clear filters</button>}
         </div>
       )}

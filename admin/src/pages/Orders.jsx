@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import { backendUrl, ORDER_STATUSES } from '../config'
-import { formatPrice } from '../utils'
+import { formatDate, formatPrice } from '../utils'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets';
 
@@ -38,7 +38,7 @@ const Orders = ({ token }) => {
         toast.error(response.data.message)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       // 401s are handled globally in App (auto-logout)
       if (error.response?.status !== 401) toast.error(error.response?.data?.message || error.message)
     }
@@ -75,8 +75,8 @@ const Orders = ({ token }) => {
                 <p className='text-sm sm:text-[15px]'>Items: {order.items.length}</p>
                 <p className='mt-3'>Method: {order.paymentMethod}</p>
                 <p>Payment: {order.payment ? 'Done' : 'Pending'}</p>
-                <p>Ordered: {new Date(order.date).toLocaleDateString()}</p>
-                {order.address.deliveryDate && <p className='font-medium text-ink'>Deliver on: {new Date(`${order.address.deliveryDate}T00:00:00`).toLocaleDateString()}</p>}
+                <p>Ordered: {formatDate(order.date)}</p>
+                {order.address.deliveryDate && <p className='font-medium text-ink'>Deliver on: {formatDate(order.address.deliveryDate)}</p>}
               </div>
               <p className='text-sm sm:text-[15px] font-medium'>{formatPrice(order.amount)}</p>
               <select onChange={(event)=>statusHandler(event,order._id)} value={order.status} aria-label='Order status' className='px-3 py-2 font-medium cursor-pointer'>

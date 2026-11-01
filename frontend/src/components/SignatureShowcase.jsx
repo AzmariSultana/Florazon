@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/assets'
 import { typeLabel } from '../constants'
+import { SIGNATURE_NAMES } from '../utils/catalog'
 import { formatPrice } from '../utils/format'
 import Reveal from './Reveal'
 import Title from './Title'
@@ -11,7 +12,7 @@ import Title from './Title'
 // "Discover" opens the product page, which shows the full photo and similar flowers.
 const PICKS = [
   {
-    name: 'Crimson Lily & Rose Bouquet',
+    name: SIGNATURE_NAMES[0],
     image: assets.showcase_bouquet,
     width: 709,
     height: 901,
@@ -19,7 +20,7 @@ const PICKS = [
     text: 'Deep red roses and white lilies in crimson wrap, the classic way to say I love you.',
   },
   {
-    name: 'Lily & Rose Hatbox',
+    name: SIGNATURE_NAMES[1],
     image: assets.showcase_hatbox,
     width: 636,
     height: 755,

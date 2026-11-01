@@ -22,7 +22,7 @@ const Login = ({setToken}) => {
             
             
         } catch (error) {
-            console.log(error);
+            console.error(error);
             toast.error(error.message)
         } finally {
             setLoading(false)

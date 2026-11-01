@@ -14,12 +14,12 @@ const POLICIES = [
   },
   {
     title: '1-day easy exchange',
-    text: 'Easy exchange, no stress, no mess',
+    text: "Not right? We'll swap it",
     icon: <><path d='M4 9h13l-3-3' /><path d='M20 15H7l3 3' /></>,
   },
   {
-    title: 'Best customer support',
-    text: "Day or night, we're a message away",
+    title: 'Friendly support',
+    text: "Questions or changes, we're a message away",
     icon: <path d='M5 12a7 7 0 0 1 14 0v4a2 2 0 0 1-2 2h-1v-6h3M5 12v4a2 2 0 0 0 2 2h1v-6H5' />,
   },
 ]

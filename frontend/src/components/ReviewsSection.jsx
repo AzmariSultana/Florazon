@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import StarRating from './StarRating'
+import { formatDate } from '../utils/format'
 import { IS_SAMPLE_DATA, getProductReviews, summarizeReviews } from '../utils/reviews'
 
 const INITIAL_VISIBLE = 4
@@ -13,7 +14,6 @@ const SORTS = [
 const AVATAR_COLOURS = ['bg-blush text-brand-dark', 'bg-sage-soft text-sage', 'bg-brand-soft text-brand', 'bg-cream text-ink border border-line']
 const avatarColour = (name) => AVATAR_COLOURS[[...name].reduce((sum, c) => sum + c.charCodeAt(0), 0) % AVATAR_COLOURS.length]
 const initials = (name) => name.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase()
-const formatDate = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 
 const ReviewCard = ({ review }) => (
   <li className='rounded-2xl border border-line/80 bg-white/60 p-5 sm:p-6 animate-fade-up'>

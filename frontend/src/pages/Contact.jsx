@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
-import NewsletterBox from '../components/NewsletterBox'
 import { STORE } from '../constants'
 import Reveal from '../components/Reveal'
 import useDocumentTitle from '../utils/useDocumentTitle'
@@ -189,7 +188,6 @@ const Contact = () => {
         </div>
       </Reveal>
 
-      <Reveal><NewsletterBox /></Reveal>
     </div>
   )
 }

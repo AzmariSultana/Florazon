@@ -3,8 +3,9 @@ import { toast } from 'react-toastify';
 import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title';
 import EmptyState from '../components/EmptyState';
+import StatusMessage from '../components/StatusMessage';
 import axios from 'axios';
-import { formatPrice, imageUrl } from '../utils/format';
+import { formatDate, formatPrice, imageUrl } from '../utils/format';
 import useDocumentTitle from '../utils/useDocumentTitle'
 
 // Dot colour for each delivery stage
@@ -15,6 +16,8 @@ const STATUS_DOT = {
   'Out for delivery': 'bg-brand',
   'Delivered': 'bg-green-500',
 }
+
+const PAYMENT_LABELS = { COD: 'Cash on delivery' }
 
 const Orders = () => {
   const { backendUrl, token, handleApiError }= useContext(ShopContext);
@@ -60,7 +63,13 @@ const Orders = () => {
   },[loadOrderData])
   return (
     <div className='pt-6 sm:pt-10'>
-      <Title as='h1' eyebrow='Your account' text1={'MY'} text2={'ORDERS'} size='text-4xl sm:text-5xl' />
+      <div className='flex flex-wrap items-end justify-between gap-4'>
+        <Title as='h1' eyebrow='Your account' text1={'MY'} text2={'ORDERS'} size='text-4xl sm:text-5xl' />
+        {/* One refresh for the whole list: statuses change as the studio updates each order */}
+        {token && orderData.length > 0 && (
+          <button type='button' onClick={loadOrderData} className='btn-outline mb-6 px-5 py-2.5 text-xs'>Refresh status</button>
+        )}
+      </div>
       {!token && (
         <EmptyState
           title='Sign in to see your orders'
@@ -75,6 +84,7 @@ const Orders = () => {
           action={{ to: '/collection', label: 'Browse collection' }}
         />
       )}
+      {token && loading && <StatusMessage>Loading your orders...</StatusMessage>}
       <ul className='flex flex-col gap-3 mt-2'>
         {orderData.map((item, index) => (
           <li key={index} className='card p-4 sm:p-5 text-gray-700 animate-fade-up flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-shadow hover:shadow-lift'>
@@ -85,19 +95,16 @@ const Orders = () => {
                 <div className='flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-sm text-gray-700'>
                   <p>{formatPrice(item.price)}</p>
                   <p>Quantity: {item.quantity}</p>
-                  <p>{item.size}</p>
+                  <p className='rounded-full bg-blush/60 px-2.5 py-0.5 text-xs'>{item.size}</p>
                 </div>
-                <p className='mt-1.5 text-gray-500'>Ordered: <span className='text-gray-700'>{new Date(item.date).toDateString()}</span></p>
-                {item.deliveryDate && <p className='mt-0.5 text-gray-500'>Delivery: <span className='text-gray-700'>{new Date(`${item.deliveryDate}T00:00:00`).toDateString()}</span></p>}
-                <p className='mt-0.5 text-gray-500'>Payment: <span className='text-gray-700'>{item.paymentMethod}</span></p>
+                <p className='mt-1.5 text-gray-500'>Ordered: <span className='text-gray-700'>{formatDate(item.date)}</span></p>
+                {item.deliveryDate && <p className='mt-0.5 text-gray-500'>Delivery: <span className='text-gray-700'>{formatDate(item.deliveryDate)}</span></p>}
+                <p className='mt-0.5 text-gray-500'>Payment: <span className='text-gray-700'>{PAYMENT_LABELS[item.paymentMethod] || item.paymentMethod}</span></p>
               </div>
             </div>
-            <div className='md:w-1/2 flex items-center justify-between gap-4'>
-              <div className='flex items-center gap-2 rounded-full bg-blush/50 px-3.5 py-1.5'>
-                <span className={`w-2 h-2 rounded-full ${STATUS_DOT[item.status] || 'bg-gray-400'}`} aria-hidden='true'></span>
-                <p className='text-sm'>{item.status}</p>
-              </div>
-              <button type='button' onClick={loadOrderData} className='btn-outline px-4 py-2 text-xs'>Track order</button>
+            <div className='flex shrink-0 items-center gap-2 self-start rounded-full bg-blush/50 px-3.5 py-1.5 md:self-center'>
+              <span className={`w-2 h-2 rounded-full ${STATUS_DOT[item.status] || 'bg-gray-400'}`} aria-hidden='true'></span>
+              <p className='text-sm'>{item.status}</p>
             </div>
           </li>
         ))}

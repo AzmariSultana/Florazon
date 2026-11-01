@@ -20,7 +20,7 @@ const RelatedProducts = ({ category, subCategory, currentId }) => {
   return (
     <section className='mt-24'>
       <div className='text-center'>
-        <Title align='center' eyebrow='You may also love' text1={'RELATED'} text2={'PRODUCTS'} />
+        <Title align='center' eyebrow='You may also love' text1={'SIMILAR'} text2={'FLOWERS'} />
       </div>
       <ProductGrid products={related} className='grid-cols-2 md:grid-cols-4' />
     </section>

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import Title from '../components/Title'
 import CartTotal from '../components/CartTotal'
+import EmptyState from '../components/EmptyState'
 import { ShopContext } from '../context/ShopContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -42,7 +43,7 @@ const StepHeading = ({ step, children, note }) => (
 const PlaceOrder = () => {
   const [method, setMethod] = useState('cod')
   const [submitting, setSubmitting] = useState(false)
-  const { navigate, backendUrl, token, cartItems, setCartItems, getCartAmount, products, handleApiError } = useContext(ShopContext)
+  const { navigate, backendUrl, token, cartItems, setCartItems, getCartAmount, products, productsStatus, handleApiError } = useContext(ShopContext)
   const [formData, setFormData] = useState(EMPTY_FORM)
   const [deliveryDate, setDeliveryDate] = useState(localDate(0))
   const [giftMessage, setGiftMessage] = useState('')
@@ -131,6 +132,16 @@ const PlaceOrder = () => {
     </ul>
   )
 
+  // Nothing to check out: point back to the collection instead of showing an empty form
+  if (productsStatus === 'ready' && lines.length === 0) {
+    return (
+      <div className='pt-6 sm:pt-10'>
+        <Title as='h1' eyebrow='Checkout' text1={'DELIVERY'} text2={'INFORMATION'} size='text-4xl sm:text-5xl' />
+        <EmptyState title='Your cart is empty.' text='Add a few flowers first, then come back to choose a delivery day.' action={{ to: '/collection', label: 'Browse collection' }} />
+      </div>
+    )
+  }
+
   return (
     <form onSubmit={onSubmitHandler} className='pt-6 sm:pt-10'>
       <Title as='h1' eyebrow='Checkout' text1={'DELIVERY'} text2={'INFORMATION'} size='text-4xl sm:text-5xl' />
@@ -205,7 +216,7 @@ const PlaceOrder = () => {
                 <span className={`w-5 h-5 shrink-0 rounded-full border-2 flex items-center justify-center ${method === 'cod' ? 'border-ink' : 'border-gray-300'}`}><span className={`w-2.5 h-2.5 rounded-full transition-transform ${method === 'cod' ? 'bg-ink scale-100' : 'scale-0'}`}></span></span>
                 <div>
                   <p className='text-sm font-medium text-ink'>Cash on delivery</p>
-                  <p className='text-xs text-gray-500 mt-0.5'>Pay when your flowers arrive.</p>
+                  <p className='text-xs text-gray-500 mt-0.5'>Pay the courier in cash at your door.</p>
                 </div>
               </div>
             </div>
@@ -216,7 +227,7 @@ const PlaceOrder = () => {
         <div className='lg:sticky lg:top-24'>
           <CartTotal items={orderLines}>
             <button type='submit' disabled={submitting} className='btn-primary w-full mt-7'>{submitting ? 'Placing order...' : 'Place order'}</button>
-            <p className='mt-4 text-center text-xs text-gray-500'>Hand-arranged on the day of delivery.</p>
+            <p className='mt-4 text-center text-xs text-gray-500'>Nothing is charged now. You pay when the flowers arrive.</p>
           </CartTotal>
         </div>
       </div>
