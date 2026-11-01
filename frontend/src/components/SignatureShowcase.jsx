@@ -49,9 +49,6 @@ const SignatureShowcase = () => {
         />
 
         <div className='relative mt-14 flex flex-col gap-20 lg:gap-12'>
-          {/* Faint dashed guides behind the rows, a quiet editorial touch on wide screens */}
-          <div aria-hidden='true' className='pointer-events-none absolute inset-y-0 left-1/3 hidden border-l border-dashed border-line lg:block' />
-          <div aria-hidden='true' className='pointer-events-none absolute inset-y-0 left-2/3 hidden border-l border-dashed border-line lg:block' />
 
           {picks.map((pick, i) => {
             const flip = i % 2 === 1
