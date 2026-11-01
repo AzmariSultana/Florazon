@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { ShopContext } from '../context/ShopContext'
 import RelatedProducts from '../components/RelatedProducts'
 import Reveal from '../components/Reveal'
+import Lightbox from '../components/Lightbox'
 import { formatPrice, imageUrl } from '../utils/format'
 import StatusMessage, { LOAD_ERROR_TEXT } from '../components/StatusMessage'
 import useDocumentTitle from '../utils/useDocumentTitle'
@@ -48,33 +49,32 @@ const ICONS = {
 }
 
 // Main photo: the frame takes the photo's own shape (read when it loads), so the whole flower is shown
-// with no cropping and no empty bands. Tall photos are capped to the screen height. Zoom is hover-only.
-const PhotoStage = ({ src, alt, badge }) => {
-  const [origin, setOrigin] = useState('50% 50%')
+// with no cropping and no empty bands. Tall photos are capped to the screen height. Clicking opens the viewer.
+const PhotoStage = ({ src, alt, badge, onOpen }) => {
   const [ratio, setRatio] = useState(4 / 5)
-  const onMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    setOrigin(`${((e.clientX - rect.left) / rect.width) * 100}% ${((e.clientY - rect.top) / rect.height) * 100}%`)
-  }
   return (
-    <div
-      onMouseMove={onMove}
-      onMouseLeave={() => setOrigin('50% 50%')}
+    <button
+      type='button'
+      onClick={onOpen}
+      aria-label={`View ${alt} full screen`}
       style={{ aspectRatio: ratio, width: `calc(min(72vh, 680px) * ${ratio})` }}
-      className='group relative mx-auto lg:mx-0 max-w-full lg:max-w-[min(100%,580px)] overflow-hidden rounded-[1.75rem] bg-blush/40 shadow-soft cursor-zoom-in'
+      className='group relative mx-auto lg:mx-0 block max-w-full lg:max-w-[min(100%,580px)] overflow-hidden rounded-[1.75rem] bg-blush/40 shadow-soft cursor-zoom-in'
     >
-      {/* The fade runs on a wrapper: an animation's held transform would override the zoom */}
       <div key={src} className='absolute inset-0 animate-fade-up'>
         <img
-          className='h-full w-full object-cover transition-transform duration-500 ease-petal group-hover:scale-[1.5]'
-          style={{ transformOrigin: origin }}
+          className='h-full w-full object-cover transition-transform duration-700 ease-petal group-hover:scale-[1.03]'
           src={src}
           alt={alt}
           onLoad={(e) => e.currentTarget.naturalHeight && setRatio(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight)}
         />
       </div>
       {badge && <span className='tag absolute left-4 top-4 z-10'>{badge}</span>}
-    </div>
+      {/* Expand hint: always visible on touch screens, revealed on hover elsewhere */}
+      <span className='absolute bottom-4 right-4 z-10 flex items-center gap-2 rounded-full border border-white/70 bg-white/80 px-3.5 py-2 text-xs font-medium text-ink shadow-glass backdrop-blur-md transition-all duration-300 ease-petal sm:translate-y-1 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-visible:translate-y-0 sm:group-focus-visible:opacity-100'>
+        <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='1.8' strokeLinecap='round' strokeLinejoin='round' className='h-4 w-4' aria-hidden='true'><path d='M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7' /></svg>
+        View full screen
+      </span>
+    </button>
   )
 }
 
@@ -99,6 +99,7 @@ const Product = () => {
   const [size, setSize] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [tab, setTab] = useState('details')
+  const [viewerIndex, setViewerIndex] = useState(null)
 
   useEffect(() => {
     const item = products.find(p => p._id === productId)
@@ -108,6 +109,7 @@ const Product = () => {
     setSize(item ? getProductOptions(item)[0].label : '')
     setQuantity(1)
     setTab('details')
+    setViewerIndex(null)
     window.scrollTo(0, 0)
   }, [productId, products])
 
@@ -210,7 +212,7 @@ const Product = () => {
       <div className='grid lg:grid-cols-[auto_minmax(0,1fr)] items-start gap-8 lg:gap-12 xl:gap-16'>
         {/* Gallery */}
         <div className='min-w-0 lg:sticky lg:top-24 animate-fade-up'>
-          <PhotoStage src={imageUrl(image, 1000)} alt={productData.name} badge={productData.bestseller ? 'Bestseller' : null} />
+          <PhotoStage src={imageUrl(image, 1000)} alt={productData.name} badge={productData.bestseller ? 'Bestseller' : null} onOpen={() => setViewerIndex(Math.max(0, images.indexOf(image)))} />
           {images.length > 1 && (
             <div className='mt-4 flex justify-center gap-3 overflow-x-auto p-1'>
               {images.map((item, index) => (
@@ -375,6 +377,16 @@ const Product = () => {
       </Reveal>
 
       <RelatedProducts category={productData.category} subCategory={productData.subCategory} currentId={productData._id} />
+
+      {viewerIndex !== null && images.length > 0 && (
+        <Lightbox
+          images={images.map((url) => imageUrl(url, 2400))}
+          index={viewerIndex}
+          alt={productData.name}
+          onIndexChange={(i) => { setViewerIndex(i); setImage(images[i]) }}
+          onClose={() => setViewerIndex(null)}
+        />
+      )}
 
       {/* Phones: price and add to cart stay within reach while scrolling (the footer leaves room for it) */}
       <div className='fixed inset-x-0 bottom-0 z-30 flex items-center gap-3 border-t border-line/80 bg-canvas/90 px-4 py-3 backdrop-blur-xl lg:hidden'>
