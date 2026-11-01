@@ -2,6 +2,8 @@
 import logo from './logo.png'
 import hero_basket from './hero_basket.webp'
 import hero_accent from './hero_accent.webp'
+import showcase_bouquet from './showcase_bouquet.webp'
+import showcase_hatbox from './showcase_hatbox.webp'
 import cart_icon from './cart_icon.png'
 import bin_icon from './bin_icon.png'
 import dropdown_icon from './dropdown_icon.png'
@@ -19,6 +21,8 @@ export const assets = {
     logo,
     hero_basket,
     hero_accent,
+    showcase_bouquet,
+    showcase_hatbox,
     cart_icon,
     dropdown_icon,
     exchange_icon,

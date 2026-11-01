@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import Hero from '../components/Hero'
 import Reveal from '../components/Reveal'
 import CategoryShowcase from '../components/CategoryShowcase'
+import SignatureShowcase from '../components/SignatureShowcase'
 import LatestCollection from '../components/LatestCollection';
 import BestSeller from '../components/BestSeller'
 import OurPolicy from '../components/OurPolicy';
@@ -19,6 +20,7 @@ const Home = () => {
       {productsStatus === 'error' && <StatusMessage retry>{LOAD_ERROR_TEXT}</StatusMessage>}
       <Reveal><OurPolicy/></Reveal>
       <Reveal><CategoryShowcase/></Reveal>
+      <SignatureShowcase />
       <Reveal><LatestCollection/></Reveal>
       <Reveal><BestSeller/></Reveal>
       <Reveal><NewsletterBox/></Reveal>
